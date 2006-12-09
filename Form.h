@@ -6,9 +6,7 @@
 #include "easyWinDefines.h"
 
 namespace easyWin {
-
   class Form : public Window {
-
   public:
     Form() {
       prepareClass("easyWin::Form");

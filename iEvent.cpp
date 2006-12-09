@@ -52,7 +52,6 @@ tMsgCallback iEvent::onMouseUp(eMsg *msg) {
 }
 
 tMsgCallback iEvent::onSize(eMsg *msg) {
-
   sizeOption option = (sizeOption)0;
 
   switch (msg->wParam) {
@@ -86,7 +85,6 @@ tMsgCallback iEvent::onCreate(eMsg *msg) {
 tMsgCallback iEvent::onDestroy(eMsg *msg) {
   evtOnDestroy();
 }
-
 
 tMsgCallback iEvent::onShow(eMsg *msg) {
   showOption option = (showOption)0;
@@ -125,4 +123,3 @@ tMsgCallback iEvent::onKeyUp(eMsg *msg) {
 tMsgCallback iEvent::onKeyPress(eMsg *msg) {
   evtOnKeyPress(msg->wParam, msg->lParam);
 }
-

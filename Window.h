@@ -1,20 +1,17 @@
 #ifndef __EASYWIN_WINDOW_H__
 #define __EASYWIN_WINDOW_H__
-
 #include <map>
 #include <string>
 #include <assert.h>
 #include "iEvent.h"
 #include "easyWinDefines.h"
 
-#pragma warning( push )
-#pragma warning( disable : 4800 )
+#pragma warning(push)
+#pragma warning(disable: 4800)
 
 namespace easyWin {
-  class Window : iEvent {
-
+  class Window : public iEvent {
   public:
-
     typedef std::map<std::string, signals::connection> tConnections;
     typedef signal<LPARAM (HWND, UINT, WPARAM, LPARAM)> sigOnMsg;
 
@@ -33,7 +30,7 @@ namespace easyWin {
     typedef std::map<int, sObserver*> tObservers;
 
   public:
-    static enum wndStyle{
+    static enum wndStyle {
       wsDefault = WS_OVERLAPPED,
       wsBorder = WS_BORDER,
       wsDlgFrame = WS_DLGFRAME,
@@ -50,39 +47,39 @@ namespace easyWin {
       wsDisabled = WS_DISABLED,
       wsVisible = WS_VISIBLE,
       wsMaximize = WS_MAXIMIZE,
-      wsMinimize = WS_MINIMIZE}; 
+      wsMinimize = WS_MINIMIZE
+    };
 
-    static enum wndState{
+    static enum wndState {
       wstShow = SW_SHOW,
       wstHide = SW_HIDE,
       wstMaximize = SW_MAXIMIZE,
       wstMinimize = SW_MINIMIZE,
-      wstRestore = SW_RESTORE};
+      wstRestore = SW_RESTORE
+    };
    
-    static enum wndExStyle{
+    static enum wndExStyle {
       wsExContextHelp = WS_EX_CONTEXTHELP,
       wsExTopMost = WS_EX_TOPMOST,
       wsExToolWindow = WS_EX_TOOLWINDOW,
       wsExClientEdge = WS_EX_CLIENTEDGE, 
       wsExAcceptFiles = WS_EX_ACCEPTFILES,
-      wsExControlParent = WS_EX_CONTROLPARENT};
-
-    Window() {
-      _handle = 0;
-      registerObserver(WM_SIZE, boost::bind(&Window::onSize, (iEvent *)this, _1), 1, boost::signals::connect_position::at_back, "SizeCallback", false);
-      registerObserver(WM_MOVE, boost::bind(&Window::onMove, (iEvent *)this, _1), 1, boost::signals::connect_position::at_back, "MoveCallback", false);
-      registerObserver(WM_MOUSEMOVE, boost::bind(&Window::onMouseMove, (iEvent *)this, _1), 1, boost::signals::connect_position::at_back, "MouseMoveCallback", false);
+      wsExControlParent = WS_EX_CONTROLPARENT
     };
 
-    ~Window() {
+    Window(): _handle(0) {
+      registerObserver(WM_SIZE, boost::bind(&Window::onSize, this, _1), 1, boost::signals::connect_position::at_back, "SizeCallback", false);
+      registerObserver(WM_MOVE, boost::bind(&Window::onMove, this, _1), 1, boost::signals::connect_position::at_back, "MoveCallback", false);
+      registerObserver(WM_MOUSEMOVE, boost::bind(&Window::onMouseMove, this, _1), 1, boost::signals::connect_position::at_back, "MouseMoveCallback", false);
+    };
 
+    virtual ~Window() {
       if (getHandle()) {
         destroy();
       }
-
     }
 
-    inline void prepareClass(char *className = "easyWin::unkown") {
+    inline void prepareClass(char *className = "easyWin::unknown") {
         WNDCLASSEX wcex;
         wcex.cbSize = sizeof(WNDCLASSEX);
         wcex.style = CS_HREDRAW | CS_VREDRAW;
@@ -202,10 +199,9 @@ namespace easyWin {
     }
 
     inline LPARAM process(eMsg *msg) {
-
       clear();
-
       setMsg(msg);
+
       if (_staticValues.find(msg->msg) != _staticValues.end()) {
         setReturnCode(_staticValues[msg->msg]);
       }
@@ -238,8 +234,7 @@ namespace easyWin {
       _observers[id]->signal(&_msg);
     }
 
-    inline bool registerObserver(int id, fOnMessage f, int priority, signals::connect_position pos, std::string name, bool overwrite) 
-    {
+    inline bool registerObserver(int id, fOnMessage f, int priority, signals::connect_position pos, std::string name, bool overwrite) {
       if (f.empty()) {
         return false;
       }
@@ -261,19 +256,14 @@ namespace easyWin {
       return (_observers[id]->connections[name] = _observers[id]->signal.connect(priority, f, pos)).connected();
     }
 
+  public:
     static HINSTANCE instance;
 
   private:
-
     static __w64 long _sMsgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam); 
-
     __w64 long _msgProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-
-
-
   protected:
-
     static inline bool _isMsgProc(HWND hWnd) {
       if (_msgProcs.find(hWnd) != _msgProcs.end()) {
          return !_msgProcs[hWnd]->signal.empty();
@@ -283,22 +273,19 @@ namespace easyWin {
 
     static tMsgProcs _msgProcs;
 
-    eMsg _msg;
-
     tObservers _observers;
     tStaticValues _staticValues;
+    eMsg _msg;
 
     LRESULT _returnCode;
     bool _returnCodeSet;
     bool _returnLockCode;
 
     char *_className;
-
     HANDLE _handle;
-
   };
-
-
 };
-#pragma warning( pop ) 
+
+#pragma warning(pop) 
+
 #endif /*__EASYWIN_WINDOW_H__*/

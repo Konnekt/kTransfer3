@@ -2,6 +2,7 @@
 #define __EASYWIN_DEFINES_H__
 
 #define BOOST_MEM_FN_ENABLE_STDCALL
+
 #include <windows.h>
 #include <assert.h>
 #include <boost/bind.hpp>
@@ -11,7 +12,6 @@
 using namespace boost;
 
 namespace easyWin {
-
   typedef void tMsgCallback;
   typedef void tEventCallback;
 
@@ -28,11 +28,28 @@ namespace easyWin {
   typedef function<tMsgCallback(eMsg *msg)> fOnMessage;
   typedef signal<tMsgCallback(eMsg *msg)> sigOnMessage;
 
-  enum sizeOption{soMaxHide, soMaximized, soMaxShow, soMinimized, soRestored};
-  enum mouseButton{mbLeft = MK_LBUTTON, mbMiddle = MK_MBUTTON, mbRight = MK_RBUTTON, mbControl = MK_CONTROL, mbShift = MK_SHIFT};
-  enum showOption{shOtherUnZoom, shOtherZoom, shParentClosing, shParentOpening};
+  enum sizeOption { 
+    soMaxHide, 
+    soMaximized, 
+    soMaxShow, 
+    soMinimized, 
+    soRestored
+  };
 
+  enum mouseButton {
+    mbLeft = MK_LBUTTON, 
+    mbMiddle = MK_MBUTTON, 
+    mbRight = MK_RBUTTON, 
+    mbControl = MK_CONTROL, 
+    mbShift = MK_SHIFT 
+  };
 
-
+  enum showOption { 
+    shOtherUnZoom, 
+    shOtherZoom, 
+    shParentClosing, 
+    shParentOpening 
+  };
 };
+
 #endif /*__EASYWIN_DEFINES_H__*/

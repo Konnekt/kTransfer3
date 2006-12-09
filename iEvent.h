@@ -1,12 +1,14 @@
 #ifndef __EASYWIN_IEVENT_H__
 #define __EASYWIN_IEVENT_H__
-#include"easyWinDefines.h"
+
+#include "easyWinDefines.h"
 
 namespace easyWin {
-
-  class iEvent {
+  class iEvent : public iObject {
   public: 
-    iEvent() {};
+    iEvent() {}
+    virtual ~iEvent() {}
+
     tMsgCallback onPaint(eMsg *msg); // WM_PAINT
     tMsgCallback onShow(eMsg *msg); // WM_SHOW
     tMsgCallback onCreate(eMsg *msg); // WM_CREATE
@@ -34,9 +36,10 @@ namespace easyWin {
     signal<tEventCallback(int nsKey, int vKey)> evtOnKeyPress; 
     signal<tEventCallback(mouseButton mb, int x, int y)> evtOnMouseMove;
     signal<tEventCallback(mouseButton mb, int x, int y)> evtOnMouseLeave;
-    signal<tEventCallback(mouseButton mb, mouseButton mbn/*sasiedzi*/, int x, int y)> evtOnMouseUp;
-    signal<tEventCallback(mouseButton mb, mouseButton mbn/*sasiedzi*/, int x, int y)> evtOnClick;
-    signal<tEventCallback(mouseButton mb, mouseButton mbn/*sasiedzi*/, int x, int y)> evtOnDblClick;  
+    signal<tEventCallback(mouseButton mb, mouseButton mbn /*sasiedzi*/, int x, int y)> evtOnMouseUp;
+    signal<tEventCallback(mouseButton mb, mouseButton mbn /*sasiedzi*/, int x, int y)> evtOnClick;
+    signal<tEventCallback(mouseButton mb, mouseButton mbn /*sasiedzi*/, int x, int y)> evtOnDblClick;  
   };
 };
+
 #endif /*__EASYWIN_IEVENT_H__*/
