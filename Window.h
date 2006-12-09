@@ -30,7 +30,7 @@ namespace easyWin {
     typedef std::map<int, sObserver*> tObservers;
 
   public:
-    static enum wndStyle {
+    enum wndStyle {
       wsDefault = WS_OVERLAPPED,
       wsBorder = WS_BORDER,
       wsDlgFrame = WS_DLGFRAME,
@@ -50,7 +50,7 @@ namespace easyWin {
       wsMinimize = WS_MINIMIZE
     };
 
-    static enum wndState {
+    enum wndState {
       wstShow = SW_SHOW,
       wstHide = SW_HIDE,
       wstMaximize = SW_MAXIMIZE,
@@ -58,7 +58,7 @@ namespace easyWin {
       wstRestore = SW_RESTORE
     };
    
-    static enum wndExStyle {
+    enum wndExStyle {
       wsExContextHelp = WS_EX_CONTEXTHELP,
       wsExTopMost = WS_EX_TOPMOST,
       wsExToolWindow = WS_EX_TOOLWINDOW,
