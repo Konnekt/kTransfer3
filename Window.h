@@ -80,21 +80,21 @@ namespace easyWin {
     }
 
     inline void prepareClass(char *className = "easyWin::unknown") {
-        WNDCLASSEX wcex;
-        wcex.cbSize = sizeof(WNDCLASSEX);
-        wcex.style = CS_HREDRAW | CS_VREDRAW;
-        wcex.lpfnWndProc	= (WNDPROC)&Window::_sMsgProc;
-        wcex.cbClsExtra	= 0;
-        wcex.cbWndExtra	= 0;
-        wcex.hInstance	= instance;
-        wcex.hIcon	= LoadIcon(NULL, 0);
-        wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
-        wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-        wcex.lpszMenuName	= "";
-        wcex.lpszClassName	= className;
-        wcex.hIconSm = 0;
+      WNDCLASSEX wcex;
+      wcex.cbSize = sizeof(WNDCLASSEX);
+      wcex.style = CS_HREDRAW | CS_VREDRAW;
+      wcex.lpfnWndProc = (WNDPROC)&Window::_sMsgProc;
+      wcex.cbClsExtra = 0;
+      wcex.cbWndExtra = 0;
+      wcex.hInstance = instance;
+      wcex.hIcon = LoadIcon(NULL, 0);
+      wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+      wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+      wcex.lpszMenuName = "";
+      wcex.lpszClassName = className;
+      wcex.hIconSm = 0;
 
-        RegisterClassEx(&wcex); 
+      RegisterClassEx(&wcex); 
     }
 
     virtual void create(const char *name, int style, int exStyle, int x, int y, int w, int h, HWND parent = NULL) = 0;
