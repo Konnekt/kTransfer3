@@ -65,11 +65,9 @@
 #include "Group.h"
 #include "State.h"
 
-
-
-//using namespace boost;
-//using namespace Konnekt;
-//using namespace Stamina;
+using namespace boost;
+using namespace Konnekt;
+using namespace Stamina;
 
 #endif /*__STDAFX_H__*/
 

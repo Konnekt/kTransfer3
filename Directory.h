@@ -9,46 +9,46 @@
 typedef std::vector<class Directory *> tDirectories; 
 
 class Directory: public Item {
-
 public:
   Directory(Directory* parent = NULL) {
     _parent = parent;
   }
-  
   inline Directory* getParent() {
     return _parent;
   }
-  inline bool setName(const Stamina::StringRef &name) {
-    if (getDirectoryID(name) != -1) {
+  virtual inline bool setName(const Stamina::StringRef &name) {
+    if (getDirectoryID(name) != 0) {
       return false;
     }
     _name = name;
     return true;
   }
-  inline Stamina::String getName() {
+  virtual inline int getDirectoryID(const Stamina::StringRef &name) {
+    tDirectories::iterator it = _directories.begin();
+    for (;it != this->_directories.end(); it++) {
+      if ((*it)->getName() == name ) {
+        return (*it)->getID();
+      }
+    }
+    return 0;
+  }
+  virtual inline Stamina::String getName() {
     return _name;
   }
-  inline bool addDirectory(const Stamina::StringRef &name) {
-    if (getDirectoryID(name) != -1) {
-      return false;
+
+  virtual inline int addDirectory(const Stamina::StringRef &name) {
+    if (getDirectoryID(name) != 0) {
+      return 0;
     }
     Directory* directory = new Directory(this);
     if (directory == NULL) {
-      return false;
+      return 0;
     }
     directory->setName(name);
     _directories.push_back(directory);
-    return true;
+    return directory->getID();
   }
-  inline Directory* getDirectory(int id) {
-    tDirectories::iterator it = _directories.begin();
-    for (;it != this->_directories.end(); it++) {
-      if ((*it)->getID() == id ) {
-        return (*it);
-      }
-    }
-    return NULL;
-  }
+
   inline Directory* getDirectory(const Stamina::StringRef &name) {
     tDirectories::iterator it = _directories.begin();
     for (;it != this->_directories.end(); it++) {
@@ -57,15 +57,6 @@ public:
       }
     }
     return NULL;
-  }
-  inline int getDirectoryID(const Stamina::StringRef &name) {
-    tDirectories::iterator it = _directories.begin();
-    for (;it != this->_directories.end(); it++) {
-      if ((*it)->getName() == name ) {
-        return (*it)->getID();
-      }
-    }
-    return -1;
   }
   inline bool removeDirectory(int id) {
     tDirectories::iterator it = _directories.begin();
@@ -78,33 +69,42 @@ public:
     }
     return false;
   }
-  /*
-  inline bool addFile(const Stamina::StringRef &name) {
-    if (getFileID(name) != -1) {
-      return false;
+  
+  inline int addFile(const Stamina::StringRef &name) {
+    if (getFileID(name) != 0) {
+      return 0;
     }
-    File* file = new File();
+    File* file = new File(this);
     if (file == NULL) {
-      return false;
+      return 0;
+    }
     file->setName(name);
     _files.push_back(file);
-    return true;
+    return file->getID();
   }
   inline bool removeFile(int id) {
-    File *file = _files[id];
-    if (file == NULL) {
-      return false;
+    tFiles::iterator it = _files.begin();
+    for (;it != this->_files.end(); it++) {
+      if ((*it)->getID() == id ) {
+        delete (*it);
+        _files.erase(it); 
+        return true;
+      }
     }
-    delete file;
-    tFiles::iterator it = _files.begin() + id;
-    _files.erase(it); 
-    return true;
+    return false;
   }
+
   inline File* getFile(int id) {
-    return _files[id];
+    tFiles::iterator it = _files.begin();
+    for (;it != this->_files.end(); it++) {
+      if ((*it)->getID() == id ) {
+        return (*it);
+      }
+    }
+    return NULL;
   }
   inline File* getFile(const Stamina::StringRef &name) {
-    tDirectories::iterator it = _files.begin();
+    tFiles::iterator it = _files.begin();
     for (;it != this->_files.end(); it++) {
       if ((*it)->getName() == name ) {
         return (*it);
@@ -113,23 +113,39 @@ public:
     return NULL;
   }
   inline int getFileID(const Stamina::StringRef &name) {
-    tDirectories::iterator it = _files.begin();
+    tFiles::iterator it = _files.begin();
     for (;it != this->_files.end(); it++) {
       if ((*it)->getName() == name ) {
-        return it - _files.begin();
+        return (*it)->getID();
       }
     }
-    return -1;
-  }*/
-  //TODO sprawdzenie jednej nazwy dla 1 pliku
-
-private:
-  Stamina::String _name;
-  Directory* _parent;
+    return 0;
+  }
+  inline void setDirectoriesState(enState state) {
+    tDirectories::iterator it = _directories.begin();
+    for (;it != _directories.end(); it++) {
+      (*it)->setState(state);
+    }
+  }
+  inline void setFilesState(enState state) {
+    tFiles::iterator it = _files.begin();
+    for (;it != _files.end(); it++) {
+      (*it)->setState(state);
+    }
+  }
+  inline void setState(enState state) {
+    _state = state;
+    setFilesState(state);
+    setDirectoriesState(state);
+  }
 
 protected:
+  Stamina::String _name;
+  Directory* _parent;
   tDirectories _directories;
   tFiles _files;
+
+
 };
 
 #endif /*__DIRECTORY_H__*/

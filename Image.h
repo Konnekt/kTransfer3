@@ -3,12 +3,16 @@
 
 #include "stdafx.h"
 #include <vector>
+
 #include "File.h"
 
 typedef std::vector<class Image *> tImages;
 
 class Image: public File {
 public:
+  Image() {
+    _parent = NULL;
+  }
 
 private:
 

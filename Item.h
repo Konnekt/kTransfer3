@@ -3,23 +3,47 @@
 
 #include "stdafx.h"
 #include "State.h"
+#include <windows.h>
 
 class Item {
+public: 
+  enum enState {
+    stNone,
+    stOffline,
+    stActive,
+    stPaused,
+    stCompleted,
+    stTransfered,
+    stStopped,
+    stStarted,
+    stError,
+    stAborted,
+    stIgnored
+  };
+
 public:
   Item() {
     _ref++;
-    _id = ((_ref << 16) | (GetTickCount() & 0xFFFF));
+    LARGE_INTEGER li;
+    QueryPerformanceCounter(&li);
+    _id = ((_ref << 16) | (li.LowPart & 0xFFFF));
   }
   virtual inline int getID() {
     return _id;
   }
-
-public:
-  State state;
+  virtual inline enState getState() {
+    return _state;
+  }
+  virtual inline void setState(enState state) {
+    _state = state;
+  }
 
 private:
   int _id;
   static int _ref;
+
+protected:
+  enState _state;
 };
 
 #endif /*__ITEM_H__*/

@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "Group.h"
 #include "State.h"
+#include "Items.h"
 
 typedef Stamina::SharedPtr<class Transfer> oTransfer;
 
@@ -26,7 +27,6 @@ public:
     _net = net;
     _type = type;
     _cnt = cnt;
- //   _directory = new Directory(NULL);
   }
   inline void setName(const Stamina::StringRef &name) {
     _transfer_name = name;
@@ -55,9 +55,15 @@ public:
   inline void setRootPath(const Stamina::StringRef &path) {
     _root_path = path;
   }
+  inline Item::enState getState() {
+    return items.getState();
+  }
+  inline void setState(Item::enState state) {
+    items.setState(state);
+  }
 
 public:
-  State state;
+  Items items;
 
 private:
   int _id;
