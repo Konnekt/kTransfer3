@@ -3,7 +3,7 @@
 
 class Group {
 public:
-  enum group{
+  enum enGroup{
     grNone,
     grReceiving,
     grSending,
@@ -15,19 +15,19 @@ public:
   Group() {
     _group = grNone;
   }
-  inline bool setGroup(group grp) {
+  inline bool setGroup(enGroup group) {
     if (_group != grNone) {
       return false;
     }
-    _group = grp;
+    _group = group;
     return true;
   }
-  inline group getGroup() {
+  inline enGroup getGroup() {
     return _group;
   }
 
 private:
-  group _group;
+  enGroup _group;
 };
 
 #endif /*__GROUP_H__*/

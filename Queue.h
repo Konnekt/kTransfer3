@@ -1,15 +1,12 @@
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
 
+#include "stdafx.h"
 #include <vector>
-
-using namespace std;
-
-#include "Transfer.h"
 
 class Queue {
 public:
-  typedef vector<oTransfer> tTransfers;
+  typedef std::vector<oTransfer> tTransfers;
 
 public:
   Queue() {};

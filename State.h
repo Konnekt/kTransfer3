@@ -3,7 +3,7 @@
 
 class State {
 public:
-  enum state {
+  enum enState {
     stNone,
     stOffline,
     stActive,
@@ -21,15 +21,15 @@ public:
   State() {
     _state = stNone;
   }
-  inline state getState() {
+  inline enState getState() {
     return _state;
   }
-  bool setState(state st) {
-    _state = st;
+  bool setState(enState state) {
+    _state = state;
   }
 
 protected:
-  state _state;
+  enState _state;
 };
 
 #endif /*__STATE_H__*/

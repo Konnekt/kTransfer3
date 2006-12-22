@@ -2,11 +2,11 @@
 #define __FILE_H__
 
 #include "stdafx.h"
-#include <windows.h>
-#include "State.h"
+#include <vector>
 
+typedef std::vector<class File *> tFiles;
 
-class File: public State {
+class File {
 public:
   inline bool isOpened() {}
   inline bool close() {}

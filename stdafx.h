@@ -4,7 +4,8 @@
 //
 
 #pragma once
-
+#ifndef __STDAFX_H__
+#define __STDAFX_H__
 // Modify the following defines if you have to target a platform prior to the ones specified below.
 // Refer to MSDN for the latest info on corresponding values for different platforms.
 #ifndef WINVER				// Allow use of features specific to Windows XP or later.
@@ -55,6 +56,7 @@
 #include "konnekt/kNotify.h"
 
 #include "Transfer.h"
+#include "Item.h"
 #include "Directory.h"
 #include "File.h"
 #include "Items.h"
@@ -63,10 +65,13 @@
 #include "Group.h"
 #include "State.h"
 
-using namespace boost;
-using namespace Konnekt;
-using namespace Stamina;
 
+
+//using namespace boost;
+//using namespace Konnekt;
+//using namespace Stamina;
+
+#endif /*__STDAFX_H__*/
 
 
 // TODO: reference additional headers your program requires here

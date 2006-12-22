@@ -2,19 +2,22 @@
 #define __DIRECTORY_H__
 
 #include "stdafx.h"
+#include "Item.h"
 #include "File.h"
-#include "Directory.h"
-#include "State.h"
 #include <vector>
 
-using namespace std;
+typedef std::vector<class Directory *> tDirectories; 
 
-class Directory: public State {
-public:
-  typedef vector<Directory *> tDirectories; 
-  typedef vector<File *> tFiles; 
+class Directory: public Item {
 
 public:
+  Directory(Directory* parent = NULL) {
+    _parent = parent;
+  }
+  
+  inline Directory* getParent() {
+    return _parent;
+  }
   inline bool setName(const Stamina::StringRef &name) {
     if (getDirectoryID(name) != -1) {
       return false;
@@ -29,7 +32,7 @@ public:
     if (getDirectoryID(name) != -1) {
       return false;
     }
-    Directory* directory = new Directory();
+    Directory* directory = new Directory(this);
     if (directory == NULL) {
       return false;
     }
@@ -38,7 +41,13 @@ public:
     return true;
   }
   inline Directory* getDirectory(int id) {
-    return _directories[id];
+    tDirectories::iterator it = _directories.begin();
+    for (;it != this->_directories.end(); it++) {
+      if ((*it)->getID() == id ) {
+        return (*it);
+      }
+    }
+    return NULL;
   }
   inline Directory* getDirectory(const Stamina::StringRef &name) {
     tDirectories::iterator it = _directories.begin();
@@ -53,21 +62,23 @@ public:
     tDirectories::iterator it = _directories.begin();
     for (;it != this->_directories.end(); it++) {
       if ((*it)->getName() == name ) {
-        return it - _directories.begin();
+        return (*it)->getID();
       }
     }
     return -1;
   }
   inline bool removeDirectory(int id) {
-    Directory *directory = _directories[id];
-    if (directory == NULL) {
-      return false;
+    tDirectories::iterator it = _directories.begin();
+    for (;it != this->_directories.end(); it++) {
+      if ((*it)->getID() == id ) {
+        delete (*it);
+        _directories.erase(it); 
+        return true;
+      }
     }
-    delete directory;
-    tDirectories::iterator it = _directories.begin() + id;
-    _directories.erase(it); 
-    return true;
+    return false;
   }
+  /*
   inline bool addFile(const Stamina::StringRef &name) {
     if (getFileID(name) != -1) {
       return false;
@@ -109,11 +120,12 @@ public:
       }
     }
     return -1;
-  }
+  }*/
   //TODO sprawdzenie jednej nazwy dla 1 pliku
 
 private:
   Stamina::String _name;
+  Directory* _parent;
 
 protected:
   tDirectories _directories;
