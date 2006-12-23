@@ -144,8 +144,6 @@ protected:
   Directory* _parent;
   tDirectories _directories;
   tFiles _files;
-
-
 };
 
 #endif /*__DIRECTORY_H__*/

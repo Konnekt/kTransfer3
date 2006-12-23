@@ -36,6 +36,8 @@
 #include <Stamina/ListWnd/ListWnd.h>
 #include <Stamina/ListWnd/ListView.h>
 #include <Stamina/ListWnd/Entry.h>
+#include <Stamina/Helpers.h>
+#include <Stamina/Exception.h>
 
 //#include <stdlib.h>
 //#include <winnls.h>
@@ -43,6 +45,9 @@
 //#include <string>
 //#include <math.h>
 #include <vector>
+#include <map>
+#include <list>
+#include <deque>
 
 #include <boost/signal.hpp>
 #include <boost/bind.hpp>
@@ -54,6 +59,8 @@
 #include "konnekt/plug.h"
 #include "konnekt/core_ctrl.h"
 #include "konnekt/kNotify.h"
+
+#include "PlugController.h"
 
 #include "Transfer.h"
 #include "Item.h"

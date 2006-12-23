@@ -13,10 +13,5 @@ public:
   Image() {
     _parent = NULL;
   }
-
-private:
-
-protected:
-
 };
 #endif /*__IMAGE_H__*/

@@ -27,6 +27,5 @@ public:
 protected:
   void* _parent;
   Stamina::String _name;
-
 };
 #endif /*__FILE_H__*/
