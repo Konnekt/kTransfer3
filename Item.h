@@ -28,7 +28,7 @@ public:
     QueryPerformanceCounter(&li);
     _id = ((_ref << 16) | (li.LowPart & 0xFFFF));
   }
-  virtual inline int getID() {
+  virtual inline UINT getID() {
     return _id;
   }
   virtual inline enState getState() {
@@ -39,8 +39,8 @@ public:
   }
 
 private:
-  int _id;
-  static int _ref;
+  UINT _id;
+  static UINT _ref;
 
 protected:
   enState _state;

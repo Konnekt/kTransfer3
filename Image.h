@@ -3,7 +3,6 @@
 
 #include "stdafx.h"
 #include <vector>
-
 #include "File.h"
 
 typedef std::vector<class Image *> tImages;

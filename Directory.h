@@ -17,9 +17,7 @@ public:
     return _parent;
   }
   virtual inline bool setName(const Stamina::StringRef &name) {
-    if (getDirectoryID(name) != 0) {
-      return false;
-    }
+    if (getDirectoryID(name)) return false;
     _name = name;
     return true;
   }
@@ -37,13 +35,8 @@ public:
   }
 
   virtual inline int addDirectory(const Stamina::StringRef &name) {
-    if (getDirectoryID(name) != 0) {
-      return 0;
-    }
+    if (getDirectoryID(name)) return 0;
     Directory* directory = new Directory(this);
-    if (directory == NULL) {
-      return 0;
-    }
     directory->setName(name);
     _directories.push_back(directory);
     return directory->getID();
@@ -58,7 +51,7 @@ public:
     }
     return NULL;
   }
-  inline bool removeDirectory(int id) {
+  inline bool removeDirectory(UINT id) {
     tDirectories::iterator it = _directories.begin();
     for (;it != this->_directories.end(); it++) {
       if ((*it)->getID() == id ) {
@@ -70,19 +63,14 @@ public:
     return false;
   }
   
-  inline int addFile(const Stamina::StringRef &name) {
-    if (getFileID(name) != 0) {
-      return 0;
-    }
+  inline UINT addFile(const Stamina::StringRef &name) {
+    if (getFileID(name)) return 0;
     File* file = new File(this);
-    if (file == NULL) {
-      return 0;
-    }
     file->setName(name);
     _files.push_back(file);
     return file->getID();
   }
-  inline bool removeFile(int id) {
+  inline bool removeFile(UINT id) {
     tFiles::iterator it = _files.begin();
     for (;it != this->_files.end(); it++) {
       if ((*it)->getID() == id ) {
@@ -94,7 +82,7 @@ public:
     return false;
   }
 
-  inline File* getFile(int id) {
+  inline File* getFile(UINT id) {
     tFiles::iterator it = _files.begin();
     for (;it != this->_files.end(); it++) {
       if ((*it)->getID() == id ) {
@@ -112,7 +100,7 @@ public:
     }
     return NULL;
   }
-  inline int getFileID(const Stamina::StringRef &name) {
+  inline UINT getFileID(const Stamina::StringRef &name) {
     tFiles::iterator it = _files.begin();
     for (;it != this->_files.end(); it++) {
       if ((*it)->getName() == name ) {

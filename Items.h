@@ -8,19 +8,14 @@
 
 class Items: public Directory {
 public:
-  inline int addImage(const Stamina::StringRef &name) {
-    if (getFileID(name) != 0) {
-      return 0;
-    }
+  inline UINT addImage(const Stamina::StringRef &name) {
+    if (getFileID(name)) return 0;
     Image* image = new Image();
-    if (image == NULL) {
-      return 0;
-    }
     image->setName(name);
     _images.push_back(image);
     return image->getID();
   }
-  inline bool removeImage(int id) {
+  inline bool removeImage(UINT id) {
     tImages::iterator it = _images.begin();
     for (;it != this->_images.end(); it++) {
       if ((*it)->getID() == id ) {
@@ -31,7 +26,7 @@ public:
     }
     return false;
   }
-  inline Image* getImage(int id) {
+  inline Image* getImage(UINT id) {
     tImages::iterator it = _images.begin();
     for (;it != this->_images.end(); it++) {
       if ((*it)->getID() == id ) {
@@ -49,7 +44,7 @@ public:
     }
     return NULL;
   }
-  inline int getImageID(const Stamina::StringRef &name) {
+  inline UINT getImageID(const Stamina::StringRef &name) {
     tImages::iterator it = _images.begin();
     for (;it != _images.end(); it++) {
       if ((*it)->getName() == name ) {
