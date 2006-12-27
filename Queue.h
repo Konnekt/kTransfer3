@@ -1,7 +1,8 @@
+#pragma once
+
 #ifndef __QUEUE_H__
 #define __QUEUE_H__
 
-#include "stdafx.h"
 #include <vector>
 
 class Queue {
@@ -13,24 +14,23 @@ public:
 
   void refreshTransfer(int id) {}
 
-  inline UINT Queue::insertTransfer(const oTransfer &transfer) {
+  inline void Queue::insertTransfer(const oTransfer &transfer) {
     Stamina::LockerCS locker(_locker);
 
     _queue.push_back(transfer);
-    return transfer->getID();
   }
 
-  inline UINT Queue::removeTransfer(UINT id) {
+  inline bool Queue::removeTransfer(UINT id) {
     Stamina::LockerCS locker(_locker);
 
     tTransfers::iterator it = _queue.begin();
     for (;it != _queue.end(); it++) {
-      if ((*it)->getID() == id ) {
+      if ((*it)->getID() == id) {
         _queue.erase(it);       
-        return id;
+        return true;
       }
     }
-    return 0;
+    return false;
   }
 
   inline oTransfer Queue::getTransfer(UINT id) {
@@ -38,7 +38,7 @@ public:
 
     tTransfers::iterator it = _queue.begin();
     for (;it != _queue.end(); it++) {
-      if ((*it)->getID() == id ) {
+      if ((*it)->getID() == id) {
         return (*it);
       }
     }
@@ -50,15 +50,13 @@ public:
 
     tTransfers::iterator it = _queue.begin();
     for (;it != _queue.end(); it++) {
-      if ((*it)->getID() == id ) {
-        return true;
-      }
+      if ((*it)->getID() == id) return true;
     }
     return false;
   }
 
 protected:
-  Stamina::CriticalSection_w32 _locker;
+  Stamina::CriticalSection _locker;
   tTransfers _queue;
 };
 

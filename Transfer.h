@@ -1,21 +1,20 @@
+#pragma once
+
 #ifndef __TRANSFER_H__
 #define __TRANSFER_H__
 
-#include "stdafx.h"
 #include "Group.h"
-#include "State.h"
 #include "Item.h"
-
-typedef Stamina::SharedPtr<class Transfer> oTransfer;
 
 class Transfer: public Group, public Stamina::SharedObject<Stamina::iSharedObject> {
 public:
   enum enType {
-    tNone,
-    tOneFile,
-    tMultiFile,
-    tMultiFileFolders,
-    tOther
+    typeNone,
+    typeFile,
+    typeFiles,
+    typeFilesFolders,
+    typeImage,
+    typeOther
   };
 
 public:
@@ -29,8 +28,8 @@ public:
     QueryPerformanceCounter(&li);
     _id = ((_ref << 16) | (li.LowPart & 0xFFFF));
 
-    _net = net;
     _type = type;
+    _net = net;
     _cnt = cnt;
   }
 
@@ -41,13 +40,12 @@ public:
   inline void setName(const Stamina::StringRef &name) {
     Stamina::LockerCS locker(_locker);
 
-    _transfer_name = name;
+    _name = name;
   }
-
   inline Stamina::String getName() {
     Stamina::LockerCS locker(_locker);
 
-    return _transfer_name;
+    return _name;
   }
 
   inline __int64 getSpeed() {
@@ -55,11 +53,10 @@ public:
 
     return _last_speed; 
   }
-
-  inline void setSpeed(__int64 Bps) {
+  inline void setSpeed(__int64 bps) {
     Stamina::LockerCS locker(_locker);
 
-    _last_speed = Bps;
+    _last_speed = bps;
   }
 
   inline Stamina::Time64 getBeginTime() {
@@ -67,31 +64,31 @@ public:
 
     return _begin_time;
   }
-
   inline void setBeginTime(const Stamina::Time64 &time) {
     Stamina::LockerCS locker(_locker);
 
     _begin_time = time;
   }
 
-  inline Stamina::String getRootPath() {
+  inline Stamina::String getSavePath() {
     Stamina::LockerCS locker(_locker);
 
-    return _root_path;
+    return _save_path;
+  }
+  inline void setSavePath(const Stamina::StringRef &path) {
+    Stamina::LockerCS locker(_locker);
+
+    _save_path = path;
   }
 
-  inline void setRootPath(const Stamina::StringRef &path) {
+  inline bool addItem(Item* item) {
     Stamina::LockerCS locker(_locker);
 
-    _root_path = path;
-  }
-
-  inline UINT addItem(Item* item) {
-    Stamina::LockerCS locker(_locker);
-
-    if (haveItem(item->getName(), item->getType())) return 0;
+    if (haveItem(item->getName(), item->getType())) {
+      return false;
+    }
     _items.push_back(item);
-    return item->getID();
+    return true;
   }
 
   inline Item* getItem(UINT id) {
@@ -99,9 +96,7 @@ public:
 
     tItem::iterator it = _items.begin();
     for (;it != this->_items.end(); it++) {
-      if ((*it)->getID() == id) {
-        return (*it);
-      }
+      if ((*it)->getID() == id) return (*it);
     }
     return NULL;
   }
@@ -154,35 +149,37 @@ public:
     Stamina::LockerCS locker(_locker);
 
     Item *item = getItem(id);
-    if (haveItem(name, item->getType())) return 0;
+    if (haveItem(name, item->getType())) {
+      return false;
+    }
     tItem::iterator it = _items.begin();
       for (;it != this->_items.end(); it++) {
-        if (((*it)->getID() == id)) {
-          return (*it)->setName(name);
-        }
+        if (((*it)->getID() == id)) return (*it)->setName(name);
       }
-    return 0;
+    return false;
   }
   
 public:
-  tItem _items;
+  tItems _items;
 
 private:
-  UINT _id;
   static UINT _ref;
+  UINT _id;
+
+protected:
+  Stamina::CriticalSection _locker;
+  __int64 _last_speed;
+  enType _type;
 
   int _cnt;
   int _net;
-  enType _type;
 
   Stamina::Time64 _begin_time;
-  Stamina::String _transfer_name;
-  __int64 _last_speed;
-
-  Stamina::String _root_path;
-
-  Stamina::CriticalSection_w32 _locker;
+  Stamina::String _save_path;
+  Stamina::String _name;
 };
+
+typedef Stamina::SharedPtr<Transfer> oTransfer;
 
 UINT Transfer::_ref = 0;
 

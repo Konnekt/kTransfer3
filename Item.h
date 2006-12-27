@@ -1,37 +1,35 @@
+#pragma once
+
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
-#include "stdafx.h"
-#include "State.h"
 #include <windows.h>
 #include <vector>
 
-typedef std::vector<class Item*> tItem;
+class Item: public iObject {
+public:
+  STAMINA_OBJECT_CLASS_VERSION(Item, iObject, Version(0,1,0,0));
 
-class Item {
 public: 
   enum enState {
-    stNone,
-    stOffline,
+    stUnknown,
+    stWaitingForConn,
+    stQueued,
+    stFinished,
     stActive,
-    stPaused,
-    stCompleted,
-    stTransfered,
-    stStopped,
-    stStarted,
     stError,
     stAborted,
     stIgnored
   };
   enum enType {
-    tFile = 1,
-    tDirectory,
-    tImage,
-    tOther
+    typeFile = 1,
+    typeDirectory,
+    typeImage,
+    typeOther
   };
 
 public:
-  Item() {
+  Item(const Stamina::StringRef &name = "") {
     Stamina::LockerCS locker(_locker);
 
     // generacja losowego id
@@ -39,11 +37,10 @@ public:
     LARGE_INTEGER li;
     QueryPerformanceCounter(&li);
     // ref z li.LowPart powinny stworzyæ naprawdê unikalny id
-    _id = ((_ref << 16) | (li.LowPart & 0xFFFF));
+    _id = (_ref << 16) | (li.LowPart & 0xFFFF);
 
     // od tej chwili domysln¹ nazw¹ itemu jest jego id, zapisany numerycznie
-    char buff[12];
-    _name = itoa(_id, buff, 10);
+     _name = !name.length() ? inttostr(_id) : name;
   }
   virtual inline UINT getID() {
     return _id;
@@ -65,11 +62,10 @@ public:
     return _type;
   }
 
-  virtual inline bool setName(const Stamina::StringRef &name) {
+  virtual inline void setName(const Stamina::StringRef &name) {
     Stamina::LockerCS locker(_locker);
 
     _name = name;
-    return true;
   }
 
   virtual inline Stamina::String getName() {
@@ -79,16 +75,18 @@ public:
   }
 
 private:
-  UINT _id;
   static UINT _ref;
+  UINT _id;
 
 protected:
+  Stamina::String _name;
   enState _state;
   enType _type;
-  Stamina::String _name;
 
-  Stamina::CriticalSection_w32 _locker;
+  Stamina::CriticalSection _locker;
 };
+
+typedef std::vector<Item*> tItems;
 
 UINT Item::_ref = 0;
 

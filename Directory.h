@@ -1,21 +1,28 @@
+#pragma once
+
 #ifndef __DIRECTORY_H__
 #define __DIRECTORY_H__
 
-#include "stdafx.h"
 #include "Item.h"
 #include "File.h"
 #include <vector>
 
-class Directory;
-typedef std::vector<Directory *> tDirectories; 
-
 class Directory: public Item {
 public:
-  Directory(Directory* parent = NULL) {
-    _type = enType::tDirectory;
+  Directory(const Stamina::StringRef &name = "", Directory* parent = NULL): Item(name) {
+    _type = enType::typeDirectory;
     _parent = parent;
   }
-
+  ~Directory() {
+    tDirectories::iterator it = _directories.begin();
+    for (;it != this->_directories.end(); it++) {
+      delete *it;
+    }
+    tFiles::iterator it = _files.begin();
+    for (;it != _files.end(); it++) {
+      delete *it;
+    }
+  }
   inline Directory* getParent() {
     Stamina::LockerCS locker(_locker);
 
@@ -28,7 +35,7 @@ public:
     if (haveDirectory(name)) return false;
     tDirectories::iterator it = _directories.begin();
     for (;it != _directories.end(); it++) {
-      if ((*it)->getID() == id ) {
+      if ((*it)->getID() == id) {
         return (*it)->setName(name);
       }
     }
@@ -40,7 +47,7 @@ public:
 
     tDirectories::iterator it = _directories.begin();
     for (;it != _directories.end(); it++) {
-      if ((*it)->getName() == name ) {
+      if ((*it)->getName() == name) {
         return (*it)->getID();
       }
     }
@@ -56,8 +63,7 @@ public:
   virtual inline int addDirectory(const Stamina::StringRef &name) {
     Stamina::LockerCS locker(_locker);
 
-    Directory* directory = new Directory(this);
-    directory->setName(name);
+    Directory* directory = new Directory(name, this);
     _directories.push_back(directory);
     return directory->getID();
   }
@@ -67,7 +73,7 @@ public:
 
     tDirectories::iterator it = _directories.begin();
     for (;it != _directories.end(); it++) {
-      if ((*it)->getName() == name ) {
+      if ((*it)->getName() == name) {
         return (*it);
       }
     }
@@ -79,7 +85,7 @@ public:
 
     tDirectories::iterator it = _directories.begin();
     for (;it != _directories.end(); it++) {
-      if ((*it)->getID() == id ) {
+      if ((*it)->getID() == id) {
         delete (*it);
         _directories.erase(it); 
         return true;
@@ -103,8 +109,7 @@ public:
   virtual inline UINT addFile(const Stamina::StringRef &name) {
     Stamina::LockerCS locker(_locker);
 
-    File* file = new File(this);
-    file->setName(name);
+    File* file = new File(name, this)
     _files.push_back(file);
     return file->getID();
   }
@@ -128,7 +133,7 @@ public:
 
     tFiles::iterator it = _files.begin();
     for (;it != _files.end(); it++) {
-      if ((*it)->getID() == id ) {
+      if ((*it)->getID() == id) {
         return (*it);
       }
     }
@@ -140,7 +145,7 @@ public:
 
     tFiles::iterator it = _files.begin();
     for (;it != _files.end(); it++) {
-      if ((*it)->getName() == name ) {
+      if ((*it)->getName() == name) {
         return (*it);
       }
     }
@@ -152,7 +157,7 @@ public:
 
     tFiles::iterator it = _files.begin();
     for (;it != _files.end(); it++) {
-      if ((*it)->getName() == name ) {
+      if ((*it)->getName() == name) {
         return (*it)->getID();
       }
     }
@@ -211,9 +216,9 @@ public:
   virtual inline void setState(enState state) {
     Stamina::LockerCS locker(_locker);
 
-    _state = state;
-    setFilesState(state);
     setDirectoriesState(state);
+    setFilesState(state);
+    Item::setState(state);
   }
 
 protected:
@@ -221,5 +226,7 @@ protected:
   tDirectories _directories;
   tFiles _files;
 };
+
+typedef std::vector<Directory*> tDirectories;
 
 #endif /*__DIRECTORY_H__*/

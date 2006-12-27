@@ -1,18 +1,16 @@
+#pragma once
+
 #ifndef __FILE_H__
 #define __FILE_H__
 
-#include "stdafx.h"
 #include "Item.h"
 #include "Directory.h"
 #include <vector>
 
-class File;
-typedef std::vector<File *> tFiles;
-
 class File: public Item {
 public:
-  File(void* parent = NULL) {
-    _type = enType::tFile;
+  File(const Stamina::StringRef &name = "", Directory* parent = NULL): Item(name) {
+    _type = enType::typeFile;
     _parent = parent;
   }
 
@@ -22,6 +20,9 @@ public:
   virtual inline bool getData(DWORD offset, void *buff, DWORD size) {}
 
 protected:
-  void* _parent;
+  Directory* _parent;
 };
+
+typedef std::vector<File*> tFiles;
+
 #endif /*__FILE_H__*/
