@@ -7,14 +7,16 @@
 #include "File.h"
 #include "Item.h"
 
-class Image: public File {
-public:
-  Image() {
-    _type = enType::typeImage;
-    _parent = NULL;
-  }
-};
+namespace kTransfer3 {
+  class Image: public File {
+  public:
+    Image() {
+      _type = enType::typeImage;
+      _parent = NULL;
+    }
+  };
 
-typedef std::vector<Image*> tImages;
+  typedef std::vector<Image*> tImages;
+};
 
 #endif /*__IMAGE_H__*/

@@ -62,6 +62,8 @@
 
 #include "PlugController.h"
 
+#include "kTransfer3.h"
+
 #include "Transfer.h"
 #include "Item.h"
 #include "Directory.h"
@@ -70,7 +72,6 @@
 #include "Option.h"
 #include "Queue.h"
 #include "Group.h"
-#include "State.h"
 
 using namespace boost;
 using namespace Konnekt;
