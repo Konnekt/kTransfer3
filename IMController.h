@@ -99,7 +99,7 @@ namespace Konnekt {
   public:
     inline IMController() { 
       // locking
-//      LockerCS lock(CS());
+      LockerCS lock(CS());
 
       // setting/unsetting Ctrl global pointer
       registerObserver(IM_PLUG_INIT, bind(resolve_cast0(&IMController::_plugInit), this));

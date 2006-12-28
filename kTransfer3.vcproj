@@ -218,6 +218,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\kTransfer3_shared.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>

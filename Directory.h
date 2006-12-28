@@ -109,6 +109,7 @@ namespace kTransfer3 {
     virtual inline Directory* getDirectoryT(UINT id_t) {
       Stamina::LockerCS locker(_locker);
 
+      if (id_t >= getDirectoryCount()) return NULL;
       return _directories[id_t];
     }
 
@@ -179,6 +180,7 @@ namespace kTransfer3 {
     virtual inline File* getFileT(UINT id_t) {
       Stamina::LockerCS locker(_locker);
 
+      if(id_t >= getFileCount()) return NULL;
       return _files[id_t];
     }
 

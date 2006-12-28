@@ -10,7 +10,7 @@ namespace kTransfer3 {
   class Transfer: public Group, public Stamina::SharedObject<Stamina::iSharedObject> {
   public:
     enum enType {
-      typeNone,
+      typeNone = 0,
       typeFile,
       typeFiles,
       typeFilesFolders,
@@ -143,6 +143,7 @@ namespace kTransfer3 {
     virtual inline Item* getItemT(UINT id_t) {
       Stamina::LockerCS locker(_locker);
 
+      if (id_t >= getItemsCount()) return NULL;
       return _items[id_t];
     }
 

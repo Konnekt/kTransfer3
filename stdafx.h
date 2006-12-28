@@ -29,17 +29,18 @@
 
 #include <windows.h>
 
+#include <stdlib.h>
 #include <Stamina/Object.h>
 #include <Stamina/Time64.h>
 #include <Stamina/Object.h>
 #include <Stamina/ObjectImpl.h>
-#include <Stamina/ListWnd/ListWnd.h>
-#include <Stamina/ListWnd/ListView.h>
-#include <Stamina/ListWnd/Entry.h>
+//#include <Stamina/ListWnd/ListWnd.h>
+//#include <Stamina/ListWnd/ListView.h>
+//#include <Stamina/ListWnd/Entry.h>
 #include <Stamina/Helpers.h>
 #include <Stamina/Exception.h>
 
-//#include <stdlib.h>
+
 //#include <winnls.h>
 //#include <process.h>
 //#include <string>
@@ -53,12 +54,12 @@
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 
-#include "konnekt/plug_export.h"
-#include "konnekt/ui.h"
-#include "konnekt/plug_func.h"
-#include "konnekt/plug.h"
-#include "konnekt/core_ctrl.h"
-#include "konnekt/kNotify.h"
+#include <konnekt/plug_export.h>
+#include <konnekt/ui.h>
+#include <konnekt/plug_func.h>
+#include <konnekt/plug.h>
+#include <konnekt/core_ctrl.h>
+#include <konnekt/kNotify.h>
 
 #include "PlugController.h"
 
@@ -73,9 +74,13 @@
 #include "Queue.h"
 #include "Group.h"
 
+#include "Helpers.h"
+#include "kTransfer3_shared.h"
+
 using namespace boost;
 using namespace Konnekt;
 using namespace Stamina;
+using namespace Helpers;
 
 #endif /*__STDAFX_H__*/
 

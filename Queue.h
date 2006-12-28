@@ -13,7 +13,7 @@ namespace kTransfer3 {
   public:
     Queue() {}
 
-    void refreshTransfer(int id) {}
+    void refreshTransfer(UINT id) {}
 
     inline void insertTransfer(const oTransfer &transfer) {
       Stamina::LockerCS locker(_locker);
@@ -46,6 +46,13 @@ namespace kTransfer3 {
       return NULL;
     }
 
+    inline oTransfer getTransferT(UINT id_t) {
+      Stamina::LockerCS locker(_locker);
+
+      if (id_t >= countTransfer()) return NULL;
+      return _queue[id_t];
+    }
+
     inline bool haveTransfer(UINT id) {
       Stamina::LockerCS locker(_locker);
 
@@ -54,6 +61,10 @@ namespace kTransfer3 {
         if ((*it)->getID() == id) return true;
       }
       return false;
+    }
+
+    inline UINT countTransfer() {
+      return _queue.size();
     }
 
   protected:
