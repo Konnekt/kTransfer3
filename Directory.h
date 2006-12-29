@@ -12,9 +12,8 @@ namespace kTransfer3 {
 
   class Directory: public Item {
   public:
-    Directory(const Stamina::StringRef &name = "", Directory* parent = NULL): Item(name) {
+    Directory(const Stamina::StringRef &name = "", Directory* parent = NULL): Item(name, parent) {
       _type = enType::typeDirectory;
-      _parent = parent;
     }
 
     ~Directory() {
@@ -26,12 +25,6 @@ namespace kTransfer3 {
       for (;itf != _files.end(); itf++) {
         delete *itf;
       }
-    }
-
-    inline Directory* getParent() {
-      Stamina::LockerCS locker(_locker);
-
-      return _parent;
     }
 
     inline bool setDirectoryName(UINT id, const Stamina::StringRef &name) {
@@ -231,7 +224,6 @@ namespace kTransfer3 {
     }
 
   protected:
-    Directory* _parent;
     tDirectories _directories;
     tFiles _files;
   };

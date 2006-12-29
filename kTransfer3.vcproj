@@ -198,6 +198,10 @@
 			<Filter
 				Name="Transfer"
 				>
+				<File
+					RelativePath=".\Item.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -205,6 +209,10 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\CfgController.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Controller.h"
 				>
@@ -214,11 +222,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IMController.h"
+				>
+			</File>
+			<File
 				RelativePath=".\kTransfer3.h"
 				>
 			</File>
 			<File
 				RelativePath=".\kTransfer3_shared.h"
+				>
+			</File>
+			<File
+				RelativePath=".\resource.h"
 				>
 			</File>
 			<File
@@ -260,6 +276,10 @@
 					RelativePath=".\Transfer.h"
 					>
 				</File>
+				<File
+					RelativePath=".\Transfer_defs.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -267,6 +287,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\resource.rc"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

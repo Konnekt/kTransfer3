@@ -64,9 +64,8 @@
 #include "PlugController.h"
 
 #include "kTransfer3.h"
-
+#include "Transfer_defs.h"
 #include "Transfer.h"
-#include "Item.h"
 #include "Directory.h"
 #include "File.h"
 
@@ -76,6 +75,7 @@
 
 #include "Helpers.h"
 #include "kTransfer3_shared.h"
+#include "resource.h"
 
 using namespace boost;
 using namespace Konnekt;

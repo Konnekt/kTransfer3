@@ -3,8 +3,8 @@
 #ifndef __TRANSFER_H__
 #define __TRANSFER_H__
 
-#include "Group.h"
 #include "Item.h"
+#include "Group.h"
 
 namespace kTransfer3 {
   class Transfer: public Group, public Stamina::SharedObject<Stamina::iSharedObject> {
@@ -71,7 +71,7 @@ namespace kTransfer3 {
       _begin_time = time;
     }
 
-    inline Stamina::String getSavePath() {
+     virtual inline Stamina::String getSavePath() {
       Stamina::LockerCS locker(_locker);
 
       return _save_path;

@@ -3,11 +3,13 @@
 #ifndef __ITEM_H__
 #define __ITEM_H__
 
-#include "stdafx.h"
 #include <windows.h>
+#include "Transfer.h"
 #include <vector>
 
 namespace kTransfer3 {
+  typedef std::vector<Item*> tItems;
+
   class Item: public iObject {
   public:
     STAMINA_OBJECT_CLASS_VERSION(Item, iObject, Version(0,1,0,0));
@@ -31,7 +33,7 @@ namespace kTransfer3 {
     };
 
   public:
-    Item(const Stamina::StringRef &name = "") {
+    Item(const Stamina::StringRef &name = "", Item* parent = NULL) {
       Stamina::LockerCS locker(_locker);
 
       // generacja losowego id
@@ -43,7 +45,10 @@ namespace kTransfer3 {
 
       // od tej chwili domysln¹ nazw¹ itemu jest jego id, zapisany numerycznie
        _name = !name.length() ? inttostr(_id) : name;
+
+       _parent = parent;
     }
+
     virtual inline UINT getID() {
       return _id;
     }
@@ -76,6 +81,12 @@ namespace kTransfer3 {
       return _name;
     }
 
+    virtual inline Item* getParent() {
+      return _parent;
+    }
+
+    virtual Stamina::String getPath();
+
   private:
     static UINT _ref;
     UINT _id;
@@ -85,12 +96,14 @@ namespace kTransfer3 {
     enState _state;
     enType _type;
 
+    Item* _parent;
+
     Stamina::CriticalSection _locker;
   };
 
-  typedef std::vector<Item*> tItems;
-
   UINT Item::_ref = 0;
 };
+
+
 
 #endif /*__ITEM_H__*/
