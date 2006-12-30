@@ -17,7 +17,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="c:\program files\konnekt\plugins"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			ATLMinimizesCRunTimeLibraryUsage="true"
@@ -66,6 +66,7 @@
 				AdditionalOptions="/FORCE:MULTIPLE"
 				AdditionalDependencies="smartwind.lib stamina_d.lib listwnd_d.lib Stamina_UI_d.lib comctl32.lib msimg32.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(ProjectDir)Lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -143,6 +144,7 @@
 				AdditionalDependencies="comctl32.lib msimg32.lib"
 				OutputFile="c:\program files\konnekt\plugins\kTransfer3.dll"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(ProjectDir)Lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -184,22 +186,22 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\Controller.cpp"
+				RelativePath="..\Source\Controller.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\konnekt_defs.cpp"
+				RelativePath="..\Source\konnekt_defs.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\kTransfer3.cpp"
+				RelativePath="..\Source\kTransfer3.cpp"
 				>
 			</File>
 			<Filter
 				Name="Transfer"
 				>
 				<File
-					RelativePath=".\Item.cpp"
+					RelativePath="..\Source\Item.cpp"
 					>
 				</File>
 			</Filter>
@@ -210,27 +212,27 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\CfgController.h"
+				RelativePath="..\Source\CfgController.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Controller.h"
+				RelativePath="..\Source\Controller.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Helpers.h"
+				RelativePath="..\Source\Helpers.h"
 				>
 			</File>
 			<File
-				RelativePath=".\IMController.h"
+				RelativePath="..\Source\IMController.h"
 				>
 			</File>
 			<File
-				RelativePath=".\kTransfer3.h"
+				RelativePath="..\Source\kTransfer3.h"
 				>
 			</File>
 			<File
-				RelativePath=".\kTransfer3_shared.h"
+				RelativePath="..\Source\kTransfer3_shared.h"
 				>
 			</File>
 			<File
@@ -238,46 +240,46 @@
 				>
 			</File>
 			<File
-				RelativePath=".\stdafx.h"
+				RelativePath="..\Source\stdafx.h"
 				>
 			</File>
 			<Filter
 				Name="Transfer"
 				>
 				<File
-					RelativePath=".\Directory.h"
+					RelativePath="..\Source\Directory.h"
 					>
 				</File>
 				<File
-					RelativePath=".\File.h"
+					RelativePath="..\Source\File.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Group.h"
+					RelativePath="..\Source\Group.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Image.h"
+					RelativePath="..\Source\Image.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Item.h"
+					RelativePath="..\Source\Item.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Option.h"
+					RelativePath="..\Source\Option.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Queue.h"
+					RelativePath="..\Source\Queue.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Transfer.h"
+					RelativePath="..\Source\Transfer.h"
 					>
 				</File>
 				<File
-					RelativePath=".\Transfer_defs.h"
+					RelativePath="..\Source\Transfer_defs.h"
 					>
 				</File>
 			</Filter>
