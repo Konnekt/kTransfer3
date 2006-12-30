@@ -44,14 +44,15 @@ BEGIN
     BEGIN
         BLOCK "041504b0"
         BEGIN
-            VALUE "CompanyName", "Ursus6"
+            VALUE "CompanyName", "Konnekt Team"
             VALUE "FileDescription", "UI dla transferów"
             VALUE "FileVersion", "3, 0, 0, 0"
-            VALUE "InternalName", "kAQQ2"
-            VALUE "LegalCopyright", "Copyright © 2006-2007 ursus6"
+            VALUE "InternalName", "kTransfer3"
+            VALUE "LegalCopyright", "Copyright © 2006-2007 Konnekt Team"
             VALUE "OriginalFilename", "kTransfer3.dll"
             VALUE "ProductName", "kTransfer3"
             VALUE "ProductVersion", "3, 0, 0, 0"
+            VALUE "URL", "http://www.konnekt.info/"
         END
     END
     BLOCK "VarFileInfo"
@@ -60,7 +61,6 @@ BEGIN
     END
 END
 
-IDI_LOGO  ICON  "logo.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -69,8 +69,7 @@ IDI_LOGO  ICON  "logo.ico"
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-
-
+IDI_LOGO  ICON  "..\\Res\\logo.ico"
 #endif    // Polish resources
 /////////////////////////////////////////////////////////////////////////////
 
