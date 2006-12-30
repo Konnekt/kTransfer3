@@ -75,7 +75,7 @@
 
 #include "Helpers.h"
 #include "kTransfer3_shared.h"
-#include "resource.h"
+#include "..\Project\resource.h"
 
 using namespace boost;
 using namespace Konnekt;

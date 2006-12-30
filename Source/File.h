@@ -22,15 +22,16 @@ namespace kTransfer3 {
       return _temp_name;
     }
 
-    virtual bool openFile(bool overwritte) {
+    virtual bool open(bool overwritte) {
       if (isOpened()) return false;
       HANDLE hFile = CreateFile(getPath().a_str(), GENERIC_WRITE, 0, NULL, (overwritte) ? TRUNCATE_EXISTING : OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
       if (hFile == INVALID_HANDLE_VALUE) {
-        if (overwritte) return openFile(false);
+        if (overwritte) return open(false);
         else return false;
       }
       _file = hFile;
-      _opened = true;      
+      _opened = true;  
+      return true;
     }
 
     virtual Stamina::String getTempPath() {
@@ -40,16 +41,17 @@ namespace kTransfer3 {
       return path;
     }
 
-    virtual bool openTempFile(bool overwritte) {
+    virtual bool openTemp(bool overwritte) {
       if (isOpened()) return false;
 
       HANDLE hFile = CreateFile(getTempPath().a_str(), GENERIC_WRITE, 0, NULL, (overwritte) ? TRUNCATE_EXISTING : OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
       if (hFile == INVALID_HANDLE_VALUE) {
-        if (overwritte) return openFile(false);
+        if (overwritte) return openTemp(false);
         else return false;
       }
       _file = hFile;
-      _opened = true;       
+      _opened = true;
+      return true;
     }
 
     virtual inline DWORD getAttrib(const Stamina::String &path) {
@@ -103,7 +105,8 @@ namespace kTransfer3 {
 
     virtual bool setSeek(DWORD offset) {
 	    DWORD dwptr =  SetFilePointer(_file, offset, NULL, FILE_BEGIN);
-	    if (dwptr == 0xFFFFFF) return 0;
+	    if (dwptr == 0xFFFFFF) return false;
+      return true;
     }
 
   private:

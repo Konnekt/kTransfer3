@@ -53,9 +53,14 @@ namespace kTransfer3 {
       tr->addItem(new Directory("dir1",(Directory*)tr));
       ((Directory*)tr->getItemT(0))->addFile("file.xxx");
       tr->setSavePath("c:\\root");
+      ((Directory*)tr->getItemT(0))->create();
       Stamina::String txt = ((Directory*)tr->getItemT(0))->getFileT(0)->getPath();
+      ((Directory*)tr->getItemT(0))->getFileT(0)->open(false);
+      char buff[] ="Jakiœ tekst";
+      ((Directory*)tr->getItemT(0))->getFileT(0)->write(0, buff, sizeof(buff)-1);
+      ((Directory*)tr->getItemT(0))->getFileT(0)->close();
       */
-      
+     
     }
 
   public:

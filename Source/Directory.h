@@ -27,7 +27,16 @@ namespace kTransfer3 {
       }
     }
 
-    inline bool setDirectoryName(UINT id, const Stamina::StringRef &name) {
+    virtual void create() {
+      Stamina::String path = getPath() + "\\";
+      unsigned int count = path.find("\\"); // trzeba pomin¹c tworzenie glownego katalogu np. C:/
+      while (path.size() > count + 1) {
+        count+= path.substr(count + 1).find("\\") + 1;
+        CreateDirectory(path.substr(0, count + 1).a_str(), NULL);
+      }
+    }
+
+    virtual inline bool setDirectoryName(UINT id, const Stamina::StringRef &name) {
       Stamina::LockerCS locker(_locker);
 
       if (haveDirectory(name)) return false;
