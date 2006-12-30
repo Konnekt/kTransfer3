@@ -64,9 +64,9 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/FORCE:MULTIPLE"
-				AdditionalDependencies="stamina_d.lib comctl32.lib msimg32.lib"
+				AdditionalDependencies="stamina_d.lib konnekt_api_d.lib comctl32.lib msimg32.lib"
 				LinkIncremental="1"
-				AdditionalLibraryDirectories="$(ProjectDir)\Lib"
+				AdditionalLibraryDirectories="$(ProjectDir)Lib"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -95,6 +95,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 			/>
+		/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -187,10 +188,6 @@
 			>
 			<File
 				RelativePath="..\Source\Controller.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\Source\konnekt_defs.cpp"
 				>
 			</File>
 			<File

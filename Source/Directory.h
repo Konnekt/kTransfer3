@@ -28,12 +28,18 @@ namespace kTransfer3 {
     }
 
     virtual void create() {
+      if (isExists()) return ;
       Stamina::String path = getPath() + "\\";
       unsigned int count = path.find("\\"); // trzeba pomin¹c tworzenie glownego katalogu np. C:/
       while (path.size() > count + 1) {
         count+= path.substr(count + 1).find("\\") + 1;
         CreateDirectory(path.substr(0, count + 1).a_str(), NULL);
       }
+    }
+
+    virtual inline bool isExists() {
+      DWORD code = getAttrib(getPath());
+      return (code != -1) && ((FILE_ATTRIBUTE_DIRECTORY ^ code) == 0);
     }
 
     virtual inline bool setDirectoryName(UINT id, const Stamina::StringRef &name) {

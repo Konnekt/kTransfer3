@@ -85,6 +85,12 @@ namespace kTransfer3 {
       return _parent;
     }
 
+    virtual inline DWORD getAttrib(const Stamina::StringRef &path) {
+      return GetFileAttributes(path.a_str());
+    }
+
+    virtual bool isExists() = 0;
+
     virtual Stamina::String getPath();
 
   private:

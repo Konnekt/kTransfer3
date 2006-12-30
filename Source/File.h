@@ -54,19 +54,13 @@ namespace kTransfer3 {
       return true;
     }
 
-    virtual inline DWORD getAttrib(const Stamina::String &path) {
-      return GetFileAttributes(path.a_str());
-    }
-
     virtual inline bool isExists() {
-      Stamina::String path = getPath() + "\\" + getName();
-      DWORD code = getAttrib(path);
+      DWORD code = getAttrib(getPath());
       return (code != -1) && ((FILE_ATTRIBUTE_DIRECTORY & code) == 0);
     }
 
     virtual inline bool isTempExists() {
-      Stamina::String path = getPath() + "\\" + getTempName();
-      DWORD code = getAttrib(path);
+      DWORD code = getAttrib(getPath() + "\\" + getTempName());
       return (code != -1) && ((FILE_ATTRIBUTE_DIRECTORY & code) == 0);
     }
 
@@ -107,6 +101,13 @@ namespace kTransfer3 {
 	    DWORD dwptr =  SetFilePointer(_file, offset, NULL, FILE_BEGIN);
 	    if (dwptr == 0xFFFFFF) return false;
       return true;
+    }
+
+    virtual DWORD getSize() {
+      if (!isOpened()) return 0;
+      DWORD size = GetFileSize(_file, NULL);
+      if (size == INVALID_FILE_SIZE) return 0;
+	    return size;
     }
 
   private:

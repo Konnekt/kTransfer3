@@ -48,18 +48,20 @@ namespace kTransfer3 {
 
       registerObserver(IM_UI_PREPARE, bind(resolve_cast0(&Controller::_onPrepare), this));
 
-      /* test
+      /*
       Transfer *tr = new Transfer(Transfer::enType::typeFilesFolders);
       tr->addItem(new Directory("dir1",(Directory*)tr));
       ((Directory*)tr->getItemT(0))->addFile("file.xxx");
       tr->setSavePath("c:\\root");
       ((Directory*)tr->getItemT(0))->create();
+      bool exists = ((Directory*)tr->getItemT(0))->isExists();
       Stamina::String txt = ((Directory*)tr->getItemT(0))->getFileT(0)->getPath();
       ((Directory*)tr->getItemT(0))->getFileT(0)->open(false);
       char buff[] ="Jakiœ tekst";
       ((Directory*)tr->getItemT(0))->getFileT(0)->write(0, buff, sizeof(buff)-1);
       ((Directory*)tr->getItemT(0))->getFileT(0)->close();
       */
+
      
     }
 
@@ -202,7 +204,7 @@ namespace kTransfer3 {
       UIActionCfgAdd(ui::cfgGroup, 0, ACTT_GROUPEND);
 
       UIActionCfgAdd(ui::cfgGroup,0, ACTT_GROUP, "Pobieranie automatyczne");
-      UIActionCfgAdd(ui::cfgGroup, cfg::adAutoAccept, ACTT_COMBO | ACTSCOMBO_LIST | ACTSCOMBO_BYPOS |ACTSC_INLINE, "Zawsze pytaj" CFGICO "11"
+      UIActionCfgAdd(ui::cfgGroup, cfg::adAutoAccept, ACTT_COMBO | ACTSCOMBO_LIST | ACTSCOMBO_BYPOS, "Zawsze pytaj" CFGICO "11"
       "\n" "Akceptuj wszystko" CFGICO "20" "\n" "Odrzucaj wszystko" CFGICO "46" "\n", cfg::adAutoAccept, 0, 0, 150);
       UIActionCfgAdd(ui::cfgGroup, cfg::adUseDefaultDir, ACTT_CHECK, "U¿ywaj domyœlnej œcie¿ki", cfg::adUseDefaultDir);
       UIActionCfgAdd(ui::cfgGroup, 0, ACTT_COMMENT, "Katalog sk³adowania plików (pe³na œcie¿ka):" CFGTIP "%konnektProfile% - katalog profilu");
