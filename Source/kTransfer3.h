@@ -1,3 +1,16 @@
+/**
+  *  kTransfer3 - Definitions
+  *
+  *  @filesource
+  *  @copyright    Copyright (c) 2006-2007 Ursus6
+  *  @link         svn://konnekt.info/ktransfer3/ kTransfer3 plugin SVN Repo
+  *  @version      $Revision$
+  *  @modifiedby   $LastChangedBy$
+  *  @lastmodified $Date$
+  */
+
+#pragma once
+
 #ifndef __KTRANSFER3_H__
 #define __KTRANSFER3_H__
 

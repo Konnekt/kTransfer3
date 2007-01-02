@@ -1,3 +1,14 @@
+/**
+  *  kTransfer3 - Controller Class
+  *
+  *  @filesource
+  *  @copyright    Copyright (c) 2006-2007 Ursus6
+  *  @link         svn://konnekt.info/ktransfer3/ kTransfer3 plugin SVN Repo
+  *  @version      $Revision$
+  *  @modifiedby   $LastChangedBy$
+  *  @lastmodified $Date$
+  */
+
 #pragma once
 
 #ifndef __CONTROLLER_H__
@@ -47,7 +58,7 @@ namespace kTransfer3 {
       registerObserver(im::transferDeletePlug, bind(resolve_cast0(&Controller::_onTransferDeletePlug), this)); 
 
       registerObserver(IM_UI_PREPARE, bind(resolve_cast0(&Controller::_onPrepare), this));
-
+ 
       /*
       Transfer *tr = new Transfer(Transfer::enType::typeFilesFolders);
       tr->addItem(new Directory("dir1",(Directory*)tr));

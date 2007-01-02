@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef __KTRANSFER3_SHARED_H__
 #define __KTRANSFER3_SHARED_H__
 

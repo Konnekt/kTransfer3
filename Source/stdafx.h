@@ -1,9 +1,16 @@
-// stdafx.h : include file for standard system include files,
-// or project specific include files that are used frequently, but
-// are changed infrequently
-//
+/**
+  *  kTransfer3 - Stdafx
+  *
+  *  @filesource
+  *  @copyright    Copyright (c) 2006-2007 Ursus6
+  *  @link         svn://konnekt.info/ktransfer3/ kTransfer3 plugin SVN Repo
+  *  @version      $Revision$
+  *  @modifiedby   $LastChangedBy$
+  *  @lastmodified $Date$
+  */
 
 #pragma once
+
 #ifndef __STDAFX_H__
 #define __STDAFX_H__
 // Modify the following defines if you have to target a platform prior to the ones specified below.
@@ -39,7 +46,6 @@
 //#include <Stamina/ListWnd/Entry.h>
 #include <Stamina/Helpers.h>
 #include <Stamina/Exception.h>
-
 
 //#include <winnls.h>
 //#include <process.h>
