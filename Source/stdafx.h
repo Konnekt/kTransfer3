@@ -41,11 +41,13 @@
 #include <Stamina/Time64.h>
 #include <Stamina/Object.h>
 #include <Stamina/ObjectImpl.h>
-//#include <Stamina/ListWnd/ListWnd.h>
-//#include <Stamina/ListWnd/ListView.h>
+#include <Stamina/ListWnd/ListWnd.h>
+#include <Stamina/ListWnd/ListView.h>
 //#include <Stamina/ListWnd/Entry.h>
 #include <Stamina/Helpers.h>
 #include <Stamina/Exception.h>
+
+#include <SmartWin/SmartWin.h>
 
 //#include <winnls.h>
 //#include <process.h>
@@ -78,8 +80,11 @@
 #include "Option.h"
 #include "Queue.h"
 #include "Group.h"
-
 #include "Helpers.h"
+
+#include "UI/RecvCollectionEntry.h"
+#include "UI/MainWindow.h"
+
 #include "kTransfer3_shared.h"
 #include "../Project/resource.h"
 

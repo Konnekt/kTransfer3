@@ -27,7 +27,7 @@ namespace kTransfer3 {
 
   class Directory: public Item {
   public:
-    Directory(const Stamina::StringRef &name = "", Directory* parent = NULL): Item(name, parent) {
+    Directory(const StringRef &name = "", Directory* parent = NULL): Item(name, parent) {
       _type = enType::typeDirectory;
     }
 
@@ -44,7 +44,7 @@ namespace kTransfer3 {
 
     virtual void create() {
       if (isExists()) return ;
-      Stamina::String path = getPath() + "\\";
+      String path = getPath() + "\\";
       unsigned int count = path.find("\\"); // trzeba pomin¹c tworzenie glownego katalogu np. C:/
       while (path.size() > count + 1) {
         count+= path.substr(count + 1).find("\\") + 1;
@@ -57,8 +57,8 @@ namespace kTransfer3 {
       return (code != -1) && ((FILE_ATTRIBUTE_DIRECTORY ^ code) == 0);
     }
 
-    virtual inline bool setDirectoryName(UINT id, const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline bool setDirectoryName(UINT id, const StringRef &name) {
+      LockerCS locker(_locker);
 
       if (haveDirectory(name)) return false;
       tDirectories::iterator it = _directories.begin();
@@ -71,8 +71,8 @@ namespace kTransfer3 {
       return true;
     }
 
-    virtual inline UINT getDirectoryID(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline UINT getDirectoryID(const StringRef &name) {
+      LockerCS locker(_locker);
 
       tDirectories::iterator it = _directories.begin();
       for (;it != _directories.end(); it++) {
@@ -83,22 +83,22 @@ namespace kTransfer3 {
       return 0;
     }
 
-    virtual bool haveDirectory(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual bool haveDirectory(const StringRef &name) {
+      LockerCS locker(_locker);
 
       return getDirectoryID(name);
     }
 
-    virtual inline UINT addDirectory(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline UINT addDirectory(const StringRef &name) {
+      LockerCS locker(_locker);
 
       Directory* directory = new Directory(name, this);
       _directories.push_back(directory);
       return directory->getID();
     }
 
-    virtual inline Directory* getDirectory(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline Directory* getDirectory(const StringRef &name) {
+      LockerCS locker(_locker);
 
       tDirectories::iterator it = _directories.begin();
       for (;it != _directories.end(); it++) {
@@ -110,7 +110,7 @@ namespace kTransfer3 {
     }
 
     virtual inline bool removeDirectory(UINT id) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tDirectories::iterator it = _directories.begin();
       for (;it != _directories.end(); it++) {
@@ -124,20 +124,20 @@ namespace kTransfer3 {
     }
 
     virtual inline UINT getDirectoryCount() {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       return _directories.size();
     }
 
     virtual inline Directory* getDirectoryT(UINT id_t) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       if (id_t >= getDirectoryCount()) return NULL;
       return _directories[id_t];
     }
 
-    virtual inline UINT addFile(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline UINT addFile(const StringRef &name) {
+      LockerCS locker(_locker);
 
       File* file = new File(name, this);
       _files.push_back(file);
@@ -145,7 +145,7 @@ namespace kTransfer3 {
     }
 
     inline bool removeFile(UINT id) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tFiles::iterator it = _files.begin();
       for (;it != _files.end(); it++) {
@@ -159,7 +159,7 @@ namespace kTransfer3 {
     }
 
     inline File* getFile(UINT id) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tFiles::iterator it = _files.begin();
       for (;it != _files.end(); it++) {
@@ -170,8 +170,8 @@ namespace kTransfer3 {
       return NULL;
     }
 
-    inline File* getFile(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    inline File* getFile(const StringRef &name) {
+      LockerCS locker(_locker);
 
       tFiles::iterator it = _files.begin();
       for (;it != _files.end(); it++) {
@@ -182,8 +182,8 @@ namespace kTransfer3 {
       return NULL;
     }
 
-    inline UINT getFileID(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    inline UINT getFileID(const StringRef &name) {
+      LockerCS locker(_locker);
 
       tFiles::iterator it = _files.begin();
       for (;it != _files.end(); it++) {
@@ -195,26 +195,26 @@ namespace kTransfer3 {
     }
 
     virtual inline UINT getFileCount() {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       return _files.size();
     }
 
     virtual inline File* getFileT(UINT id_t) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       if(id_t >= getFileCount()) return NULL;
       return _files[id_t];
     }
 
-    virtual inline bool haveFile(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline bool haveFile(const StringRef &name) {
+      LockerCS locker(_locker);
 
       return getFileID(name);
     }
 
-    virtual inline bool setFileName(UINT id, const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline bool setFileName(UINT id, const StringRef &name) {
+      LockerCS locker(_locker);
 
       if (haveFile(name)) return false;
       tFiles::iterator it = _files.begin();
@@ -228,7 +228,7 @@ namespace kTransfer3 {
     }
 
     virtual inline void setDirectoriesState(enState state) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tDirectories::iterator it = _directories.begin();
       for (;it != _directories.end(); it++) {
@@ -237,7 +237,7 @@ namespace kTransfer3 {
     }
 
     virtual inline void setFilesState(enState state) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tFiles::iterator it = _files.begin();
       for (;it != _files.end(); it++) {
@@ -246,11 +246,11 @@ namespace kTransfer3 {
     }
 
     virtual inline void setState(enState state) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       setDirectoriesState(state);
       setFilesState(state);
-      Item::setState(state);
+      setState(state);
     }
 
   protected:

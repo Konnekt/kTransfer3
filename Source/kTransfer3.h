@@ -60,6 +60,8 @@ namespace kTransfer3 {
 
     const unsigned int userCfgGroup = ui + 10;
 
+    const unsigned int transferButton = ui + 20;
+
   };
 
   namespace act {

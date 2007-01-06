@@ -48,8 +48,8 @@ namespace kTransfer3 {
     };
 
   public:
-    Item(const Stamina::StringRef &name = "", Item* parent = NULL) {
-      Stamina::LockerCS locker(_locker);
+    Item(const StringRef &name = "", Item* parent = NULL) {
+      LockerCS locker(_locker);
 
       // generacja losowego id
       _ref++;
@@ -69,13 +69,13 @@ namespace kTransfer3 {
     }
 
     virtual inline enState getState() {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       return _state;
     }
 
     virtual inline void setState(enState state) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       _state = state;
     }
@@ -84,14 +84,14 @@ namespace kTransfer3 {
       return _type;
     }
 
-    virtual inline void setName(const Stamina::StringRef &name) {
-      Stamina::LockerCS locker(_locker);
+    virtual inline void setName(const StringRef &name) {
+      LockerCS locker(_locker);
 
       _name = name;
     }
 
-    virtual inline Stamina::String getName() {
-      Stamina::LockerCS locker(_locker);
+    virtual inline String getName() {
+      LockerCS locker(_locker);
 
       return _name;
     }
@@ -100,26 +100,31 @@ namespace kTransfer3 {
       return _parent;
     }
 
-    virtual inline DWORD getAttrib(const Stamina::StringRef &path) {
+    virtual inline DWORD getAttrib(const StringRef &path) {
       return GetFileAttributes(path.a_str());
+    }
+
+    virtual inline bool isItemParent(Item *parent) {
+      return (((iObject*)parent)->getClass().getName() == "Item");
     }
 
     virtual bool isExists() = 0;
 
-    virtual Stamina::String getPath();
+    virtual String getPath();
+
 
   private:
     static UINT _ref;
     UINT _id;
 
   protected:
-    Stamina::String _name;
+    String _name;
     enState _state;
     enType _type;
 
     Item* _parent;
 
-    Stamina::CriticalSection _locker;
+    CriticalSection _locker;
   };
 
   UINT Item::_ref = 0;

@@ -23,7 +23,7 @@
 #include "Item.h"
 
 namespace kTransfer3 {
-  class Image(const Stamina::StringRef &name = ""): public File(name, NULL) {
+  class Image(const StringRef &name = ""): public File(name, NULL) {
   public:
     Image() {
       _type = enType::typeImage;

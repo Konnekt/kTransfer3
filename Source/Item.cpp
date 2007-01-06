@@ -18,7 +18,7 @@
 
 namespace kTransfer3 {
   Stamina::String Item::getPath() {
-    if (((Stamina::iObject*)getParent())->getClass().getName() == "Item") {
+    if (isItemParent(getParent())) {
       return getParent()->getPath() + "\\" + getName();
     }
     else {

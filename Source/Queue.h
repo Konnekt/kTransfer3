@@ -31,13 +31,13 @@ namespace kTransfer3 {
     void refreshTransfer(UINT id) {}
 
     inline void insertTransfer(const oTransfer &transfer) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       _queue.push_back(transfer);
     }
 
     inline bool removeTransfer(UINT id) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tTransfers::iterator it = _queue.begin();
       for (;it != _queue.end(); it++) {
@@ -50,7 +50,7 @@ namespace kTransfer3 {
     }
 
     inline oTransfer getTransfer(UINT id) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tTransfers::iterator it = _queue.begin();
       for (;it != _queue.end(); it++) {
@@ -62,14 +62,14 @@ namespace kTransfer3 {
     }
 
     inline oTransfer getTransferT(UINT id_t) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       if (id_t >= countTransfer()) return NULL;
       return _queue[id_t];
     }
 
     inline bool haveTransfer(UINT id) {
-      Stamina::LockerCS locker(_locker);
+      LockerCS locker(_locker);
 
       tTransfers::iterator it = _queue.begin();
       for (;it != _queue.end(); it++) {
@@ -83,7 +83,7 @@ namespace kTransfer3 {
     }
 
   protected:
-    Stamina::CriticalSection _locker;
+    CriticalSection _locker;
     tTransfers _queue;
   };
 };

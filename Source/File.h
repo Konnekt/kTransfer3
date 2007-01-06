@@ -27,13 +27,17 @@ namespace kTransfer3 {
 
   class File: public Item {
   public:
-    File(const Stamina::StringRef &name = "", Directory* parent = NULL): Item(name, (Item*)parent) {
+    File(const StringRef &name = "", Directory* parent = NULL): Item(name, (Item*)parent) {
       _type = enType::typeFile;
       _opened = false;
       _temp_name = "temp_" + name + /*temp_id +*/ ".part"; // domyslna wartosc
     }
 
-    virtual inline Stamina::String getTempName() {
+    virtual ~File() {
+      close();
+    }
+
+    virtual inline String getTempName() {
       return _temp_name;
     }
 
@@ -47,10 +51,11 @@ namespace kTransfer3 {
       }
       _file = hFile;
       _opened = true;  
+      _temp_opened = false;
       return true;
     }
 
-    virtual Stamina::String getTempPath() {
+    virtual String getTempPath() {
       Stamina::LockerCS locker(_locker);
       Stamina::String path = getPath();
       path.erase(path.findLast("\\"));
@@ -68,7 +73,22 @@ namespace kTransfer3 {
       }
       _file = hFile;
       _opened = true;
+      _temp_opened = true;
       return true;
+    }
+
+    virtual inline bool isOpenTemp() const {
+      return _temp_opened;
+    }
+
+    virtual inline bool remove() {
+      Stamina::LockerCS locker(_locker);
+      return DeleteFile(getPath().a_str());
+    }
+
+    virtual inline bool removeTemp() {
+      Stamina::LockerCS locker(_locker);
+      return DeleteFile(getTempPath().a_str());
     }
 
     virtual inline bool isExists() {
@@ -135,9 +155,10 @@ namespace kTransfer3 {
     }
 
   private:
-    Stamina::String _temp_name;
+    String _temp_name;
     HANDLE _file;
     bool _opened;
+    bool _temp_opened;
   };
 };
 
