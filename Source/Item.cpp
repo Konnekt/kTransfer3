@@ -17,12 +17,5 @@
 #include "Item.h"
 
 namespace kTransfer3 {
-  Stamina::String Item::getPath() {
-    if (isItemParent(getParent())) {
-      return getParent()->getPath() + "\\" + getName();
-    }
-    else {
-      return ((Transfer *)getParent())->getSavePath() + "\\" + getName();
-    }
-  }
+
 };

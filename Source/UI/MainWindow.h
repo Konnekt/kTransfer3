@@ -4,9 +4,9 @@
   *  @filesource
   *  @copyright    Copyright (c) 2006-2007 Ursus6
   *  @link         svn://konnekt.info/ktransfer3/ kTransfer3 plugin SVN Repo
-  *  @version      $Revision: 27 $
-  *  @modifiedby   $LastChangedBy: ursus6 $
-  *  @lastmodified $Date: 2007-01-02 08:25:56 +0100 (Wt, 02 sty 2007) $
+  *  @version      $Revision$
+  *  @modifiedby   $LastChangedBy$
+  *  @lastmodified $Date$
   */
 
 #pragma once
@@ -24,6 +24,7 @@ namespace kTransfer3 {
 
   public:
     MainWindow() {
+      _kill = false;
     }
 
     void init() {
@@ -31,33 +32,30 @@ namespace kTransfer3 {
       wnd.caption = _T("kTransfer3");
       wnd.location = SmartWin::Rectangle(0, 0, 0, 0);
       createWindow(wnd);
-      //setVisible(false);
+      setVisible(false);
+  
       onSized(&MainWindow::_onResized);
-      onClosing(&MainWindow::_onClosing);
       onRaw(&MainWindow::_onSizing, Message(WM_SIZING));
-      onRaw(&MainWindow::_onDestroy, Message(WM_DESTROY));
+      onRaw(&MainWindow::_onClosing, Message(WM_CLOSE));
 
       lv = new ListWnd::ListView(0, 0, 0, 0, handle(), 0);
       hListView = lv->getHwnd();
       lv->alwaysShowScrollbars(false, true);
 
       MoveWindow(handle(), 0, 0, defx, defy, true);
-
-      ListWnd::oItem coll = lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      lv->insertEntry(new RecvCollectionEntry(new Transfer(kTransfer3::Transfer::enType::typeFile)));
-      coll->setFlag(ListWnd::flagExpanded, true);
     }
 
+    void killWindow() {
+      _kill = true;
+    }
+
+
+
   private:
-    bool _onClosing() {
+    HRESULT _onClosing(LPARAM lPar, WPARAM wPar) {
+      if (_kill) return ::DefWindowProc(handle(), WM_CLOSE, wPar, lPar);
       setVisible(false);
-      return false;
+      return 1;
     }
     
     void _onResized(const WidgetSizedEventResult& sz) {
@@ -72,11 +70,7 @@ namespace kTransfer3 {
       return 1;
     }
 
-    HRESULT _onDestroy(LPARAM lPar, WPARAM wPar) {
-      delete lv;
-      return 1;
-    }
-    
+   
   public:
     static const int min_x = 500;
     static const int min_y = 300;
@@ -85,14 +79,23 @@ namespace kTransfer3 {
     WidgetWindow::Seed wnd;
     HWND hListView;
     ListWnd::ListView *lv;
+
+    bool _kill;
   };
 
-  MainWindow* main_wnd;
+  MainWindow *main_wnd = new MainWindow;
 
   unsigned int MainLoop(void *arg) {
-    main_wnd = new MainWindow;
     main_wnd->init();
-    return SmartWin::Application::instance().run();
+    SmartWin::Application::instance().run();
+
+    bool corruptMemMemLeak;
+    try {
+      Application::checkCorruptOrMemleak(corruptMemMemLeak);
+    } catch ( xCeption & err ) {
+			Application::reportErr( err, corruptMemMemLeak );
+		}
+    return 0;
   }
 };
 

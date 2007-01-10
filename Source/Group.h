@@ -18,35 +18,52 @@
 #ifndef __GROUP_H__
 #define __GROUP_H__
 
+#include <vector>
+
 namespace kTransfer3 {
   class Group {
-  public:
-    enum enGroup{
-      grNone,
-      grReceiving,
-      grSending,
-      grChecking,
-      grOther
+ /* public:
+    struct sGroup {
+      UINT id;
+      String name;
+      ListWnd::oItem item; // grupa
     };
+    typedef std::vector<sGroup> tGroup;
 
   public:
-    Group() {
-      _group = grNone;
+    Group {
     }
-    inline bool setGroup(enGroup group) {
-      if (_group != grNone) {
-        return false;
+
+    inline bool registerGroup(sGroup &group) {
+      if (isGroup(group.id)) return false;
+    }
+
+    bool isGroup(UINT id) {
+      tGroup::iterator it = _group.begin();
+      for(; it != _group.end(); it++) {
+        if ((*it).id == id) return true;
       }
-      _group = group;
-      return true;
+      return false;
     }
-    inline enGroup getGroup() {
-      return _group;
+
+    bool deleteGroup(UINT id) {
+
     }
 
   private:
-    enGroup _group;
+    ListWnd::oItem _addGroupToLv(const ListWnd::oItem &groupEntry) {
+
+    }
+
+    ListWnd::oItem _getGroupFromLv(UINT id) {
+
+    }
+  private:
+    tGroup _group;
+  
+  */
   };
+  
 };
 
 #endif /*__GROUP_H__*/

@@ -18,6 +18,7 @@
 #ifndef __DIRECTORY_H__
 #define __DIRECTORY_H__
 
+#include "Transfer.h"
 #include "Item.h"
 #include "File.h"
 #include <vector>
@@ -27,8 +28,8 @@ namespace kTransfer3 {
 
   class Directory: public Item {
   public:
-    Directory(const StringRef &name = "", Directory* parent = NULL): Item(name, parent) {
-      _type = enType::typeDirectory;
+    Directory(const StringRef &name = "", Transfer* parent = NULL, Directory* parent_dir = NULL): Item(30, name, parent) {
+      _parent_dir = parent_dir;
     }
 
     ~Directory() {
@@ -52,8 +53,21 @@ namespace kTransfer3 {
       }
     }
 
+    virtual Directory* getDirectoryParent() const {
+      return _parent_dir;
+    }
+
+    virtual String getPath() {
+      if (getDirectoryParent()) {
+        return getDirectoryParent()->getPath() + "\\" + getName();
+      }
+      else {
+        return getParent()->getName();
+      }
+    }
+
     virtual inline bool isExists() {
-      DWORD code = getAttrib(getPath());
+      DWORD code = GetFileAttributes(getPath().a_str());
       return (code != -1) && ((FILE_ATTRIBUTE_DIRECTORY ^ code) == 0);
     }
 
@@ -92,7 +106,7 @@ namespace kTransfer3 {
     virtual inline UINT addDirectory(const StringRef &name) {
       LockerCS locker(_locker);
 
-      Directory* directory = new Directory(name, this);
+      Directory* directory = new Directory(name, _parent, this);
       _directories.push_back(directory);
       return directory->getID();
     }
@@ -139,7 +153,7 @@ namespace kTransfer3 {
     virtual inline UINT addFile(const StringRef &name) {
       LockerCS locker(_locker);
 
-      File* file = new File(name, this);
+      File* file = new File(name, _parent, this);
       _files.push_back(file);
       return file->getID();
     }
@@ -252,6 +266,9 @@ namespace kTransfer3 {
       setFilesState(state);
       setState(state);
     }
+
+  private:
+    Directory *_parent_dir;
 
   protected:
     tDirectories _directories;

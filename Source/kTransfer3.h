@@ -83,6 +83,9 @@ namespace kTransfer3 {
     const unsigned int transferCount = im + 15;
     const unsigned int transferRefresh = im + 16;
   };
+
+  extern HANDLE handle_mainwnd_thread;
+  
 };
 
 #endif /*__KTRANSFER3_H__*/

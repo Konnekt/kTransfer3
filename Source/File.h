@@ -19,6 +19,7 @@
 #define __FILE_H__
 
 #include "Item.h"
+#include "Directory.h"
 #include <windows.h>
 #include <vector>
 
@@ -27,10 +28,11 @@ namespace kTransfer3 {
 
   class File: public Item {
   public:
-    File(const StringRef &name = "", Directory* parent = NULL): Item(name, (Item*)parent) {
-      _type = enType::typeFile;
+    File(const StringRef &name = "", Transfer* parent = NULL, Directory* parent_dir = NULL): Item(35, name, parent) {
       _opened = false;
       _temp_name = "temp_" + name + /*temp_id +*/ ".part"; // domyslna wartosc
+
+      _parent_dir = parent_dir;
     }
 
     virtual ~File() {
@@ -93,13 +95,14 @@ namespace kTransfer3 {
 
     virtual inline bool isExists() {
       Stamina::LockerCS locker(_locker);
-      DWORD code = getAttrib(getPath());
+      DWORD code = GetFileAttributes(getPath().a_str());
       return (code != -1) && ((FILE_ATTRIBUTE_DIRECTORY & code) == 0);
     }
 
     virtual inline bool isTempExists() {
       Stamina::LockerCS locker(_locker);
-      DWORD code = getAttrib(getPath() + "\\" + getTempName());
+      Stamina::String path = getPath() + "\\" + getTempName();
+      DWORD code = GetFileAttributes(path.a_str());
       return (code != -1) && ((FILE_ATTRIBUTE_DIRECTORY & code) == 0);
     }
 
@@ -154,7 +157,12 @@ namespace kTransfer3 {
 	    return size;
     }
 
+    virtual String getPath();
+
+
   private:
+    Directory* _parent_dir;
+
     String _temp_name;
     HANDLE _file;
     bool _opened;

@@ -23,10 +23,9 @@
 #include "Item.h"
 
 namespace kTransfer3 {
-  class Image(const StringRef &name = ""): public File(name, NULL) {
+  class Image(const StringRef &name = "", Transfer* parent): public File(name, parent, NULL): public Item(38, name, parent) {
   public:
     Image() {
-      _type = enType::typeImage;
     }
   };
 

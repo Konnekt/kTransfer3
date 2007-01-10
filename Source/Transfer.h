@@ -131,7 +131,7 @@ namespace kTransfer3 {
       return false;
     }
 
-    inline UINT getItemID(const StringRef &name, Item::enType type) {
+    inline UINT getItemID(const StringRef &name, UINT type) {
       LockerCS locker(_locker);
 
       tItems::iterator it = _items.begin();
@@ -143,7 +143,7 @@ namespace kTransfer3 {
       return 0;
     }
 
-    inline bool haveItem(const StringRef &name, Item::enType type) {
+    inline bool haveItem(const StringRef &name, UINT type) {
       LockerCS locker(_locker);
 
       return getItemID(name, type);

@@ -38,17 +38,12 @@ namespace kTransfer3 {
       stActive,
       stError,
       stAborted,
-      stIgnored
-    };
-    enum enType {
-      typeFile = 1,
-      typeDirectory,
-      typeImage,
-      typeOther
-    };
+      stIgnored,
+      stOK
+   };
 
   public:
-    Item(const StringRef &name = "", Item* parent = NULL) {
+    Item(UINT type, const StringRef &name = "", Transfer* parent = NULL) {
       LockerCS locker(_locker);
 
       // generacja losowego id
@@ -62,6 +57,7 @@ namespace kTransfer3 {
       _name = !name.length() ? inttostr(_id) : name;
 
       _parent = parent;
+      _type = type;
     }
 
     virtual inline UINT getID() const {
@@ -80,7 +76,7 @@ namespace kTransfer3 {
       _state = state;
     }
 
-    virtual inline enType getType() const {
+    virtual inline UINT getType() const {
       return _type;
     }
 
@@ -96,21 +92,10 @@ namespace kTransfer3 {
       return _name;
     }
 
-    virtual inline Item* getParent() const {
+    virtual inline Transfer* getParent() const {
       return _parent;
     }
 
-    virtual inline DWORD getAttrib(const StringRef &path) {
-      return GetFileAttributes(path.a_str());
-    }
-
-    virtual inline bool isItemParent(Item *parent) {
-      return (((iObject*)parent)->getClass().getName() == "Item");
-    }
-
-    virtual bool isExists() = 0;
-
-    virtual String getPath();
 
 
   private:
@@ -118,18 +103,15 @@ namespace kTransfer3 {
     UINT _id;
 
   protected:
+    Transfer *_parent;
     String _name;
     enState _state;
-    enType _type;
-
-    Item* _parent;
+    UINT _type;
 
     CriticalSection _locker;
   };
 
   UINT Item::_ref = 0;
 };
-
-
 
 #endif /*__ITEM_H__*/

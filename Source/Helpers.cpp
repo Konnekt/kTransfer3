@@ -5,8 +5,8 @@
   *  @copyright    Copyright (c) 2006-2007 Ursus6
   *  @link         svn://konnekt.info/ktransfer3/ kTransfer3 plugin SVN Repo
   *  @version      $Revision$
-  *  @modifiedby   $LastChangedBy: ursus6 $
-  *  @lastmodified $Date: 2007-01-02 08:25:56 +0100 (Wt, 02 sty 2007) $
+  *  @modifiedby   $LastChangedBy$
+  *  @lastmodified $Date$
   */
 
 #include "stdafx.h"

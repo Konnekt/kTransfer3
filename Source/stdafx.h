@@ -82,7 +82,6 @@
 #include "Group.h"
 #include "Helpers.h"
 
-#include "UI/RecvCollectionEntry.h"
 #include "UI/MainWindow.h"
 
 #include "kTransfer3_shared.h"
