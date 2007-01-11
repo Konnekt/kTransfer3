@@ -1,3 +1,6 @@
+#ifndef __IGROUP_H__
+#define __IGROUP_H__
+
 namespace kTransfer3 {
   class iGroup: public ListWnd::Collection {
   public:
@@ -6,6 +9,7 @@ namespace kTransfer3 {
   public:
     iGroup(UINT id, const String name = "") {
       _id = id;
+      _name = name;
     }
 
     virtual UINT getID() const {
@@ -20,10 +24,10 @@ namespace kTransfer3 {
       return item;
     }
 
-
-
   private:
     UINT _id;
     String _name;
   };  
 };
+
+#endif /*__IGROUP_H__*/

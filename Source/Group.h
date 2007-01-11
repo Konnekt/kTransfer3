@@ -19,35 +19,41 @@
 #define __GROUP_H__
 
 #include <vector>
+#include <iGroup.h>
 
 namespace kTransfer3 {
   class Group {
- /* public:
-    struct sGroup {
-      UINT id;
-      String name;
-      ListWnd::oItem item; // grupa
-    };
-    typedef std::vector<sGroup> tGroup;
+  public:
+    typedef std::vector<iGroup*> tGroup;
 
   public:
     Group {
     }
 
-    inline bool registerGroup(sGroup &group) {
+    inline bool registerGroup(iGroup* group) {
       if (isGroup(group.id)) return false;
+      _group.push_back(group);
+      return true;
     }
 
     bool isGroup(UINT id) {
       tGroup::iterator it = _group.begin();
       for(; it != _group.end(); it++) {
-        if ((*it).id == id) return true;
+        if ((*it)->id == id) return true;
       }
       return false;
     }
 
     bool deleteGroup(UINT id) {
-
+      tGroup::iterator it = _group.begin();
+      for(; it != _group.end(); it++) {
+        if ((*it)->id == id) {
+          //delete (*it);
+          _group.erase(it);
+          return true;
+        }
+      }
+      return false;
     }
 
   private:

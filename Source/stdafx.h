@@ -81,7 +81,7 @@
 #include "Queue.h"
 #include "Group.h"
 #include "Helpers.h"
-
+#include "Event.h"
 #include "UI/MainWindow.h"
 
 #include "kTransfer3_shared.h"
