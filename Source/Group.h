@@ -19,7 +19,7 @@
 #define __GROUP_H__
 
 #include <vector>
-#include <iGroup.h>
+#include "iGroup.h"
 
 namespace kTransfer3 {
   class Group {
@@ -27,11 +27,11 @@ namespace kTransfer3 {
     typedef std::vector<iGroup*> tGroup;
 
   public:
-    Group {
+    Group() {
     }
 
     inline bool registerGroup(iGroup* group) {
-      if (isGroup(group.id)) return false;
+      if (isGroup(group->getID())) return false;
       _group.push_back(group);
       return true;
     }
@@ -39,7 +39,7 @@ namespace kTransfer3 {
     bool isGroup(UINT id) {
       tGroup::iterator it = _group.begin();
       for(; it != _group.end(); it++) {
-        if ((*it)->id == id) return true;
+        if ((*it)->getID() == id) return true;
       }
       return false;
     }
@@ -47,7 +47,7 @@ namespace kTransfer3 {
     bool deleteGroup(UINT id) {
       tGroup::iterator it = _group.begin();
       for(; it != _group.end(); it++) {
-        if ((*it)->id == id) {
+        if ((*it)->getID() == id) {
           //delete (*it);
           _group.erase(it);
           return true;
@@ -67,7 +67,6 @@ namespace kTransfer3 {
   private:
     tGroup _group;
   
-  */
   };
   
 };

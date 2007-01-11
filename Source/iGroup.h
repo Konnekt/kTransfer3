@@ -7,7 +7,7 @@ namespace kTransfer3 {
     STAMINA_OBJECT_CLASS(iGroup, iCollection);
 
   public:
-    iGroup(UINT id, const String name = "") {
+    iGroup(UINT id, const StringRef &name = "") {
       _id = id;
       _name = name;
     }

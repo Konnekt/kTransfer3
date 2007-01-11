@@ -18,8 +18,8 @@ namespace kTransfer3 {
       tConnections connections;
       sigOnEvent sig;
     };
-
-    typedef std::map<Item*, std::map<int, sObserver*>> tObservers;
+    typedef std::map<int, sObserver*> tEventObservers;
+    typedef std::map<UINT, tEventObservers> tObservers;
 
   public:
     Event() {
@@ -28,21 +28,40 @@ namespace kTransfer3 {
 
     UINT registerObserver(Item* item, fOnEvent f, int event_, int priority) {
       if (++_ref == 0) _ref++;
-      if (_observers[item].find(event_) == _observers[item].end()) {
-         _observers[item][event_] = new sObserver;
+      if (_observers[item->getID()].find(event_) == _observers[item->getID()].end()) {
+         _observers[item->getID()][event_] = new sObserver;
       }
-      return ((_observers[item][event_]->connections[_ref] = _observers[item][event_]->sig.connect(priority, f)).connected()) ? _ref : 0;
+      return ((_observers[item->getID()][event_]->connections[_ref] = _observers[item->getID()][event_]->sig.connect(priority, f)).connected()) ? _ref : 0;
     }
 
     bool deleteObserver(Item* item, int event_, UINT id) {
-      if (_observers[item].find(event_) != _observers[item].end()) return false;
-      if (_observers[item][event_]->connections.find(id) == _observers[item][event_]->connections.end()) return false;
-      _observers[item][event_]->connections[id].disconnect();
+      if (_observers.find(item->getID()) == _observers.end()) return false;
+      if (_observers[item->getID()].find(event_) != _observers[item->getID()].end()) return false;
+      if (_observers[item->getID()][event_]->connections.find(id) == _observers[item->getID()][event_]->connections.end()) return false;
+      _observers[item->getID()][event_]->connections[id].disconnect();
       return true;
     }
 
-    void sendEvent(Item* item, int event_) {
-      _observers[item][event_]->sig(item, event_);
+    bool deleteAllObservers(Item* item) {
+      if (_observers.find(item->getID()) == _observers.end()) return false;
+      
+      tEventObservers::iterator ite = _observers[item->getID()].begin();
+      for(;ite != _observers[item->getID()].end(); ite++) {
+        tConnections::iterator itc = ite->second->connections.begin();
+        for(;itc != ite->second->connections.end(); itc++) {
+          itc->second.disconnect();
+        }
+        delete ite->second;
+        _observers[item->getID()].erase(ite);
+      }
+      return true;
+    }
+
+    bool sendEvent(Item* item, int event_) {
+      if (_observers.find(item->getID()) == _observers.end()) return false;
+      if (_observers[item->getID()].find(event_) != _observers[item->getID()].end()) return false;
+      _observers[item->getID()][event_]->sig(item, event_);
+      return true;
     }
    
   private:
