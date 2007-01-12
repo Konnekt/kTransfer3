@@ -42,14 +42,12 @@ namespace kTransfer3 {
       hListView = lv->getHwnd();
       lv->alwaysShowScrollbars(false, true);
 
-      MoveWindow(handle(), 0, 0, defx, defy, true);
+      setBounds(0, 0, defx, defy, true);
     }
 
     void killWindow() {
       _kill = true;
     }
-
-
 
   private:
     HRESULT _onClosing(LPARAM lPar, WPARAM wPar) {
@@ -65,8 +63,21 @@ namespace kTransfer3 {
     HRESULT _onSizing(LPARAM lPar, WPARAM wPar) {
       if (!lPar) return 0;
       PRECT rc = (PRECT)lPar;
-      if (rc->right - rc->left < min_x) rc->right = rc->left + min_x;
-      if (rc->bottom - rc->top < min_y) rc->bottom = rc->top + min_y;
+
+      if (rc->right - rc->left < min_x) {
+        if (rc->left == getPosition().x) {
+          rc->right = rc->left + min_x;
+        } else {
+          rc->left = rc->right - min_x;
+        }
+      }
+      if (rc->bottom - rc->top < min_y) {
+        if (rc->top == getPosition().y) {
+          rc->bottom = rc->top + min_y;
+        } else {
+          rc->top = rc->bottom - min_y;
+        }
+      }
       return 1;
     }
 
@@ -78,12 +89,12 @@ namespace kTransfer3 {
   private:
     WidgetWindow::Seed wnd;
     HWND hListView;
-    ListWnd::ListView *lv;
+    ListWnd::ListView* lv;
 
     bool _kill;
   };
 
-  MainWindow *main_wnd = new MainWindow;
+  MainWindow* main_wnd = new MainWindow;
 
   unsigned int MainLoop(void *arg) {
     main_wnd->init();
