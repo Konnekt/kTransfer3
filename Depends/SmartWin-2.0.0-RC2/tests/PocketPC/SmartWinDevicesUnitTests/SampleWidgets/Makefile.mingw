@@ -1,0 +1,128 @@
+
+
+CC            = gcc
+CXX           = g++
+LEX           = flex
+YACC          = byacc
+DEFINES       = -DNDEBUG
+CFLAGS        = -O2 -w $(DEFINES)
+CXXFLAGS      = -O2 -frtti -fexceptions -w $(DEFINES)
+LEXFLAGS      = 
+YACCFLAGS     = -d
+INCPATH       = -I"." -I"..\..\..\..\include" -I"..\..\..\..\include\smartwin"
+LINK          = g++
+LFLAGS        = -mthreads -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -Wl,-s -Wl,-subsystem,windows
+LIBS          = obj\SampleWidgets.o -L../../../../lib -lsmartwin -lcomctl32 -luser32 -lGdi32 -lopengl32 -lglu32 -lkernel32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -limm32 -lwinmm -lwsock32 -lwinspool -lcomdlg32
+IDL           = midl
+ZIP           = zip -r -9
+DEF_FILE      = 
+RES_FILE      = obj\SampleWidgets.o
+COPY          = copy /y
+COPY_FILE     = $(COPY)
+COPY_DIR      = xcopy /s /q /y /i
+DEL_FILE      = del
+DEL_DIR       = rmdir
+MOVE          = move
+CHK_DIR_EXISTS= if not exist
+MKDIR         = mkdir
+INSTALL_FILE  = $(COPY_FILE)
+INSTALL_DIR   = $(COPY_DIR)
+
+####### Output directory
+
+OBJECTS_DIR   = obj
+
+####### Files
+
+SOURCES       = Buttons.cpp DataGrid.cpp Main.cpp Mainwindow.cpp Misc.cpp Sliders.cpp TabSheetWidget.cpp
+OBJECTS       = obj\Buttons.o obj\DataGrid.o obj\Main.o obj\Mainwindow.o obj\Misc.o obj\Sliders.o obj\TabSheetWidget.o
+DIST          = 
+DESTDIR       =  #avoid trailing-slash linebreak
+TARGET        = main-mingw.exe
+
+####### Implicit rules
+
+.SUFFIXES: .c .cpp .cc .cxx
+
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+.cc.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+.cxx.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(INCPATH) -o $@ $<
+
+####### Build rules
+
+first: all
+all: check_obj $(TARGET)
+
+$(TARGET):  $(OBJECTS) obj\SampleWidgets.o
+	$(LINK) $(LFLAGS) -o "$(TARGET)" $(OBJECTS)  $(LIBS)
+
+obj\SampleWidgets.o: SampleWidgets.rc
+	windres -i SampleWidgets.rc -o obj\SampleWidgets.o --include-dir=.
+
+check_obj: 
+	@$(CHK_DIR_EXISTS) "obj\" $(MKDIR) "obj\"
+	
+
+clean: compiler_clean
+	-$(DEL_FILE) $(OBJECTS)
+	-$(DEL_FILE) obj\SampleWidgets.o
+	-$(DEL_FILE) "$(TARGET)"
+
+
+compiler_clean: 
+
+
+
+####### Compile
+
+obj\Buttons.o: Buttons.cpp Buttons.h \
+		TabSheetWidget.h \
+		resource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\Buttons.o Buttons.cpp
+
+obj\DataGrid.o: DataGrid.cpp DataGrid.h \
+		TabSheetWidget.h \
+		resource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\DataGrid.o DataGrid.cpp
+
+obj\Main.o: Main.cpp MainWindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\Main.o Main.cpp
+
+obj\Mainwindow.o: Mainwindow.cpp MainWindow.h \
+		TabSheetWidget.h \
+		resource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\Mainwindow.o Mainwindow.cpp
+
+obj\Misc.o: Misc.cpp Misc.h \
+		TabSheetWidget.h \
+		MainWindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\Misc.o Misc.cpp
+
+obj\Sliders.o: Sliders.cpp Sliders.h \
+		TabSheetWidget.h \
+		resource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\Sliders.o Sliders.cpp
+
+obj\TabSheetWidget.o: TabSheetWidget.cpp TabSheetWidget.h \
+		MainWindow.h \
+		DataGrid.h \
+		Buttons.h \
+		Sliders.h \
+		Misc.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\TabSheetWidget.o TabSheetWidget.cpp
+####### Install
+
+install:   FORCE
+
+uninstall:   FORCE
+
+FORCE:
+

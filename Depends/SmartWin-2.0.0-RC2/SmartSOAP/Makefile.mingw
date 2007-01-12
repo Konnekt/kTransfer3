@@ -1,0 +1,32 @@
+OBJ = \
+		../SmartNetwork/HttpRequest.o \
+		../SmartNetwork/HttpResponse.o \
+		../SmartNetwork/TcpTextStream.o \
+		../SmartUtil/dateTime.o \
+		../SmartUtil/TimeSpan.o \
+		../SmartXML/XmlAttribute.o \
+		../SmartXML/XmlDocument.o \
+		../SmartXML/XmlNamespace.o \
+		../SmartXML/XmlNode.o 
+
+	
+BIN = ../lib/libsmartsoap.a
+#CXXFLAGS = -Wall -Wold-style-cast -Wundef -Wsign-compare -Wconversion -Wpointer-arith -pedantic -O2
+CXXFLAGS = -W0 -O2
+CPPFLAGS = -I../include -DNDEBUG
+
+$(BIN): $(OBJ)
+	ar rs $(BIN) $(OBJ)
+
+.PHONY: install clean-tmp clean
+install: $(BIN)
+	mkdir -p $(DESTDIR)/usr/lib
+	install $(BIN) $(DESTDIR)/usr/lib
+
+clean-tmp:
+	rm -f $(OBJ)
+
+clean: clean-tmp
+	rm -f $(BIN)
+	
+	

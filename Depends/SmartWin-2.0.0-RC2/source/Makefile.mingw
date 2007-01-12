@@ -1,0 +1,41 @@
+OBJ = \
+		Application.o \
+		BasicTypes.o \
+		Bitmap.o \
+		CanvasClasses.o \
+		CommandLine.o \
+		DestructionClass.o \
+		Font.o \
+		Icon.o \
+		ImageList.o \
+		LibraryLoader.o \
+		Message.o \
+		Widget.o \
+		WidgetSplitter.o \
+		boost/signals/connection.o \
+		boost/signals/named_slot_map.o \
+		boost/signals/signal_base.o \
+		boost/signals/slot.o \
+		boost/signals/trackable.o
+	
+BIN = ../lib/libsmartwin.a
+#CXXFLAGS = -Wall -Wold-style-cast -Wsign-compare -Wconversion -Wpointer-arith -pedantic -O2
+CXXFLAGS = -W0 -O2
+CPPFLAGS = -I../include -DNDEBUG
+
+$(BIN): $(OBJ)
+	ar rs $(BIN) $(OBJ)
+
+.PHONY: install clean-tmp clean
+
+install: $(BIN)
+	mkdir -p $(DESTDIR)/usr/lib
+	install $(BIN) $(DESTDIR)/usr/lib
+
+clean-tmp:
+	rm -f $(OBJ)
+
+clean: clean-tmp
+	rm -f $(BIN)
+	
+	

@@ -1,0 +1,25 @@
+MAKEFILE = Makefile.mingw
+.PHONY: build check install clean-tmp clean
+build:
+	$(MAKE) -f $(MAKEFILE) -C source 
+	$(MAKE) -f $(MAKEFILE) -C SmartSOAP
+
+check: build
+	$(MAKE) -f $(MAKEFILE) -C tests
+
+install:
+	$(MAKE) -f $(MAKEFILE) -C source install
+	$(MAKE) -f $(MAKEFILE) -C SmartSOAP install
+	$(MAKE) -f $(MAKEFILE) -C include install
+
+clean-tmp:
+	$(MAKE) -f $(MAKEFILE) -C source clean-tmp
+	$(MAKE) -f $(MAKEFILE) -C SmartSOAP clean-tmp
+
+clean:
+	$(MAKE) -f $(MAKEFILE) -C source clean
+	$(MAKE) -f $(MAKEFILE) -C SmartSOAP clean
+	$(MAKE) -f $(MAKEFILE) -C tests clean
+	
+	
+	

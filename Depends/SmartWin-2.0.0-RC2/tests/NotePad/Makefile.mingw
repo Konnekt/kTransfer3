@@ -1,0 +1,110 @@
+
+
+CC            = gcc
+CXX           = g++
+LEX           = flex
+YACC          = byacc
+DEFINES       = -DNDEBUG
+CFLAGS        = -O2 -w $(DEFINES)
+CXXFLAGS      = -O2 -frtti -fexceptions -w $(DEFINES)
+LEXFLAGS      = 
+YACCFLAGS     = -d
+INCPATH       = -I"." -I"..\..\include" -I"..\..\include\smartwin" 
+LINK          = g++
+LFLAGS        = -mthreads -Wl,-enable-stdcall-fixup -Wl,-enable-auto-import -Wl,-enable-runtime-pseudo-reloc -Wl,-subsystem,windows
+LIBS          = obj\NotePad.o -L../../lib -lsmartwin -lcomctl32 -luser32 -lGdi32 -lopengl32 -lglu32 -lkernel32 -lgdi32 -lcomdlg32 -ladvapi32 -lshell32 -lole32 -loleaut32 -luuid -limm32 -lwinmm -lwsock32 -lwinspool -lcomdlg32
+IDL           = midl
+ZIP           = zip -r -9
+DEF_FILE      = 
+RES_FILE      = obj\NotePad.o
+COPY          = copy /y
+COPY_FILE     = $(COPY)
+COPY_DIR      = xcopy /s /q /y /i
+DEL_FILE      = del
+DEL_DIR       = rmdir
+MOVE          = move
+CHK_DIR_EXISTS= if not exist
+MKDIR         = mkdir
+INSTALL_FILE  = $(COPY_FILE)
+INSTALL_DIR   = $(COPY_DIR)
+
+####### Output directory
+
+OBJECTS_DIR   = obj
+
+####### Files
+
+SOURCES       = Main.cpp \
+		MainWindow.cpp \
+		FindDialog.cpp 
+OBJECTS       = obj\Main.o \
+		obj\MainWindow.o \
+		obj\FindDialog.o
+DIST          = 
+QMAKE_TARGET  = main-mingw
+DESTDIR       =  #avoid trailing-slash linebreak
+TARGET        = main-mingw.exe
+
+####### Implicit rules
+
+.SUFFIXES: .c .cpp .cc .cxx
+
+.cpp.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+.cc.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+.cxx.o:
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o $@ $<
+
+.c.o:
+	$(CC) -c $(CFLAGS) $(INCPATH) -o $@ $<
+
+####### Build rules
+
+first: all
+all: check_obj $(TARGET)
+
+$(TARGET):  $(OBJECTS) obj\NotePad.o
+	$(LINK) $(LFLAGS) -o "$(TARGET)" $(OBJECTS)  $(LIBS)
+
+obj\NotePad.o: NotePad.rc
+	windres -i NotePad.rc -o obj\NotePad.o --include-dir=.
+
+check_obj: 
+	@$(CHK_DIR_EXISTS) "obj\" $(MKDIR) "obj\"
+	
+clean: compiler_clean
+	-$(DEL_FILE) obj\Main.o obj\MainWindow.o obj\FindDialog.o
+	-$(DEL_FILE) obj\NotePad.o
+	-$(DEL_FILE) "$(TARGET)"
+
+compiler_clean: 
+
+
+
+####### Compile
+
+obj\Main.o: Main.cpp MainWindow.h \
+		FindDialog.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\Main.o Main.cpp
+
+obj\MainWindow.o: MainWindow.cpp MainWindow.h \
+		FindDialog.h \
+		resource.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\MainWindow.o MainWindow.cpp
+
+obj\FindDialog.o: FindDialog.cpp FindDialog.h \
+		resource.h \
+		MainWindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj\FindDialog.o FindDialog.cpp
+
+####### Install
+
+install:   FORCE
+
+uninstall:   FORCE
+
+FORCE:
+

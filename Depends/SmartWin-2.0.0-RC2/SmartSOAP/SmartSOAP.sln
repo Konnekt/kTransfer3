@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartSOAPTester1", "Tester1\Tester1.vcproj", "{1DA096C6-8AA6-426F-B99E-B334F4DE5E8C}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartSOAP", "SmartSOAP\SmartSOAP.vcproj", "{8C296FC3-E54D-498D-AD1F-0A5698D5EFB4}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester1Endpoint", "http://localhost/Tester1Endpoint/Tester1Endpoint.csproj", "{23EFE810-FF52-4E6E-AFAA-2C0AA6E66941}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Release = Release
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{1DA096C6-8AA6-426F-B99E-B334F4DE5E8C}.Debug.ActiveCfg = Debug|Win32
+		{1DA096C6-8AA6-426F-B99E-B334F4DE5E8C}.Debug.Build.0 = Debug|Win32
+		{1DA096C6-8AA6-426F-B99E-B334F4DE5E8C}.Release.ActiveCfg = Release|Win32
+		{1DA096C6-8AA6-426F-B99E-B334F4DE5E8C}.Release.Build.0 = Release|Win32
+		{8C296FC3-E54D-498D-AD1F-0A5698D5EFB4}.Debug.ActiveCfg = Debug|Win32
+		{8C296FC3-E54D-498D-AD1F-0A5698D5EFB4}.Debug.Build.0 = Debug|Win32
+		{8C296FC3-E54D-498D-AD1F-0A5698D5EFB4}.Release.ActiveCfg = Release|Win32
+		{8C296FC3-E54D-498D-AD1F-0A5698D5EFB4}.Release.Build.0 = Release|Win32
+		{23EFE810-FF52-4E6E-AFAA-2C0AA6E66941}.Debug.ActiveCfg = Debug|.NET
+		{23EFE810-FF52-4E6E-AFAA-2C0AA6E66941}.Debug.Build.0 = Debug|.NET
+		{23EFE810-FF52-4E6E-AFAA-2C0AA6E66941}.Release.ActiveCfg = Release|.NET
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal
