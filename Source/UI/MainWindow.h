@@ -37,6 +37,7 @@ namespace kTransfer3 {
       onSized(&MainWindow::_onResized);
       onRaw(&MainWindow::_onSizing, Message(WM_SIZING));
       onRaw(&MainWindow::_onClosing, Message(WM_CLOSE));
+      onRaw(&MainWindow::_onGetMinMaxInfo, Message(WM_GETMINMAXINFO));
 
       lv = new ListWnd::ListView(0, 0, 0, 0, handle(), 0);
       hListView = lv->getHwnd();
@@ -80,7 +81,13 @@ namespace kTransfer3 {
       }
       return 1;
     }
-
+    
+    HRESULT _onGetMinMaxInfo(LPARAM lPar, WPARAM wPar) {
+      MINMAXINFO* min_max = (MINMAXINFO*)lPar;
+      min_max->ptMinTrackSize.x = (min_max->ptMinTrackSize.x > min_x) ? min_max->ptMinTrackSize.x : min_x; 
+      min_max->ptMinTrackSize.y = (min_max->ptMinTrackSize.y > min_y) ? min_max->ptMinTrackSize.y : min_y; 
+      return 0;
+    }
    
   public:
     static const int min_x = 500;
