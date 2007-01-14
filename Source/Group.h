@@ -27,9 +27,6 @@ namespace kTransfer3 {
     typedef std::vector<iGroup*> tGroup;
 
   public:
-    Group() {
-    }
-
     inline bool registerGroup(iGroup* group) {
       if (isGroup(group->getID())) return false;
       _group.push_back(group);

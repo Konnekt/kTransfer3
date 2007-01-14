@@ -17,5 +17,11 @@
 #include "Item.h"
 
 namespace kTransfer3 {
-
+  bool Item::removeFromTransfer() {
+    if (getTransfer()) {
+      getTransfer()->removeItem(getID());
+      return true;
+    }
+    return false;
+  }
 };

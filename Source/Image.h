@@ -23,10 +23,12 @@
 #include "Item.h"
 
 namespace kTransfer3 {
-  class Image(const StringRef &name = "", Transfer* parent): public File(name, parent, NULL): public Item(38, name, parent) {
+  class Image: public File {
   public:
-    Image() {
-    }
+    static const UINT type = 3;
+
+  public:
+    Image(const StringRef& name = "", Transfer* transfer): File(name, transfer), Item(type, name, transfer) { }
   };
 
   typedef std::vector<Image*> tImages;

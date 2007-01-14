@@ -16,7 +16,7 @@ namespace kTransfer3 {
   Controller::Controller() {
     setStaticValue(IM_PLUG_NET, net);
     setStaticValue(IM_PLUG_TYPE, IMT_CONFIG | IMT_UI);
-    setStaticValue(IM_PLUG_SIG, (int)"KT3");
+    setStaticValue(IM_PLUG_SIG, (int) "KT3");
     setStaticValue(IM_PLUG_NAME, (int) "kTransfer3");
     setStaticValue(IM_PLUG_PRIORITY, PLUGP_HIGH);
     setStaticValue(IM_PLUG_DONTFREELIBRARY, 1);
@@ -25,17 +25,16 @@ namespace kTransfer3 {
     registerObserver(IM_UI_PREPARE, bind(resolve_cast0(&Controller::_onPrepare), this));
     registerObserver(IM_BEFOREEND, bind(resolve_cast0(&Controller::_onBeforeEnd), this));
 
+    registerObserver(im::add, bind(resolve_cast0(&Controller::_onTransferAdd), this));
+    registerObserver(im::remove, bind(resolve_cast0(&Controller::_onTransferRemove), this));
+    registerObserver(im::has, bind(resolve_cast0(&Controller::_onTransferIs), this));
+    registerObserver(im::get, bind(resolve_cast0(&Controller::_onTransferGet), this)); 
+    registerObserver(im::query, bind(resolve_cast0(&Controller::_onTransferQuery), this)); 
+    registerObserver(im::refresh, bind(resolve_cast0(&Controller::_onTransferRefresh), this)); 
+    registerObserver(im::count, bind(resolve_cast0(&Controller::_onTransferCount), this)); 
 
-    registerObserver(im::transferAdd, bind(resolve_cast0(&Controller::_onTransferAdd), this));
-    registerObserver(im::transferDelete, bind(resolve_cast0(&Controller::_onTransferRemove), this));
-    registerObserver(im::transferIs, bind(resolve_cast0(&Controller::_onTransferIs), this));
-    registerObserver(im::transferGet, bind(resolve_cast0(&Controller::_onTransferGet), this)); 
-    registerObserver(im::transferQuery, bind(resolve_cast0(&Controller::_onTransferQuery), this)); 
-    registerObserver(im::transferRefresh, bind(resolve_cast0(&Controller::_onTransferRefresh), this)); 
-    registerObserver(im::transferCount, bind(resolve_cast0(&Controller::_onTransferCount), this)); 
-
-    registerObserver(im::transferRegisterPlug, bind(resolve_cast0(&Controller::_onTransferRegisterPlug), this)); 
-    registerObserver(im::transferDeletePlug, bind(resolve_cast0(&Controller::_onTransferDeletePlug), this)); 
+    registerObserver(im::registerPlug, bind(resolve_cast0(&Controller::_onTransferRegisterPlug), this)); 
+    registerObserver(im::unregisterPlug, bind(resolve_cast0(&Controller::_onTransferDeletePlug), this)); 
 
     registerActionObserver(ui::transferButton, bind(resolve_cast0(&Controller::_onPressTransferButton), this));
   }
@@ -46,14 +45,15 @@ namespace kTransfer3 {
     UIGroupAdd(IMIG_CFG_PLUGS, ui::cfgGroup, 0, "kTransfer3", ico::logo);
    
     UIActionCfgAddPluginInfoBox2(ui::cfgGroup, 
-    "Wtyczka <b>kTransfer3</b> udostêpnia UI do kontroli i zarz¹dzania transferami.",
-    "<span class='note'>Skompilowano: <b>" __DATE__ "</b> [<b>" __TIME__ "</b>]</span><br/>"
-    "Copyright © 2006-2007 <b>Ursus6</b><br/>", formatedString("reg://IML16/%d.ico", ico::logo).a_str());
+      "Wtyczka <b>kTransfer3</b> udostêpnia UI do kontroli i zarz¹dzania transferami.",
+      "<span class='note'>Skompilowano: <b>" __DATE__ "</b> [<b>" __TIME__ "</b>]</span><br/>"
+      "Copyright © 2006-2007 <b>Ursus6</b><br/>", formatedString("reg://IML16/%d.ico", ico::logo).a_str());
 
     UIActionCfgAdd(ui::cfgGroup, 0, ACTT_GROUP, "Informacje");
     UIActionCfgAdd(ui::cfgGroup, ui::plugsInfo, ACTT_HTMLINFO | ACTSC_FULLWIDTH, "", 0, 0, 0, 300, 300);
     UIActionCfgAdd(ui::cfgGroup, 0, ACTT_GROUPEND);
-    sTransferPlug plug(Ctrl->ID(), 130);
+
+    sTransferPlug plug(Ctrl->ID(), net);
     _plugs.push_back(plug);
     _setPluginsInfoText();
 
@@ -86,17 +86,14 @@ namespace kTransfer3 {
     UIActionCfgAdd(ui::cfgGroup, 0, ACTT_COMMENT, " - Limit wolnego miejsca na dysku w MB");
     UIActionCfgAdd(ui::cfgGroup, 0, ACTT_GROUPEND);
 
-    UIGroupAdd(IMIG_NFO, ui::userCfgGroup, ACTR_INIT, "kTransfer3", ico::logo); 
-    UIActionCfgAdd(ui::userCfgGroup, 0, ACTT_GROUP, "Pobieranie automatyczne"); 
-    UIActionCfgAdd(ui::userCfgGroup, cfg::adUserAutoAccept, ACTT_COMBO | ACTSCOMBO_LIST | ACTSCOMBO_BYPOS, "Domyœlnie" CFGICO "27" "\n" "Zawsze pytaj" CFGICO "11"
+    UIGroupAdd(IMIG_NFO, ui::cntCfgGroup, ACTR_INIT, "kTransfer3", ico::logo); 
+    UIActionCfgAdd(ui::cntCfgGroup, 0, ACTT_GROUP, "Pobieranie automatyczne"); 
+    UIActionCfgAdd(ui::cntCfgGroup, cfg::adUserAutoAccept, ACTT_COMBO | ACTSCOMBO_LIST | ACTSCOMBO_BYPOS, "Domyœlnie" CFGICO "27" "\n" "Zawsze pytaj" CFGICO "11"
     "\n" "Akceptuj wszystko" CFGICO "20" "\n" "Odrzucaj wszystko" CFGICO "46" "\n", cfg::adAutoAccept, 0, 0, 150);
-    UIActionCfgAdd(ui::userCfgGroup, 0, ACTT_COMMENT, "Katalog sk³adowania plików (pe³na scie¿ka):");
-    UIActionCfgAdd(ui::userCfgGroup, cfg::adUserDefaultDir, ACTT_DIR, 0, cfg::adUserDefaultDir);
-    UIActionCfgAdd(ui::userCfgGroup, 0, ACTT_GROUPEND);
+    UIActionCfgAdd(ui::cntCfgGroup, 0, ACTT_COMMENT, "Katalog sk³adowania plików (pe³na scie¿ka):");
+    UIActionCfgAdd(ui::cntCfgGroup, cfg::adUserDefaultDir, ACTT_DIR, 0, cfg::adUserDefaultDir);
+    UIActionCfgAdd(ui::cntCfgGroup, 0, ACTT_GROUPEND);
 
-    UIActionAdd(ICMessage(IMI_GETPLUGINSGROUP), ui::transferButton, 0, "Transfery", ico::logo);
+    UIActionAdd(Ctrl->ICMessage(IMI_GETPLUGINSGROUP), ui::transferButton, 0, "Transfery", ico::logo);
   }
-
-
 };
-

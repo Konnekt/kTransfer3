@@ -17,8 +17,9 @@ using namespace kTransfer3;
 int SmartWinMain(Application& app) {
 	return 0;
 }
-DWORD thid;
-HANDLE kTransfer3::handle_mainwnd_thread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MainLoop, NULL, 0, &thid);
+
+DWORD self;
+HANDLE Controller::mainwnd_thread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MainLoop, NULL, 0, &self);
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
   return true;

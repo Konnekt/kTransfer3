@@ -40,7 +40,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/GR"
+				AdditionalOptions="/GR /Zm116"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\Depends\SmartWin-2.0.0-RC2\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;KTRANSFER2_EXPORTS"
@@ -282,6 +282,10 @@
 				</File>
 				<File
 					RelativePath="..\Source\Item.h"
+					>
+				</File>
+				<File
+					RelativePath="..\Source\ItemCollection.h"
 					>
 				</File>
 				<File

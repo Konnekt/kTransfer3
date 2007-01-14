@@ -17,6 +17,7 @@
 #include "stdafx.h"
 #include "Transfer.h"
 #include "Queue.h"
+//#include "Image.h"
 
 using namespace Stamina;
 
@@ -30,6 +31,7 @@ namespace kTransfer3 {
       sTransferPlug(int plug_id, int net): plug_id(plug_id), net(net) {}
     };
 
+  public:
     typedef std::vector<sTransferPlug> tTransfersPlugs;
 
   public:
@@ -43,10 +45,10 @@ namespace kTransfer3 {
 
   public:
     ~Controller() {
-      
-      ::WaitForSingleObject(handle_mainwnd_thread, INFINITE);
+ 
+      ::WaitForSingleObject(mainwnd_thread, INFINITE);
       delete main_wnd;
-      //TerminateThread(handle_mainwnd_thread, 25);
+      //TerminateThread(mainwnd_thread, 25);
     }
 
   private:
@@ -72,8 +74,7 @@ namespace kTransfer3 {
     tIMCallback _onTransferGet() {
       if (getIM()->p2) {
         setReturnCode((int)_queue.getTransferT(getIM()->p1).get());
-      }
-      else {
+      } else {
         setReturnCode((int)_queue.getTransfer(getIM()->p1).get());
       }
     }
@@ -90,8 +91,7 @@ namespace kTransfer3 {
     }
 
     bool haveTransferPlug(int plug_id, int net) {
-      tTransfersPlugs::iterator it = _plugs.begin();
-      for (;it != _plugs.end(); it++) {
+      for (tTransfersPlugs::iterator it = _plugs.begin(); it != _plugs.end(); it++) {
         if (((*it).plug_id == plug_id) && ((*it).net == net)) return true;
       }
       return false;
@@ -99,6 +99,7 @@ namespace kTransfer3 {
 
     tIMCallback _onTransferRegisterPlug() {
       if (haveTransferPlug(getIM()->sender, getIM()->p1)) return setFailure();
+
       sTransferPlug tp(getIM()->sender, getIM()->p1);
       _plugs.push_back(tp);
       setSuccess();
@@ -106,11 +107,11 @@ namespace kTransfer3 {
 
     tIMCallback _onTransferDeletePlug() {
       if (!haveTransferPlug(getIM()->sender, getIM()->p1)) return setFailure(); 
-      tTransfersPlugs::iterator it = _plugs.begin();
-      for (;it != _plugs.end(); it++) {
+
+      for (tTransfersPlugs::iterator it = _plugs.begin(); it != _plugs.end(); it++) {
         if (((*it).plug_id == getIM()->sender) && ((*it).net == getIM()->p1)) {
           _plugs.erase(it);
-          setSuccess();
+          return setSuccess();
         }
       }
       setFailure();
@@ -121,41 +122,36 @@ namespace kTransfer3 {
     }
 
     inline bool _isTransferPlugHandling(int net) {
-      tTransfersPlugs::iterator it = _plugs.begin();
-      for (;it != _plugs.end(); it++) {
+      for (tTransfersPlugs::iterator it = _plugs.begin(); it != _plugs.end(); it++) {
         if ((*it).net == net) return true;
       }
       return false;
     }
 
-    inline bool _isTransferPlugHandlingType(Transfer::enType type) {
-      tTransfersPlugs::iterator it = _plugs.begin();
-      for (;it != _plugs.end(); it++) {
-        if (IMessageDirect(im::transferGetType, (*it).plug_id, (*it).net, type) == 1) {
-          return true;
-        }
+    inline bool _isTransferPlugHandlingType(UINT type) {
+      for (tTransfersPlugs::iterator it = _plugs.begin(); it != _plugs.end(); it++) {
+        if (IMessageDirect(im::getType, (*it).plug_id, (*it).net, type) == 1) return true;
       }
       return false;
     }
 
     inline void _setPluginsInfoText() {
-      Stamina::String text = formatedString("Iloœæ podpiêtych handlerów: <b>%d</b><br/>", _plugs.size()) + \
-      formatedString("Lista wtyczek obs³uguj¹cych transfery:<br/>");
+      String text = 
+        formatedString("Iloœæ podpiêtych handlerów: <b>%d</b><br/>\n", _plugs.size()) +
+        "Lista wtyczek obs³uguj¹cych transfery:<br/>";
 
-      tTransfersPlugs::iterator it = _plugs.begin();
-      char ver[100]={0};
-      for (;it != _plugs.end(); it++) {
-        ICMessage(IMC_PLUG_VERSION, ICMessage(IMC_PLUGID_POS, (*it).plug_id, 0), (int) ver);
-        text+= formatedString("<b>%s</b> - %s<br/>Obs³uga:", SAFECHAR((char*)IMessageDirect(IM_PLUG_NAME, (*it).plug_id, 0, 0)), ver);
+      char ver[50] = {0};
+      for (tTransfersPlugs::iterator it = _plugs.begin(); it != _plugs.end(); it++) {
+        Ctrl->ICMessage(IMC_PLUG_VERSION, Ctrl->ICMessage(IMC_PLUGID_POS, (*it).plug_id, 0), (int) ver);
+        text += formatedString("<b>%s</b> - %s<br/>\n", SAFECHAR((char*)Ctrl->IMessageDirect(IM_PLUG_NAME, (*it).plug_id, 0, 0)), ver);
         
-        Stamina::String handling;
-        if (IMessageDirect(im::transferGetType, (*it).plug_id, (*it).net, Transfer::enType::typeFile) == 1) handling = " plików";
-        if (IMessageDirect(im::transferGetType, (*it).plug_id, (*it).net, Transfer::enType::typeFilesFolders) == 1) handling+= " ,katalogów";
-        if (IMessageDirect(im::transferGetType, (*it).plug_id, (*it).net, Transfer::enType::typeImage) == 1) handling+= (!handling.size())? " obrazków ":" ,obrazków";
-        if (!handling.size()) handling = " nieznane/brak";
-        text+= handling + ".<br/>";
+        String handling = "Obs³uga: ";
+        if (IMessageDirect(im::getType, (*it).plug_id, (*it).net, File::type) == 1) handling += "plików";
+        if (IMessageDirect(im::getType, (*it).plug_id, (*it).net, Directory::type) == 1) handling += ", katalogów";
+        //if (IMessageDirect(im::getType, (*it).plug_id, (*it).net, Image::type) == 1) handling += (!handling.size())? " obrazków " : ", obrazków";
+        if (!handling.size()) handling += " nieznane/brak";
+        text += handling + ".<br/>";
       }
-
       UIActionSetText(ui::cfgGroup, ui::plugsInfo, text.a_str());
     }
     
@@ -164,6 +160,9 @@ namespace kTransfer3 {
   private:
     Queue _queue;
     tTransfersPlugs _plugs;
+
+  public:
+    static HANDLE mainwnd_thread;
   };
 };
 
