@@ -40,9 +40,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/GR /Zm116"
+				AdditionalOptions="/GR /Zm115"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\Depends\SmartWin-2.0.0-RC2\include"
+				AdditionalIncludeDirectories="&quot;E:\K\kT3\kTransfer3\Depends\SmartWin-2.0.0-RC2-CVS\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;KTRANSFER2_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -65,7 +65,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/FORCE:MULTIPLE"
-				AdditionalDependencies="stamina_d.lib konnekt_api_d.lib comctl32.lib msimg32.lib"
+				AdditionalDependencies="stamina_d.lib smartwinD.lib konnekt_api_d.lib listwnd_d.lib stamina_ui_d.lib comctl32.lib msimg32.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(ProjectDir)Lib"
 				GenerateDebugInformation="true"
@@ -102,7 +102,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			ATLMinimizesCRunTimeLibraryUsage="true"
+			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
@@ -123,9 +123,11 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\Depends\SmartWin-2.0.0-RC2\include"
+				AdditionalOptions="/GS /Zm113 /GR"
+				AdditionalIncludeDirectories="&quot;..\Depends\SmartWin-2.0.0-RC2-CVS\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;KTRANSFER2_EXPORTS"
 				RuntimeLibrary="0"
+				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
@@ -142,8 +144,8 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/FORCE:MULTIPLE"
-				AdditionalDependencies="comctl32.lib msimg32.lib"
+				AdditionalOptions="/FORCE:MULTIPLE&#x0D;&#x0A;"
+				AdditionalDependencies="smartwin.lib stamina.lib konnekt_api.lib listwnd.lib stamina_ui.lib comctl32.lib msimg32.lib"
 				OutputFile="c:\program files\konnekt\plugins\kTransfer3.dll"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(ProjectDir)Lib"
@@ -192,6 +194,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\Source\Helpers.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\Source\kTransfer3.cpp"
 				>
 			</File>
@@ -218,6 +224,10 @@
 			<Filter
 				Name="Transfer"
 				>
+				<File
+					RelativePath="..\Source\File.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\Source\Item.cpp"
 					>
@@ -302,6 +312,14 @@
 				</File>
 				<File
 					RelativePath="..\Source\Transfer_defs.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="UI"
+				>
+				<File
+					RelativePath="..\Source\UI\MainWindow.h"
 					>
 				</File>
 			</Filter>
