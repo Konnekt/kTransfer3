@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>SmartWin++ Layout</title></head>
+	<body>
+		<P>You must set the position and size of each widget after its created, or it won't 
+			be visible. The simplest runtime approach is to set the position and size of 
+			the widgets during class initialization once.
+		</P>
+		<H3>How can&nbsp;I&nbsp;fix the Widget positions and sizes at linktime ?</H3>
+		<P>You could use the resource editor and set the position and size at compile time. 
+			Or you could use the class AspectSizable that has the needed functions to set 
+			the position and size of a widget at runtime as most of the samples do. ( All 
+			widgets derive from AspectSizable. ) Or you may be able to use the emerging 
+			Sally IDE which has the ability to generate SmartWin++ 
+			windows. A new alternative is to use the Anchors class.
+		</P>
+		<H3>Why do Layout at runtime?</H3>
+		<P>
+			In order to respond to a changing runtime situation, you&nbsp;can layout the 
+			widgets at runtime. Fixed positions and size become tedious to implement, 
+			especially as the program design changes, and they do not adapt well to a 
+			changing runtime situation. You will run into cases in which screen space is 
+			either wasted or crucial data&nbsp;is hidden.&nbsp; The program may not adapt 
+			well to smaller screen sizes such as are seen in mobile devices.</P>
+		<H3>How does the program know when to redo the layout ?
+		</H3>
+		<P>Typically you create all the widgets in an init function,&nbsp;call a layout 
+			function, and then pass a member function to onSized( func ) so that layout is 
+			called for each user resize event.&nbsp; Note that you don't put the onSized() 
+			call before you create the widgets, or the resize logic will encounter NULL 
+			widgets.<BR>
+			<BR>
+			void init()
+			<BR>
+			{
+			<BR>
+			&nbsp;&nbsp;&nbsp; Creation here
+			<BR>
+			<BR>
+			&nbsp;&nbsp;&nbsp; layout();<NOBR> <WBR></NOBR>// For the first time
+			<BR>
+			&nbsp;&nbsp;&nbsp; onSized( &amp;HelloWinClass::isResized );<NOBR> <WBR></NOBR>// 
+			Make resize event trigger isResized()
+			<BR>
+			}
+			<BR>
+			<BR>
+			void isResized( const WindowSizedEventResult &amp; sz )
+			<BR>
+			{
+			<BR>
+			&nbsp;&nbsp;&nbsp; layout();<NOBR> <WBR></NOBR>// Do layout every time the user 
+			resizes the window
+			<BR>
+			}
+			<BR>
+			<BR>
+			void layout()
+			<BR>
+			{
+			<BR>
+			&nbsp;&nbsp;&nbsp; Actual layout code here
+			<BR>
+			}
+		</P>
+		<H3>How to do&nbsp;Layout ?</H3>
+		<P>&nbsp;The main issue is: How should the position and size of the widget change 
+			as the application state changes ?
+		</P>
+		<UL>
+			The application state considers:
+			<LI>
+			The total window size. (which the user can decide)
+			<LI>
+			Changes in what and how much the user wants to see.
+			<LI>
+				Changes in the size of graphics or text shown in the widget.
+			</LI>
+		</UL>
+		<P>There are three general approaches:</P>
+		<OL>
+			<LI>
+			Have fixed sizes for the widgets, but position the widgets as the window size 
+			and proportions change.
+			<LI>
+			Let the contents of the widget dictate the size of the widget. (but this may 
+			crowd out the rest of the widgets)
+			<LI>
+				Partition the available space to each widget present.</LI></OL>
+		<H3>Anchors class</H3>
+			<p>
+			The Anchors class approach is to specify fixed sizes of various widgets,
+			insert them into Anchor instance with <br>
+			"void addAnchored( SmartWin::Widget* widget, int anchors )"
+			and then just call "void resizeAnchored()" in the onSized() handler.
+			You can specify anchors such as AnchoredItem::left or AnchoredItem::top to 
+			make the widgets stick to the parent's window according to the anchors.
+			</p>
+
+		<H3>How to divide up a window into different areas
+		</H3>
+		<P>You divide the Rectangle by generating smaller Rectangles using Rectangle 
+			generator functions.
+		</P>
+		<P>Start with the client rectangle of the window, which can be retrieved with 
+			getSizeClientArea(). Then use the Rectangle member functions to return other 
+			smaller Rectangles. For example,<BR>
+			SmartWin::Rectangle r( getSizeClientArea().size );
+			<BR>
+			Rectangle lowerHalf = r.bottom( 0.5 );
+			<BR>
+			Rectangle lowright_quarter = lowerHalf.right( 0.5 );
+			<BR>
+			<BR>
+			Notice that lowright_quarter has 1/4 the area of r, and is its upper left is 
+			positioned at the center of r. These also achieve the same result:
+			<BR>
+			Rectangle lowright_quarter = r.bottom( 0.5 ).right( 0.5 );
+			<BR>
+			Rectangle lowright_quarter = r.bottom().right();
+			<BR>
+			<BR>
+		</P>
+		<P>Some other Rectangle functions are:
+			<BR>
+			Rectangle <STRONG>left</STRONG> ( double portion= 0.5 );<BR>
+			Rectangle <STRONG>right</STRONG> ( double portion= 0.5 );<BR>
+			Rectangle <STRONG>top</STRONG> ( double portion= 0.5 );<BR>
+			Rectangle <STRONG>bottom</STRONG> ( double portion = 0.5 );<BR>
+			(The new rectangle's size is the old * portion)
+		</P>
+		<P>Rectangle <STRONG>getLeft</STRONG> ( long x );<BR>
+			Rectangle <STRONG>getRight</STRONG> ( long x );<BR>
+			Rectangle <STRONG>getTop</STRONG> ( long y );<BR>
+			Rectangle <STRONG>getBottom</STRONG> ( long y );<BR>
+			(The new rectangle's size is the x or y value)
+		</P>
+		<P>Rectangle<STRONG> row</STRONG> ( int row, int rows );<BR>
+			Rectangle <STRONG>col</STRONG> ( int column, int columns );<BR>
+			(Divides the rectangle into rows or columns, and returns the rectangle for the 
+			zero based row or col. r2= r1.row( 1, 3) would give you the middle row.)
+			<BR>
+			<BR>
+			Rectangle <STRONG>subRect</STRONG> ( double x_fraction, double y_fraction, 
+			double width_fraction, double height_fraction );<BR>
+			((Move left and down by x_fraction, y_fraction of the size. Make the new size 
+			be width_fraction, height_fraction of the old size. )
+			<BR>
+		</P>
+		<P>Once you get the desired rectangle, you can use the widget method setSize( 
+			Rectangle &amp;r)<BR>
+			<BR>
+			If its too much trouble to generate the rectangles, and then call setSize(), 
+			there are combination methods that does row and column extraction and setSize 
+			together:
+			<BR>
+			void <STRONG>setSizeAsCol</STRONG> ( const Rectangle &amp; rect, int rows, int 
+			rownum );<BR>
+			void <STRONG>setSizeAsRow</STRONG> ( const Rectangle &amp; rect, int cols, int 
+			colnum );<BR>
+			<BR>
+		</P>
+		<P>If you keep dividing the rectangles into smaller rectangles until you have the 
+			desired position for each widget, you will have the #3 layout scheme.</P>
+		<H3>How to place multiple widgets into an area defined by a Rectangle.</H3>
+		<P>Use the Place class, which sets the<NOBR> <WBR></NOBR>.pos member of a Rectangle 
+			while absorbing the<NOBR> <WBR></NOBR>.size member of the Rectangle. So this is 
+			intended for situations in which you know the desired size of a widget, but 
+			want to place it with borders and according to the shape of the bounding 
+			rectangle. (Layout approach #1)</P>
+		<P>The Place class has a empty constructor which corresponds to starting with a 
+			rectangle based at 0,0 and unlimited size. However you will normally use:</P>
+		<P><STRONG>setBoundsBorder</STRONG>( Rectangle &amp; rect, int border_x= 0, int 
+			border_y= 0 )</P>
+		<P>rect specifies the bounding rectangle, and border_x and border_y specify the 
+			desired inter-widget spacing. The first widget will therefore have x position 
+			of rect.pos.x + border_x.
+		</P>
+		<P><STRONG>positionToRight</STRONG>( Rectangle &amp; obj ) is the fundamental 
+			routine that sets obj.pos, and internally advances the "current position" 
+			according to the obj.size. So obj.size is a input and obj.pos is an output of 
+			this function. Afterwards, obj is just the rectangle we want for a setSize( obj 
+			); The method is to place the objects from left to right until there is not 
+			enough room in the bounding rectangle on this row, and then start a new row 
+			just below the previous row. Note that repeated calls for widgets of different 
+			sizes works with setPositionPerPlace(). You can start a new row with:</P>
+		<P><STRONG>newRow</STRONG>()</P>
+		<P>This approach lets the widgets take advange of all the available space and the 
+			proportions of the window. For the last widget to be placed in the rectangle, 
+			there is a function that allocates all the remaining space available in the 
+			bounding rectangle:</P>
+		<P><STRONG>sizeForRemainingSpace</STRONG>( Rectangle obj )</P>
+		<P>Like positionToRight(), it sets obj.pos and takes as input obj.size. You might 
+			do a NewRow() just before calling sizeForRemainingSpace().</P>
+		<P>But suppose you don't know what the best size should be for the widgets. Place 
+			has sizeOfCell( rows, cols, Point &amp;Size ) that will set a size Point by 
+			dividing up the bounding rectangle into rows and columns, and also takes into 
+			account the broders set in setBoundsBorder(). So you can use sizeofCell to 
+			generate the size, and then positionToRight() to set the position. This 
+			situation is common enough that the AspectSizable implements the:</P>
+		<P>void <STRONG>setSizeAsGridPerPlace</STRONG>( SmartWin::Place &amp; bound, int 
+			rows, int cols );</P>
+		<P>which takes a Place class and the number of rows/columns of the grid, calculates 
+			the desired size, places the rectangle, and then does the setSize() all in one 
+			call. There is a similar combined widget function that uses the existing size 
+			of the widget for placement:</P>
+		<P>void <STRONG>setPositionPerPlace</STRONG>( SmartWin::Place &amp;bound );</P>
+		<P>So you would set the widget size in intialization code, and then in the layout 
+			code call setPositionPerPlace(). To clarify, the difference bewteen the two is 
+			that setSizeAsGridPerPlace() resizes the Widget into a grid cell first, while 
+			setPositionPerPlace() preserves the existing size, and puts the widget into the 
+			rectangle in a teletype manner: left to right, and then a new row as needed.<BR>
+		</P>
+		<H3>Content driven sizing of widgets.</H3>
+		<P>Are you tired of not having your text fit in the button ? Well, there is a 
+			AspectSizable function:
+		</P>
+		<P>Point <STRONG>getTextSize</STRONG>( tstring &amp; text )
+		</P>
+		<P>that returns the dimensions of the text given the font used in the widget. You 
+			may need some extra padding to account for the widget itself, and you can use 
+			the widget function:</P>
+		<P>void <STRONG>setSizePerTextPerPlace</STRONG>( Place &amp;bound, tstring 
+			&amp;text, int extraX= 0, int extraY= 0 )</P>
+		<P>to combine the getTextSize() and setPositionPerPlace() functions. This is the 
+			layout approach #2. A wish list item is a way to scale the font according to 
+			the available size.</P>
+		<H3>Internal implementation of layout logic.</H3>
+		<P>Notice that the Rectangle division functions are pure math in BasicTypes.cpp, 
+			the Place.h class knows nothing about widgets; it only sets a Rectangle 
+			position, and then updates per the Rectangle size it was just given. The Widget 
+			knowledgable portion remains in AspectSizeable.h, which is shared by all 
+			widgets.
+		</P>
+		<P><BR>
+			&nbsp;</P>
+		<H3>Coordinate systems (X,Y relative to what ?)</H3>
+		<UL>
+			Here are some things to keep in mind when you are dealing with X,Y coordinates.
+			<LI>
+			getSizeClientArea() is for the getting the area you can manipulate, while 
+			getSize()&nbsp;gives the whole widget or Windows size.
+			<LI>
+			If you do MyWidget-&gt;setSize( r ), the position in r is relative to the upper 
+			left point of the client area of the window.
+			<LI>
+				So if you want to generate a Rectangle that covers the client area, do 
+				SmartWin::Rectangle r( getSizeClientArea() );
+				<BR>
+			By passing only the size of the client area, the Rectangle constructor sets the 
+			position to be 0,0.
+			<LI>
+				If you use a WidgetChildWindow or a WidgetGroupBox with WidgetRadioButtons, 
+				then the button positions are relative to the GroupBox or WidgetChildWindow 
+				rather than relative to the client area of the window.
+			</LI>
+		</UL>
+	</body>
+</html>

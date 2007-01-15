@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>SmartWin++ Guide</title>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+	</head>
+	<body>
+		<h2>Eclipse<a name="devc++"> </a>
+		</h2>
+		<P>- These instructions are under construction !&nbsp; Please help finish them if 
+			you are successful with Eclipse and SmartWin++</P>
+		<P>RE: Using SmartWin++ with Eclipse
+		</P>
+		<P>Yippee! I've managed to get the examples to build under Eclipse.
+		</P>
+		<P>Assuming you are already familiar with Eclipse and its CDT (C/C++ development 
+			tools) the steps to build one of the examples supplied with SmartWin++ are:
+		</P>
+		<UL>
+			<LI>
+			Create a new "Standard Make C++ Project"
+			<LI>
+			Set the environment variable SMARTWINDIR to the directory containing your 
+			SmartWin++, there should not be a trailing slash
+			<LI>
+			Import the source and resource files and the "Makefile.mingw.main"
+			<LI>
+			Rename "Makefile.mingw.main" to "Makefile"
+			<LI>
+			Rebuild the project
+			<LI>
+				Run "main-mingw.exe"
+			</LI>
+		</UL>
+		<P>By: Kevin O'Rourke
+		</P>
+		<P>&nbsp;</P>
+		<P>I tried to flush out these instructions but have not been able to duplicate 
+			Kevin's success yet.&nbsp; Here is what I tried so far:</P>
+		<P>INSTALLATION OF ECLIPSE:</P>
+		<p>Go to <A href="http://www.eclipse.org">http://www.eclipse.org</A>&nbsp;&nbsp;&nbsp;&nbsp; 
+			(The C++ area is&nbsp;<A href="http://www.eclipse.org/cdt">http://www.eclipse.org/cdt</A>&nbsp;)
+		</p>
+		<P>Download&nbsp;eclipse- SDK 3.1.&nbsp; (100 MB),
+		</P>
+		<P>Run eclipse.exe, and then choose the menu option: Help | Software Updates | Find 
+			and Install</P>
+		<P>Select the "() Search for new features to install"&nbsp;radio button, and press 
+			next.</P>
+		<P>Click on the [New Remote Site] button, and enter&nbsp;
+		</P>
+		<P>Name:&nbsp;&nbsp;&nbsp;&nbsp; cdt</P>
+		<P>URL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <A href="http://download.eclipse.org/tools/cdt/releases/eclipse3.1">
+				http://download.eclipse.org/tools/cdt/releases/eclipse3.1</A></P>
+		<P>Click on [Finish], and you should get a [ ] cdt checkbox.&nbsp;&nbsp; Check it, 
+			and click [next], and continue through the license.</P>
+		<P>We are gettiing&nbsp;CDT 3.0 to match with the SDK 3.1.</P>
+		<P>Do the restart workbench option.&nbsp;&nbsp;
+		</P>
+		<P>&nbsp;</P>
+		<P>File | New | C++ | Standard Make C++ Project.</P>
+		<P>Project Name sw</P>
+		<P>[Environment tab],&nbsp; [New]</P>
+		<P>Name:SMARTWINDIR</P>
+		<P>Value: \src2005\c++\win32\gui\smartwin\lib</P>
+		<P>[finish]</P>
+		<P>Right click on your project and&nbsp; Import , File system, from directory 
+			.....smartwin\tests\hellosmartwinworld</P>
+		<P>Select main.cpp and Makefile.mingw.main</P>
+		<P>Rename "Makefile.mingw.main" to "Makefile"</P>
+		<P>Build completely failed - I must be missing something.</P>
+		<P>&nbsp;</P>
+		<P>&nbsp;</P>
+		<P></P>
+	</body>
+</html>

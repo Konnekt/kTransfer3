@@ -1,0 +1,5 @@
+/.cvsignore////*///
+/Makefile.mingw////*///
+/SmartSOAP.dev////*///
+/SmartSOAP.sln////*///
+/make.msvc.bat////*///

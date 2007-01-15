@@ -1,0 +1,6 @@
+/config.hpp////*///
+/gen_signal_N.pl////*///
+/named_slot_map.hpp////*///
+/signal_base.hpp////*///
+/signals_common.hpp////*///
+/slot_call_iterator.hpp////*///

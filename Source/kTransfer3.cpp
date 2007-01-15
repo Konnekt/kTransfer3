@@ -19,7 +19,7 @@ int SmartWinMain(Application& app) {
 }
 
 DWORD self;
-HANDLE Controller::mainwnd_thread = CreateThread(0, 0, (LPTHREAD_START_ROUTINE)MainLoop, NULL, 0, &self);
+HANDLE Controller::mainwnd_thread = CreateThread(0, 10000, (LPTHREAD_START_ROUTINE)MainLoop, NULL, 0, &self);
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
   return true;

@@ -1,0 +1,31 @@
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual C++ Express 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SmartWin", "SmartWin.vcproj", "{53A1E37B-966B-41B8-946F-1DB045BFF362}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		DebugHeap|Win32 = DebugHeap|Win32
+		DebugUnicode|Win32 = DebugUnicode|Win32
+		Release|Win32 = Release|Win32
+		ReleaseUnicode|Win32 = ReleaseUnicode|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.Debug|Win32.ActiveCfg = Debug|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.Debug|Win32.Build.0 = Debug|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.DebugHeap|Win32.ActiveCfg = DebugHeap|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.DebugHeap|Win32.Build.0 = DebugHeap|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.DebugUnicode|Win32.ActiveCfg = DebugUnicode|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.DebugUnicode|Win32.Build.0 = DebugUnicode|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.Release|Win32.ActiveCfg = Release|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.Release|Win32.Build.0 = Release|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.ReleaseUnicode|Win32.ActiveCfg = ReleaseUnicode|Win32
+		{53A1E37B-966B-41B8-946F-1DB045BFF362}.ReleaseUnicode|Win32.Build.0 = ReleaseUnicode|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(DPCodeReviewSolutionGUID) = preSolution
+		DPCodeReviewSolutionGUID = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+EndGlobal

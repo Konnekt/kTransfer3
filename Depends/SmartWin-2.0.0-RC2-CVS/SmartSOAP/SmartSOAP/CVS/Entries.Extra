@@ -1,0 +1,6 @@
+/.cvsignore////*///
+/SmartSOAP.vcproj////*///
+/SmartSOAPDevices.vcproj////*///
+/SoapRequest.h////*///
+/SoapResponse.h////*///
+/xCeptionSoap.h////*///

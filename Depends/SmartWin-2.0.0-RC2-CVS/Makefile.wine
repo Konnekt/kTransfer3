@@ -1,0 +1,48 @@
+
+
+MAKEFILE = Makefile.wine
+
+SUBTARGETS	=  \
+		sub-source \
+		sub-tests
+
+all: $(SUBTARGETS)
+
+sub-source: FORCE
+	cd source && \
+	$(MAKE) -f $(MAKEFILE)
+	@cd ..
+
+
+sub-tests: FORCE
+	cd tests && \
+	$(MAKE) -f $(MAKEFILE)
+	@cd ..
+
+
+clean: 
+	cd source && \
+	$(MAKE)  -f $(MAKEFILE) clean
+	@cd ..
+	cd tests && \
+	$(MAKE)  -f $(MAKEFILE) clean
+	@cd ..
+
+install_subdirs: 
+	cd source && \
+	$(MAKE)  -f $(MAKEFILE) install
+	@cd ..
+	cd tests && \
+	$(MAKE)  -f $(MAKEFILE) install
+	@cd ..
+
+
+
+install:  install_subdirs
+
+uninstall:  uninstall_subdirs
+
+
+
+FORCE:
+

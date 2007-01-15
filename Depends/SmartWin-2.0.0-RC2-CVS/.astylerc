@@ -1,0 +1,26 @@
+# astyle defaults for SmartWin++
+#
+# Run astyle using:
+# <path to astyle>\astyle.exe --options=<path to this file>\.astylerc
+
+# C/C++ mode
+mode=c
+
+# Use tabs for indenting, 4 spaces per tab
+indent=tab=4
+
+# Don't add extra indenting on continuation lines
+min-conditional-indent=0
+
+# Indent "case" lines within "switch" blocks
+indent-switches
+
+# Braces on a new line
+brackets=break
+
+# Spaces around operators and parenthesis
+pad=all
+
+# don't mess up existing one-line things
+one-line=keep-statements
+

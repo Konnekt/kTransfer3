@@ -426,7 +426,7 @@ namespace Konnekt {
         list[id] = new sObserver;
       }
       if (!name.length()) {
-        name = "unnamed." + inttostr(list[id]->connections.size());
+        name = "unnamed.";// + inttostr(list[id]->connections.size());
       }
       if (list[id]->connections.find(name) != list[id]->connections.end()) {
         if (overwrite) {

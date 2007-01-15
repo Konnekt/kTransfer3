@@ -45,16 +45,12 @@ namespace kTransfer3 {
 
   public:
     ~Controller() {
- 
-      ::WaitForSingleObject(mainwnd_thread, INFINITE);
-      delete main_wnd;
-      //TerminateThread(mainwnd_thread, 25);
     }
 
   private:
     tIMCallback _onBeforeEnd() {
-      main_wnd->killWindow();
-      ::PostMessage(main_wnd->handle(), WM_CLOSE, 0, 0);
+     main_wnd->killWindow();
+     ::PostMessage(main_wnd->handle(), WM_CLOSE, 0, 0);
     }
     tIMCallback _iStart() {
     }

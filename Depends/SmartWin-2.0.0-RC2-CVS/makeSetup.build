@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!-- In order to use this automatic setup file you need to have NAnt installed in addition to all the other tools refered to in the script;
+ * Inno Setup
+ * Doxygen
+ * SharpZipLib
+In addition NAnt and Inno Setup and Doxygen must be in your search path and SharpZipLib must be installed into your GAC
+ -->
+<project 
+	xmlns="http://nant.sf.net/release/0.85-rc3/nant.xsd" 
+	name="makeSmartWinRelease" 
+	default="build">
+
+
+	<!-- Root task, responsible for calling all child tasks in given order -->
+    <target name="build" description="Root element calling all other tasks">
+		<call target="clean" />
+		<call target="createDirs" />
+		<call target="generateDocs" />
+		<call target="copyLibraryCode" />
+		<call target="runInnoSetup" />
+		<call target="createZipFile" />
+    </target>
+
+	<!-- Cleans up existing releases -->
+	<target name="clean" description="Cleans existing build">
+		<delete dir="SmartWin" failonerror="false" />
+		<delete dir="doxygenOut" failonerror="false" />
+	</target>
+
+	<!-- Create library directory structure -->
+	<target name="createDirs" description="Creates library directory structure">
+		<mkdir dir="SmartWin" />
+		<mkdir dir="SmartWin/docs" />
+		<mkdir dir="SmartWin/include" />
+		<mkdir dir="SmartWin/lib" />
+		<mkdir dir="SmartWin/source" />
+		<mkdir dir="SmartWin/tests" />
+		<mkdir dir="SmartWin/SmartNetwork" />
+		<mkdir dir="SmartWin/SmartSOAP" />
+		<mkdir dir="SmartWin/SmartSOAP" />
+		<mkdir dir="SmartWin/SmartUtil" />
+		<mkdir dir="SmartWin/SmartXml" />
+	</target>
+
+	<!-- Generate documentation and copy to outputdir-->
+	<target name="generateDocs" description="Generate documentation">
+		<exec program="doxygen" commandline="Doxyfile" workingdir="doxygenIn" />
+		<exec program="hhc" commandline="doxygenOut/doc/index.hhp" failonerror="false" />
+		<copy file="doxygenOut/doc/index.chm" todir="SmartWin/docs" />
+		<copy file="doxygenOut/doc/index.chi" todir="SmartWin/docs" />
+	</target>
+
+	<!-- Copy library code -->
+	<target name="copyLibraryCode">
+		<copy overwrite="true" todir="SmartWin">
+			<fileset>
+				<include name="**/*.txt" />
+				<include name="**/*README*" />
+				<include name="**/*.bat" />
+				<include name="**/*.mingw" />
+				<include name="**/*.dev" />
+				<include name="**/*.sln" />
+				<include name="**/*.vcproj" />
+				<include name="**/*.h" />
+				<include name="**/*.hpp" />
+				<include name="**/*.cpp" />
+				<include name="**/*.rc" />
+				<include name="**/*.ico" />
+				<include name="**/*.bmp" />
+				<include name="**/*.cur" />
+				<include name="**/*.resx" />
+				<include name="**/*.asax" />
+				<include name="**/*.asmx" />
+				<include name="**/*.csproj" />
+				<include name="**/*.cs" />
+				<include name="**/*.webinfo" />
+				<include name="**/*.config" />
+				<include name="setup.iss" />
+				<include name="**/make.msvc.4all" />
+				<include name="**/Makefile.mingw.4all" />
+
+				<exclude name="**/*_private*" />
+				<exclude name="**/*qmake-build*" />
+				<exclude name="**/*copy_main.pro*" />
+				<exclude name="doxygenIn/*" />
+				<exclude name="doxygenOut/*" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- Run Inno Setup compiler -->
+	<target name="runInnoSetup">
+		<exec program="iscc" commandline="setup.iss" workingdir="SmartWin" />
+	</target>
+
+	<!-- Creates a Zip file -->
+	<target name="createZipFile">
+		<zip zipfile="SmartWin-2.0.0-RC1.zip">
+			<fileset basedir="SmartWin">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+	</target>
+</project>
+

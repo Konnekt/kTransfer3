@@ -7,8 +7,5 @@ namespace kTransfer3 {
       String path = _parent_dir->getPath() + "\\" + getName();
       return path;
     }
-    else {
-      return (getParent()) ? getParent()->getName() : String("");
-    }
   }
 };

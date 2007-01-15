@@ -18,13 +18,12 @@
 using namespace SmartWin;
 
 namespace kTransfer3 {
-  class MainWindow: public iObject, public WidgetFactory<WidgetWindow, MainWindow> {
+  class MainWindow: public WidgetFactory<WidgetWindow, MainWindow> {
   public:
-    STAMINA_OBJECT_CLASS_VERSION(MainWindow, iObject, Version(0,1,0,0));
+
 
   public:
-    MainWindow() {
-      _kill = false;
+    MainWindow(): _kill(false) {
     }
 
     void init() {
@@ -101,23 +100,27 @@ namespace kTransfer3 {
     bool _kill;
   };
 
-  MainWindow* main_wnd = new MainWindow;
+  MainWindow* main_wnd;
 
   unsigned int MainLoop(void *arg) {
+    bool corruptMemMemLeak = false;
+
+    SmartWin::Application::neededSmartWinInit(GetModuleHandle(NULL), SW_HIDE, "");
+    main_wnd = new MainWindow;
     main_wnd->init();
     SmartWin::Application::instance().run();
 
-    bool corruptMemMemLeak;
+    Sleep(1000);
     try {
       Application::checkCorruptOrMemleak(corruptMemMemLeak);
-    } catch ( xCeption & err ) {
-			Application::reportErr( err, corruptMemMemLeak );
+    } catch (xCeption & err) {
+		  Application::reportErr( err, corruptMemMemLeak );
 		}
+
+		::InitCommonControls();   
     return 0;
   }
 };
-
-
 
 #endif /*__MAIN_WINDOW_H__*/
 

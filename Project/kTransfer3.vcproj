@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/GR /Zm115"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;E:\K\kT3\kTransfer3\Depends\SmartWin-2.0.0-RC2-CVS\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\Depends\SmartWin-2.0.0-RC2-CVS\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;KTRANSFER2_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"

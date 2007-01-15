@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>SmartWin++ Guide</title>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+	</head>
+	<body>
+		<h2><a name="devc++">Dev-C++ </a>
+		</h2>
+		<p>Go to <A href="http://www.bloodshed.net/dev/devcpp.html">http://www.bloodshed.net/dev/devcpp.html</A>.
+		</p>
+		<P>Download Dev-C++ 5.0 beta 9.2 (4.9.9.2) (9.0 MB) with Mingw/GCC 3.4.2
+			<br>
+			Open the example hello project from \dev-c++\examples\hello just to check your 
+			basic installation. Compile and run from the Execute menu.
+			<br>
+		</P>
+		<P>Open the libsmartwin.dev project, and Execute | rebuild all.</P>
+		<P>A&nbsp;libsmartwin.a file will appear in the&nbsp;/lib subdirectory.</P>
+		<P>&nbsp;</P>
+		<H3>Build a SmartWin++ sample from the tests directory.
+		</H3>
+		<P>Open any .dev file (I tried Notepad) from the SmartWin++ unit tests projects.</P>
+		<P>Execute | compile and run . You should get the SmartWin++ Notepad running !</P>
+		<P>&nbsp;</P>
+		<H3>Create a new&nbsp;SmartWin++ program.
+		</H3>
+		<P>File | New | Project, select a Windows application, C++ Project, and name 
+			it.&nbsp; Choose a directory. Discard the boilerplate windows main.cpp, and 
+			write your own SmartWin++ program.</P>
+		<P>&nbsp;Right click on the project, Project Options, and choose Directories | 
+			Include Directories.&nbsp; Use the filesystem icon to&nbsp;insert the include 
+			directory that has SmartWin.h, then click on Add.</P>
+		<P>From Project Options, Parameters,&nbsp;use Add library or Object and select the 
+			libsmartwin.a. &nbsp;Enter "-lcomctl32"&nbsp;in the linker box&nbsp;on the next 
+			line.</P>
+		<P>Execute | Compile &amp; Run should now build your program and run it.</P>
+		<P>(Or it may be easier to simply copy an existing .dev file, rename it, and 
+			textedit the differences for your new project.)</P>
+		<P>&nbsp;</P>
+		<P>&nbsp;</P>
+		<H3>Configure DEV-CPP for SmartWin++
+		</H3>
+		<P>(No&nbsp;longer&nbsp;needed with the .dev files included with SmartWin++ 1.0 )</P>
+		<P>Tools | Compiler Options | Directories | C++ includes , and browse for the 
+			SmartWin++ directory.</P>
+		<P>(The little File icon to the right of the blank line.) Then click Add, and then 
+			OK.</P>
+		<P>Tools | Compiler Options | Directories | Libraries, and browse for the 
+			SmartWin++ directory plus \lib</P>
+		<P>&nbsp;</P>
+		<P>&nbsp;</P>
+		<P>Put ../../lib/libSmartWIn.a -lcomctl32 in the project Options, Parameters, 
+			Linker box.</P>
+	</body>
+</html>

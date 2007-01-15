@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>SmartWin++ Guide</title>
+		<meta content="Microsoft Visual Studio .NET 7.1" name="GENERATOR">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+	</head>
+	<body>
+		<h2><a name="msvc71">Microsoft Visual C++ 7.1 </a>
+		</h2>
+		<h3>Configure VC 7 for SmartWin++
+		</h3>
+		<p>Put the SmartWin\include directory into Tools | Options | Projects | Directories 
+			| Include
+			<br>
+			Put the SmartWin\lib directory into Tools | Options | Projects | Directories | 
+			linker
+			<br>
+		</p>
+		<h3>Creating a new SmartWin++ Project
+		</h3>
+		<p>Use File | New | Project | Visual C++ Projects, and then select the <b>Win32 Project 
+				template</b> close to the bottom. Select a directory and then enter a 
+			project name. In Application Settings, check "Empty project", and press Finish.
+		</p>
+		<p>After you have added (and wrote !) a .cpp file, right click on the project for 
+			Properties. Then set C/C++ | Language | <b>Enable Run-Time Type Info </b>to Yes 
+			(/GR) for both Debug and Release.
+		</p>
+		<p>Then set Linker | Input | Additional Dependencies to <b>SmartWind.lib</b> (Debug) 
+			and <b>SmartWind.lib</b> (Release).
+		</p>
+		<p>Now would be a good time to build the debug and release versions to check your 
+			entries.
+		</p>
+		<h3>Troubleshooting
+		</h3>
+		<ul>
+			<h4>Compiler Errors</h4>
+			<li>
+				C1083: Cannot open include file: 'SmartWin.h': No such file or directory
+				<br>
+			Put the SmartWin directory into Tools | Options | Projects | Directories | 
+			Include
+			<li>
+				C2512:SmartWin::WidgetXXX&lt;...&gt; no appropriate default constructor 
+				available
+				<br>
+				Perhaps you forgot the * in the declaration of WidgetXXX me; instead of 
+				WidgetXXX *me;
+			</li>
+		</ul>
+		<ul>
+			<h4>Linker Errors</h4>
+			<li>
+				warning C4541: 'typeid' used on polymorphic type ... with /GR.
+				<br>
+			You forgot to specify to use runtime type information.
+			<LI>
+				error LNK2019: unresolved external symbol "public: int __thiscall 
+				SmartWin::Application::run .....
+				<br>
+			You forgot to add the SmartWin++ library when you created the project.
+			<LI>
+				LNK1104: cannot open file 'SmartWinD.lib'
+				<br>
+				Put the SmartWin lib directory into Tools | Options | Projects | Directories | 
+				linker
+			</LI>
+
+			<li> SmartWinU.lib(Application.obj) : error LNK2005: "... already defined in smartwin.lib(Application.obj) <br>
+				Perhaps you are mixing a MBS compiled smartwin.lib with a unicode application.
+
+			</li>
+
+		</ul>
+		<ul>
+			<h4>Runtime Errors
+			</h4>
+			<li>
+				Unhandled exception at 0x7c59bc3f in pivtest.exe: Microsoft C++ exception: 
+				bad_cast @ 0x0012e82c.
+				<br>
+				One source: You have a widget under a tab, and you did not do a 
+				"widg-&gt;setEventHandler( this );".</li>
+
+
+		</ul>
+	</body>
+</html>

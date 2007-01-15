@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>SmartWin++ on Linux with Wine Guide</title>
+	</head>
+	<body>
+		<h2>Using SmartWin++ on Linux with WINE <a name="devc++"> </a>
+		</h2>
+		<H3>Background:
+		</H3>
+		<P>SmartWin++ is based upon the WIN32 API.  But you can use the WIN32 
+			suport from WineLib ( <A href="http://www.winehq.com/site/documentation">http://www.winehq.com/site/documentation</A>
+			) on Linux/Unix and thus build and run SmartWin++ source on 
+			Linux/Unix.  As of December 23rd, 2006 we have had some success in getting 
+			the tests to run under winelib, but there are some problems too.  See 
+			testcheck.html in the tests directory for the current status,</P>
+		<H3>One way to get the SmartWin++ samples on Linux.
+		</H3>
+		<UL>
+			<LI>
+			Buy a Xandros Linux PC from Walmart ($300).
+			<LI>
+			Use Xandros Networks to install GCC 3.3 and ark archieving tool
+			<LI>
+			Download wine source 0.9.28 tar.bz2, and then used ark to extract wine 
+			source
+			<LI>
+			Download flex, bison, and cvs source from GNU.
+			<LI>
+			Did ./configure , make, and make install (as root) for flex, bison, and cvs.
+			<LI>
+			Did ./configure, make depend, make, and then make install   (root) 
+			for wine
+			<LI>
+			As root, I did a ldconfig after adding /usr/local/lib in 
+			/etc/ld.so.conf  (so Xandros can find libwine.so.1)
+			<LI>
+			CHECK:  wine --version now returns "wine 0.9.28"
+			<LI>
+			CHECK: Now you can make in programs/notepad, and "wine notepad.so.1" runs.
+			<LI>
+			Fetch the latest SmartWin++ source using cvs with:
+			<LI>
+				<TT>cvs -d:pserver:anonymous@smartwin.cvs.sourceforge.net:/cvsroot/smartwin login </TT>
+			<LI>
+				<TT>cvs -z3 -d:pserver:anonymous@smartwin.cvs.sourceforge.net:/cvsroot/smartwin co -P SmartWin </TT>
+			checkout SmartWin
+			<LI>
+			cd SmartWin/source
+			<LI>
+			make -f Makefile.wine   (And the libsmartwin.a library should be put 
+			into ../lib)
+			<LI>
+			cd ../tests/HelloSmartWin
+			<LI>
+			make -f Makefile.wine run  (And the sample program should start running.)
+			<LI>
+				You can build all the tests from SmartWin/tests with  make -f  
+				Makefile.wine</LI></UL>
+		<P> </P>
+		<H3>Notes on build methods:</H3>
+		<P>"wineg++", as provided by wine, does the compiles and links  as a wrapper 
+			around "g++".  The makefiles use the Unix libc library and the built in 
+			C++ standard libraries. This means that there is no support for 
+			MSVCRT specific calls.  It may be possible to build SmartWin using 
+			wineg++'s -mno-cygwin option  (See man wineg++ for details) , but it 
+			produces lots of errors from the cstdlib at the moment.  If someone is 
+			successful using -mno-cygwin, please let us know what you did.
+		</P>
+		<P>The result of linking gives a hello.so.1 shared executable which can be run with 
+			"wine hello.so.1". 
+		</P>
+		<P>You can use winemaker to convert a Windows based program to something suitable 
+			for winelib.  You should already be using forward slashes in #include 
+			"dir/dir/file.h", and taking case into account with filenames.</P>
+		<P>
+			#ifdef __WINE__
+			<br>
+			#else
+			<br>
+			#endif
+			<br>
+			is used for the minimal Linux/Wine specific code.
+		</P>
+		<P>
+			/usr/include/c++/3.3 has the standard c++ include files. <br></br>
+			The windows files are in : wine-0.9.28/include <br></br>
+		</P>
+		<h3>Helpful Links:</h3>
+		<P><A href="http://cvsbook.red-bean.com/cvsbook.html">http://cvsbook.red-bean.com/cvsbook.html</A></P>
+		<P> </P>
+		<P> </P>
+	</body>
+</html>

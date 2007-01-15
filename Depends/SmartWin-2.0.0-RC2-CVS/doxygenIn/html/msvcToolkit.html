@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>SmartWin++ Guide</title>
+	</head>
+	<body>
+		<H2>Microsoft Visual Studio C++ 2005 Express
+		</H2>
+		By combining Microsoft's VS C++ Express with the Win2003Server SDK R2, you can 
+		download a free development environment for SmartWin++ programs. It does not 
+		contain MFC, but that's ok because SmartWin++ is used instead. You need to 
+		setup VS Express according to "Using Visual C++ 2005 Express Edition with the 
+		Microsoft Platform SDK"
+		<br>
+		By Brian Johnson, Microsoft Corporation.
+		<br>
+		at <A href="http://msdn.microsoft.com/vstudio/express/visualc/usingpsdk/">http://msdn.microsoft.com/vstudio/express/visualc/usingpsdk/</A>
+		<br>
+		Here is a summary, with some Smartwin++ extras:
+		<ul>
+			<li>
+				Install Visual C++ Express
+				<br>
+				Download VS C++ 2005 Express from <A href="http://lab.msdn.microsoft.com/express/visualc/default.aspx">
+					http://lab.msdn.microsoft.com/express/visualc/default.aspx </A>
+				<br>
+			<li>
+				Install the Microsoft Platform SDK
+				<br>
+				The Express web page eventually points you to download the "Windows® Server 
+				2003 R2 Platform SDK Web Install" from <A href="http://www.microsoft.com/downloads/details.aspx?FamilyId=0BAF2B35-C656-4969-ACE8-E4C0C0716ADB&amp;displaylang=en">
+					http://www.microsoft.com/downloads/details.aspx?FamilyId=0BAF2B35-C656-4969-ACE8-E4C0C0716ADB&amp;displaylang=en
+				</A>
+				<br>
+			<li>
+				Update the Visual C++ directories to point to the SDK and SmartWin++'s lib and 
+				include. For Tools | Options | Projects and Solutions | VC++ directories | 
+				Include, add these:<br>
+				C:\program files\Microsoft Platform SDK for Windows Server 2003 R2\Include
+				<br>
+				C:\program files\Microsoft Platform SDK for Windows Server 2003 R2\Include\MFC
+				<br>
+				??\smartwin\include
+				<br>
+				<br>
+				and for the library
+				<br>
+				C:\program files\Microsoft Platform SDK for Windows Server 2003 R2\lib
+				<br>
+				??\smartwin\lib
+				<br>
+				<br>
+				Replace ?? with the path to your SmartWin directories.<br>
+				The MFC include reference is to find afxres.h in the .rc files.
+				<br>
+			<li>
+				Set the AdditionalDependencies in
+				<br>
+				C:\Program Files\Microsoft Visual Studio 
+				8\VC\VCProjectDefaults\corewin_express.vsprops
+				<br>
+				to "kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib 
+				shell32.lib ole32.lib oleaut32.lib uuid.lib"
+				<P></P>
+			</li>
+		</ul>
+		<br>
+		<br>
+		<H2>Microsoft Visual Studio 6
+		</H2>
+		The compiler is too old, and does not support the modern C++ used in 
+		SmartWin++.
+		<h2>&nbsp;
+		</h2>
+	</body>
+</html>

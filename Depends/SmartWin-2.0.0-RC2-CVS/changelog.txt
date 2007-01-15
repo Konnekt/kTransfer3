@@ -1,0 +1,615 @@
+
+
+********************************************************************************
+*                                                                              *
+*                           Changelog for SmartWin++                           *
+*                                                                              *
+********************************************************************************
+
+
+********************************************************************************
+						 Version 2.0.0, ?th of ? 2006
+********************************************************************************
+- Added setText, getCount, isSystemMenu to WidgetMenu
+
+- Added setItemText, getCount, onPopup, removeAllItems, isSystemMenu to
+  WidgetMenuExtended
+
+- Added removeItem to WidgetComboBox
+
+- Added redrawItems to WidgetDataGrid
+
+********************************************************************************
+						 Version 2.0.0 RC2, 20th of August 2006
+********************************************************************************
+- Fixed lots of bugs in the WidgetModalDialog logic.
+  You can now actually have an application consisting of only WidgetModalDialogs
+  without being afriad of that your application is gonna die under suspicious
+  circumstances!
+
+
+********************************************************************************
+						 Version 2.0.0 RC1, 23th of July 2006
+********************************************************************************
+- Added get/setTextLimit to WidgetTextBox
+
+- Breaking change!
+  WidgetLoadFile/WidgetSaveFile "startDirectory" method changed
+  to "setStartDirectory" for consistency
+  
+- Added setStartDirectory method to WidgetChooseFolder
+
+- Fixed bug in setSmallIcon would make the icon a appear a little blurry
+
+- Added invalidateWidget method which only invalidates the window and doesn't repaint it.
+
+- Fixed bug in the getBounds/getPosition methods, which would not give the
+  relative position for child widgets
+  
+- Fixed bug in WidgetLoadFile which would give a memory access error
+  if all parameters were not set
+
+- Added the showDialogMultiSelect method to the WidgetLoadFile, to allow
+  multiple selections. Thanks Mike M.!
+
+- Added the AspectBorder to most widgets. This aspect adds the following methods:
+  setBorder - set normal solid border
+  setSunkenBorder - like in text boxes
+  setSmoothSunkenBorder - like in some read-only text boxes
+  setRaisedBorder - like buttons
+
+- Fixed bug
+  Code using WidgetWindowBase's setMinimizeBox wouldn't compile
+
+- Added icon support to WidgetDataGrid and WidgetTreeView.
+  You need to make an image list (see the new class ImageList), add icons
+  to it, and then associate the image list to the widget.
+  When adding rows / nodes, specify the index of the icon in the associated
+  image list to be shown on it, in the iconIndex parameter. Use -1 if you don't
+  want to use an icon.
+
+- Breaking change!
+  WidgetToolbar now uses ImageList's. The addBitmap method was deprecated.
+  So, e.g, instead of:
+	toolbar->addBitmap( BITMAP_ID, 5 );
+  use:
+	ImageListPtr imageList( new SmartWin::ImageList( 32, 32, ILC_COLOR24 ) );
+	imageList->addMultiple( SmartWin::Bitmap( BITMAP_ID ) );
+	toolbar->setImageList( imageList );
+
+- Added methods on WidgetDataGrid:
+  setView - changes the view between Report, Icon, Small Icon, and List
+  setAlwaysShowSelection - makes the selection always visible
+
+- AspectBackgroundColorDispatcher modified logic to allow process by the
+  original handler
+
+- WidgetTabSheet::addPage now returns unsigned int (the negative values returned
+  by the operative system are already taken care by throwing)
+
+- Added WidgetTabSheet::getUsableArea
+
+- Added support for tstringstream, etc in addition to tstring.
+
+- Added Application::generateLocalClassName, Application::setSystemClassName, and
+  Application::addLocalWindowClassToUnregister to manage window class registration.
+
+- Added cropTop, cropBottom, cropLeft, cropRight, and FromRECT to Rectangle.
+
+- Renamed the onCustomDraw in WidgetDataGrid to onCustomPainting.
+
+- OS events!
+  It is now posible to add up events for e.g. process exited or files in directory
+  changed etc.
+  See the TicTacToe or the BoostSignals sample for an example.
+
+- New Aspect!
+  Many Widgets now support "onChar" which is especially useful in WidgetTextBoxes
+  for doing "custom filtering" of characters.
+  Return false and the character won't be added to the text of the textbox!
+
+- Breaking change!
+  Renamed the NormalWidget, DialogWidget, ModalDialogWidget and the
+  MessageMapPolicyMDIChildWidget
+  classes which is used as "policy" classes to the MessageMap to:
+  * MessageMapPolicyNormalWidget
+  * MessageMapPolicyDialogWidget
+  * MessageMapPolicyModalDialogWidget
+  * MessageMapPolicyMDIChildWidget
+  These are long names and probably will take some time to become acquainted with
+  but I think (and hope) that users will aknowledge that the names are more
+  intuitive and understanding since they're more descriptive...
+
+- Renamed some of the template parameters e.g. Parent wnd WidgetOriginalType is
+  now called EventHandlerWidget since this is a more and better descriptive name.
+
+********************************************************************************
+						 Version 2.0.0 BETA, 22th of March 2006
+********************************************************************************
+
+- Fixed bug in Place::positionToRight that created a new row even when widget
+  size was bigger than the available space per row.
+
+- Added library called SmartSOAP
+  SmartSOAP is a new extension to SmartWin which can do among other things SOAP
+  calls or consume WebServices through usage of the SOAP and HTTP protocol.
+  Look in the SmartSOAPTester1 for an example of how to use the library!
+  SmartSOAP is yet in an experimental state meaning it might change in future
+  versions, but the basics are roughly as they probably will be in later
+  versions so this shouldn't scare you away from using it!
+  In addition the SmartSOAP contains helper classes for doing string conversion
+  to and from UNICODE plus it contains helper classes for parsing Dates
+  and manipulating Dates through the DateTime class and the TimeSpan class.
+  It also contains HttpRequest/Response classes, TcpStreambuffer classes
+  and lots of goodies!
+  But the docs are bad and some parts of the library might change in future
+  versions, but this is definitively something we will support "for ever"!!
+
+- Fixed bug in AspectBackgroundColorDispatcher that prevented global/static
+  functions from taking care of the background color.
+
+- Breaking change!
+  Since RadioButtons now actually are children of WidgetGroupBoxes (and not just
+  faked) the setSize (and its sizing/positioning functions) will work relatively
+  within the WidgetGroupBox.
+  Before you had to set the size relatively according to the WidgetContainer
+  the group box was within!
+  So if your radiobuttons have disappeared this is probably the reason since
+  this will make radiobuttons scroll OUT of the visible area of the Group Box!!
+
+- You no longer need to explicitly link towards neither comctl32.lib nor
+  SmartWinxx.lib if using VC++.
+  Both of these files are included automatically through compiler directives
+  in VC++ compilers!
+
+- (Deprecation): the use of CreationalStruct and all of the functions
+  getDefaultXxxCreationalStruct has been deprecated in favor of Seed (see next
+  point).
+
+- Every widget has now a class member named Seed. It contains all of the information
+  needed to successfully create a Widget. All widgets, but WidgetWindow, have set,
+  at least, WS_CHILD and WS_VISIBLE by default. WidgetWindow::Seed::style is
+  WS_VISIBLE | WS_OVERLAPPEDWINDOW set by default. The data members of Seed will be
+  tweaked until the official release.
+
+- WidgetChildWindow is no longer a typedef in the factory but a class derivated from
+  WidgetWindow. Its constructor requires a pointer to a parent Widget.
+
+- (Breaking change): WidgetWindow::create now takes only one parameter (its Seed). By
+  default, it will produce a non-child window. Use WidgetChildWindow to get child
+  windows, for example:
+	  MyClass : WidgetFactory< WidgetChildWindow, MyClass >
+
+- (Breaking change): createFont is not longer defined inside of the factory. Now, it
+  is a global function. Thus, MyWidgetPtr->createFont won't compile.
+
+- The initial fonts of some widgets has been changed to a non - bitmap font.
+
+- (Breaking change) All Widgets (or most of them) have now got protected
+  constructors which means that if you need to create a new Widget outside a
+  WidgetFactory you need to do it by using the WidgetCreator class with the template
+  parameter of the WidgetType you wish.
+
+- Added new function (alphaBlend) in CoorUtilities class which does basic alpha
+  blending of RGB values on pixel level.
+  Note that function is NOT very optimized and especially on slow platforms alternative solutions (like GDI+) should be considered!
+
+- Added up a new Widget called WidgetCoolbar which is an implementation of the
+  ReBar control in Windows API.
+  Contains basic (though unfinished) support for a Coolbar control.
+
+- Fixed bug in WidgetDataGrid when using the onCustomDraw Event Handler that
+  made the text of column 0 become invisible if text was not left aligned.
+  (Thanx to flix01)
+
+- Added new function to WidgetDataGrid called setBackgroundColor which changes
+  the background color property of the rows that DOES NOT have any items.
+
+- Added new function in AspectSizable which guarantees that the Widget will NOT
+  be obscured by other widgets in "front" of it in the same container widget
+  Function is called bringToFront.
+
+- Made it possible to embed WidgetChildWidget in WidgetDialog and
+  WidgetModalDialog
+
+- Made itsChildren in Widget protected to make inherited widgets be able to
+  reach it.
+
+- Fixed bug with Windows Mobile (CE5.x) which made the SIP not always show up
+
+- Made all the "create" function virtual to make overriding possible
+
+- Implemented AspectThreads in WidgetWindowBase instead of WidgetWindow to make
+  it possible to do threading from Widget(Modal)Dialogs
+
+
+
+********************************************************************************
+						 Version 1.0.2, 24th of October 2005
+********************************************************************************
+- Changed license from the GPL derived license to a "pure" BSD license.
+
+- AspectFocus is implemented in WidgetWindowBase meaning both Dialogs and normal
+  container Widgets can handle the Focus event and set focus without resorting
+  to pure Windows API.
+
+- AspectFocus is implemented in WidgetStatic meaning focus can be given and
+  the Focus and KillFocus Event can be handled in WidgetStatic
+
+- Fixed bug in updateWidget which would not always make the window be repainted
+  when called
+
+- Fixed bug which would in rare occasions make the onSelectionChanged fire
+  multiple times for one Event in WidgetDataGrid.
+
+
+
+
+********************************************************************************
+						 Version 1.0.1, 10th of September 2005
+********************************************************************************
+- Fixed bug in AspectText which made it impossible to handle the onTextChanged
+  Event in any Widget.
+  This changed the Event Handler signature to "const SmartUtil::tstring &" instead of just
+  "SmartUtil::tstring &"
+  In addition the Event Handler Setter has been renamed from onSetText to
+  onTextChanging
+
+- Fixed bug in WidgetCheckBox which made it impossible to handle the onDblClick
+  Event.
+
+
+********************************************************************************
+	Conversion between Version 0.99 and Version 1.0, September 21, 2005
+********************************************************************************
+
+
+Here are some errors that you will run into if you have 0.99 source and you try
+to rebuild with the 1.00 SmartWin++:
+
+
+: error C2061: syntax error : identifier 'WidgetList'
+
+1.00 changed the name to be WidgetDataGrid, so
+	replace all WidgetList with WidgetDataGrid
+	replace all createList with createDataGrid
+
+
+: error C2039: 'WindowSizedEventResult' : is not a member of 'SmartWin'
+	void isResized( const SmartWin::WindowSizedEventResult & sz )
+"Window" should be changed to "Widget":
+	void isResized( const SmartWin::WidgetSizedEventResult & sz )
+
+
+		onClosed( &cardlinkWin::closing );
+		onClosing( &cardlinkWin::closing );
+
+
+
+If you get an error on the establishment of a response function, such as
+	file->appendItem( MENU_FILE_OPEN, _T("&Open"), &MainWindow::menuClicked );
+
+: error C2664: 'void SmartWin::WidgetMenu<Parent,MessageMapPolicy>::appendItem(unsigned int,const SmartUtil::tstring &,SmartWin::WidgetMenu<Parent,MessageMapPolicy>::itsVoidMenuFunctionTakingUInt)'
+: cannot convert parameter 3 from 'void (__thiscall MainWindow::* )(SmartWin::WidgetFactory<Base,Parent>::WidgetMenu *,unsigned int)'
+:  to 'SmartWin::WidgetMenu<Parent,MessageMapPolicy>::itsVoidMenuFunctionTakingUInt'
+
+probably you need to change the definition of the response function from:
+void MainWindow::menuClicked( WidgetMenu * item, unsigned int id )
+to
+void MainWindow::menuClicked( WidgetMenuPtr item, unsigned int id )
+
+
+
+: error C2511: 'void MainWindow::menuClicked(SmartWin::WidgetFactory<Base,Parent>::WidgetMenuPtr,unsigned int)' : overloaded member function not found in 'MainWindow'
+You will get this error if you forgot to change a predeclaration of the function,
+possibly in the .h file if you changed it in the .cpp ?
+
+
+: error C2440: 'initializing' : cannot convert from 'SmartWin::Point' to 'SmartWin::Rectangle'
+	SmartWin::Rectangle rc = getClientAreaSize();
+getClientAreaSize() now returns a Point, so do it instead like this:
+	SmartWin::Rectangle rc( getClientAreaSize() );
+
+
+
+
+: error C2871: 'SmartLib' : a namespace with this name does not exist
+
+1.00 removed SmartLib, so you can delete any "using namespace SmartLib;" lines.
+
+
+
+error C2143: syntax error : missing ',' before '<' for line
+void checkForAlarms(MainWindow * wnd, const SmartPtr<Command, CopyPolymorph> & cmd)
+1.00 moved to boost from SmartPtr, so change the line as follows:
+void checkForAlarms(MainWindow * wnd, const boost::shared_ptr<Command> & cmd)
+
+
+: error C2039: 'setEnabled' : is not a member of 'SmartWin::WidgetMenu<Parent,MessageMapPolicy>'
+: error C2039: 'getEnabled' : is not a member of 'SmartWin::WidgetMenu<Parent,MessageMapPolicy>'
+1.00 changed these names to be setItemEnabled and getItemEnabled
+	itsMenu->setEnabled( MENU_FILE_CHECK, !itsMenu->getEnabled(MENU_FILE_CHECK) );
+changes to:
+	itsMenu->setItemEnabled( MENU_FILE_CHECK, !itsMenu->getItemEnabled(MENU_FILE_CHECK) );
+
+
+error C2039: 'setSize' : is not a member of 'SmartWin::WidgetRichTextBox<Parent,MessageMapPolicy,TextBoxType>'
+1.00 changed this name to be setBounds.
+
+
+: error C2660: 'SmartWin::AspectEnabled<WindowOriginalType,WidgetType,MessageMapType>::getEnabled' : function does not take 1 arguments
+For toolbars, 1.0 changed from setEnabled to setButtonEnabled.
+For toolbars, 1.0 changed from getEnabled to getButtonEnabled.
+For toolbars, 1.0 changed from setVisible to setButtonVisible
+For toolbars, 1.0 changed from getVisible to getButtonVisible
+
+item->setEnabled( 1, !item->getEnabled(1) );
+BECOMES
+item->setButtonEnabled( 1, !item->getButtonEnabled(1) );
+
+item->setVisible(2, !item->getVisible(2) );
+BECOMES
+item->setButtonVisible(2, !item->getButtonVisible(2) );
+
+
+
+
+
+
+: error C2664: 'void SmartWin::WidgetToolbar<Parent,MessageMapPolicy>::addBitmap(SmartWin::BitmapPtr,unsigned int)'
+: cannot convert parameter 1 from 'int' to 'SmartWin::BitmapPtr'
+itsToolBar->addBitmap( IDB_BITMAP_TOOLBAR, 4 );
+needs to be:
+itsToolBar->addBitmap( sw::BitmapPtr( new sw::Bitmap( IDB_BITMAP_TOOLBAR ) ), 4 );
+
+
+: error C3861: 'getSizeClientArea': identifier not found, even with argument-dependent lookup
+	SmartWin::Rectangle wndSize = getSizeClientArea();
+1.0 changed the name to be:
+	SmartWin::Rectangle wndSize = getClientAreaSize();
+
+
+
+error LNK2019: unresolved external symbol "int __cdecl SmartWinMain(class SmartWin::Application &)" (?SmartWinMain@@YAHAAVApplication@SmartWin@@@Z) referenced in function _WinMain@16
+
+int main( SmartWin::Application & app )
+should now be:
+int SmartWinMain( SmartWin::Application & app )
+
+
+
+
+
+
+
+
+
+********************************************************************************
+						 Version 1.0.0, 10th of September 2005
+********************************************************************************
+- Return Type of all creational function in WidgetFactory have been changed to
+  returning typedefed pointer for compatibility towards future versions in which
+  the actual returned type might change!
+  No WidgetXxx * itsWidget should now be used but rather WidgetXxxPtr itsWidget
+  instead!!
+
+- If you're adding up a CreationalStruct to your createXXX functions or the create
+  functions of your widgets you need to explicitly add up WS_VISIBLE or the widget
+  will initially be INVISIBLE!
+
+- All Event Handlers which takes a Canvas of some type are now expected to take a
+  reference to the base Canvas class instead of the derived type, meaning you might
+  have to change signature of one of your Event Handlers taking e.g. FreeCanvas to
+  taking just Canvas by reference.
+
+- All Widget types have now implemeted all relevant Aspects meaning there will be
+  virtually TONS of new functions on every single Widget type!
+
+- New Aspect implemented in ALL Widgets!!
+  AspectRaw which makes it possible to handle "generic" Events which there does NOT
+  exist Event Handlers for by default.
+  Look at SampleWidget (MainWindow.cpp) for an example of usage!!
+  This Event Handler Setter makes it easier to handle "non handle able" Events without
+  having to resort to overriding sendWidgetMessage!!
+
+- Right clicking, Left clicking and Double Clicking in WidgetTreeView and WidgetDataGrid
+  is now possible to handle.
+
+- Library now uses boost instead of its own custom classes (SmartLib is removed)
+
+- You can now query (AspectFont enabled) controls for their fonts
+
+- You can now selectFont on the Canvas class which will change the Font used for
+  rendering text.
+
+- You can now query a WidgetDataGrid for its Cell Text value from an LPARAM, in addition
+  there is now an Event Handler for trapping the Column Header Clicked event
+
+- Added overridden constructor to class Brush taking a Bitmap shared_ptr which will
+  be used when painting on the Brush as the background.
+  To fill a surface with the Bitmap use Canvas::fillRectangle with the newly created
+  Bitmap Brush.
+
+- AspectPainting, there now exists an aspect called AspectPainting which is
+  responsible for painting e.g. WidgetButton (created with BS_OWNERDRAW) and
+  WidgetWindow.
+
+- SmartWin++ does not any longer set deault creationalstruct parameters to default
+  Widgets to be visible!
+  This means you can create initially hidden Widgets for instance.
+
+- New Widget, WidgetProgressBar is a ProgressBar Control which can be used to
+  display the progress of lengthy jobs for instance.
+
+- New Widget, WidgetMenuExtended is a more advanced menu type with LOTS of more
+  capabilities then the default "normal" menu which is more boring, less colorful
+  and more "dull".
+
+- New Aspect for many Widgets, many Widgets now implements AspectBackgroundColor
+  which makes it possible to set an eventhandler for the background color event
+  which makes it possible to change the rendering of the background of Widgets.
+  Basically meaning it's possible (among other things) to set the background color
+  of all Widgets which realizes this Aspect.
+
+- (Breaking) Moved the defaultCreationStruct OUT of the private_ namespace
+
+- Added overloaded Constructor to Font class for using system fonts
+
+- Lots of new samples, including some for Windows CE (PPC 2003 and SmartPhone 2003)
+
+- Better directory structure for library
+
+- Support for building applications for Pocket PC and Smart Phone Windows CE
+  version 2003 and above with Visual C++ 2005 and above!
+  Lots of Pocket PC example applications are included to help you here!
+
+- The whole library has gotten way more cleaner code.
+
+- There are now two new Widgets in library, one for choosing colors and another
+  one for choosing fonts.
+  Respectively called WidgetChooseColor and WidgetChooseFont
+
+- There is now a Layout Management System in SmartWin++, partially in
+  AspectSizable and partially in class SmartWin::Place.
+  The name of the Place class might though change before the 1.0 release.
+
+- Library and all sample applications now completely compiles with MingW/gcc 3.4.2
+  Also we're working on getting it to compile with Wine meaning we will get an xNix
+  implementation.
+
+
+********************************************************************************
+						 Version 0.999, 3.rd of May 2005
+********************************************************************************
+- The whole library has more or less been completely restructured and refactored.
+  I don't' think this has however rendered any significant changes regarding
+  backwards compatibility.
+
+- The internals of the library now uses Signals and Slots (custom implementation
+  which is utilized using Loki functors) for message handling and dispatching of
+  messages.
+
+- You can now build applications using Dev-Cpp version 4.9.9.2 which internally
+  uses MingW/GCC version 3.4.2.
+  xxx.dev files are included for both the library and all sample applications.
+  You can probably also use other versions (close to) of the gcc MingW but
+  this is the only one tested!
+
+- WidgetModalDialog is added which is a modal dialog Widget
+
+- Lots and lots of bugfixes, the library is now 100 times more conforming and
+  probably in most ways way more stable then ever before.
+
+- Several new sample applications, e.g. WidgetModalDialog also many existing
+  sample applications have been extended.
+
+- Support for the Whidbey VC++ 2005 compiler with specially solution files and
+  project files. (VC++ 2005 uses different formats of the .vcproj files and
+  the .sln files)
+
+- The library has now officially changed name from just SmartWin to SmartWin++!
+
+- Documentation is embedded in the download now.
+
+
+********************************************************************************
+								  Version 0.996
+********************************************************************************
+- Added up support for Threads (helper classes for guaranteeing serialized access) and
+  support for forking current thread (AspectThreads)
+  There are now three more classes (in threads.h) called Threads, ThreadLock and
+  CriticalSection, Threads encapsulates a thread and it's operations, ThreadLock
+  encapsulates and ensures locking and unlocking of a CriticalSection and CriticalSection
+  encapsulates ensuring serialized access to shared resources among different threads.
+  See the Threads project to get an example of how to use the classes...
+
+- Fixed bug in setIcon, it didn't change the icon of the actual window, only the application
+  if it was the only window in the app, now it works like it should thanx to kostasvl.
+
+- Added up WidgetTabSheet, a naive implementation of a Tab Control with no helping sheet
+  classes or anything fancy like that, but anyway it's a tab control implementation and it works!
+
+- Fixed problems related to Dialogs which was visible in e.g. the WidgetFun. (the dialog didn't show up)
+
+- Fixed a problem related to "hanging process" which was visible in all applications which used
+  menus.
+
+
+********************************************************************************
+								  Version 0.995
+********************************************************************************
+- Added support for extracting Command Line params
+  Application class has got a function called getCommandLine which returns an object
+  that can be queried for the command line parameters.
+
+- Added support for TEXT_CALLBACK list box, the WidgetDataGrid can now insert "PARAM ITEMS"
+  which means that when the list needs to know the actual text of the items to display
+  it will call a (must be) predefined Event Handler
+
+- Added support for sorting the WidgetDataGrid Widget, the application defines an event
+  handler which will be called to find out how items should be sorted.
+
+- SmartWin now returns an error code (0xdeadbeef as in Dead Beef or in the Decimal system -559038737)
+  to the OS when the application process exits if Memory Leaks are detected!
+  This is true for both Debug builds and Release builds.
+
+- Fixed so that when you have columns of different sizes in a WidgetDataGrid and rearranges the column
+  order and then edit a column it actually places the edit control on the right position.
+  This was a bug in 0.99 Release
+
+- New Widget - WidgetSlider!
+  WidgetSlider is a slide control also known as a TrackBar control.
+  Useful for selecting input values between som sort of minimum/maximum value.
+  Good examples are RGB values in color pickers in drawing programs.
+
+- New Widget - WidgetSpinner!
+  WidgetSpinner is a Spin Control, often used for the same things as the WidgetSlider.
+  Takes less space on the screen then the WidgetSlider though
+
+- Fixed bug
+  There was a bug in UnicodeConverter<char, wchar_t>::doConvert which caused bullshit data
+  to be returned if given an empty string to convert, this bug is fixed.
+
+- New Widget - WidgetMDIParent!
+  WidgetMDIParent is a MDI Client Widget.
+  Now you can use the MDI (Multi Document Interface) control with SmartWin.
+
+- New Widget - WidgetMDIChild
+  WidgetMDIChild is a child Widget to put into the WidgetMDIParent to be able to use
+  the MDI (Multi Document Interface) with SmartWin
+
+- Design by Contract!
+  Added three "contracts" through use of Policies (Policy Based Design) which takes all the
+  logic which is different from a MessageMap for a MDIChildWindow, DialogWindow and "normal" window
+  and separated it out into three policy classes called DialogWidget, NormalWidget && MessageMapPolicyMDIChildWidget.
+  This will make things change a bit regarding your inheritence string (from WidgetFactory)
+  Now if you want to have a class describing a DialogWidget you need to derive from: "WidgetFactory<WidgetDialog, X>"
+  where X is your class instead of WidgetWindow as before, same for WidgetMDIIChild which needs to supply
+  WidgetMDIChild instead of WidgetWindow as before.
+  Basically the gain from this is that it will be impossible to call e.g. subclassButton from a WidgetFacory derived
+  class which does NOT supply WidgetDialog as it first template parameter, same for createDialog will
+  only exist in WidgetDialog and create will only exist in WidgetWindow.
+
+- Fixed a bug in the unicode conversion class (from char to wchar_t didn't work at all)
+  (Thank you Sergey)
+
+- Renamed the setIcon function and made TWO functions, one called setIconSmall and another called
+  setIconLarge (which I assume users will understand what the difference between is)
+  The small icon is the icon that shows in e.g. upper left corner of the Widget and the large icon is
+  the icon which shows when you e.g. press ALT + Tab
+  (Thank you Sergey)
+
+- New Aspect - AspectUpdate
+  The AspectUpdate class is for Widgets that can update their text properties, e.g. the WidgetText implements
+  the AspectUpdate, it declares two event handler setters (one global and one member function) which cna be set to
+  be called every time the text property of the WidgetTexctBox changes
+
+- Removed the Diamond Inheritance from Widget away from all Aspect classes.
+  (thank you Sergey)
+
+- I've outfactored everything specific to the different types of MainWidgets (Dialog, MDI && Normal Window) now
+  to the specific policy classes.
+
+- Removed the mainWndProc function (sendWidgetMessage now is the member function to use)
+
+- Added support for trapping the event onSetText in the AspectText Aspect.

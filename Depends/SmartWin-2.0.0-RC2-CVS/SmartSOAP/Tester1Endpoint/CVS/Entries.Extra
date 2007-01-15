@@ -1,0 +1,11 @@
+/.cvsignore////*///
+/AssemblyInfo.cs////*///
+/CustomObjects.asmx////*///
+/CustomObjects.asmx.cs////*///
+/CustomObjects.asmx.resx////*///
+/Global.asax////*///
+/Global.asax.cs////*///
+/Global.asax.resx////*///
+/Tester1Endpoint.csproj////*///
+/Tester1Endpoint.csproj.webinfo////*///
+/Web.config////*///

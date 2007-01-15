@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>SmartWin++ Guide</title></head>
+	<body>
+		<h2><a name="synopsis">What is SmartWin++ ? </a>
+		</h2>
+		<p>SmartWin.lib is a C++ GUI and SOAP library.<BR>
+			<a href="samplecode1.html">A Hello World (GUI) executable with buttons and check 
+				boxes</a> takes 212 KB and have no additional DLL dependencies!<br>
+			This is vital since SmartWin is a static library by default meaning less pain 
+			in versioning and upgrades of software.<br>
+			The SOAP parts and the GUI parts are not dependant upon each other 
+			and both can be used separately without using the other. This means you can use 
+			SmartSOAP e.g. in an MFC application or you can use e.g. gSOAP in a SmartWin++ 
+			application and so on.
+		</p>
+		<UL>
+			<b>Technologies used</b>
+			<li>
+			Standard 1998 C++ (STL and templates)
+			<li>
+			Boost++
+			<li>
+				Win32 API (Common controls)
+			</li>
+		</UL>
+		<UL>
+			<b>Target operating systems</b>
+			<li>
+			Windows
+			<LI>
+			Windows CE
+			<li>
+				Linux via the WineLib.</li></UL>
+		<UL>
+			<b>Tested Compilers:</b>
+			<li>
+				<a href="msvc71.html">Microsoft Visual C++ 7.1 (2003)</a>, its <a href="msvctoolkit.html">
+					Toolkit</a>, and <a href="msvctoolkit.html">Microsoft Studio C++ 2005 Express 
+					(Beta)</a>
+			<li>
+				GCC 3.4 / MinGW or later (see <a href="devcpp.html">Bloodshed Dev++</a> or <a href="eclipse.html">
+					Eclipse</a> for an IDE using MinGW)
+			</li>
+
+			<li>
+				The <a href="http://sallyide.sourceforge.net/">Sally IDE</a> supports SmartWin++.
+			</li>
+
+		</UL>
+		<UL>
+			<b>Characteristics:</b>
+			<li>
+			Free for open source and commercial use.
+			<li>
+			Links with a small static library.
+			<LI>
+			Can use resource files or can do without them.
+			<LI>
+			Presents the common controls as high level C++ classes.
+			<LI>
+			Events trigger response functions in your C++ classes.
+			<LI>
+			Response functions are set at runtime via widget functions. (No message map 
+			macros.)
+			<LI>
+			Most functions use parameters from the STL such as vector&lt;tstring&gt;<LI>
+				tstring is just std::basic_string&lt;_TCHAR&gt;. In other words, it is string 
+				compiled either for Unicode or Ascii.
+			</LI>
+		</UL>
+		<UL>
+			<b>Limitations:</b>
+			<li>
+			No support for ActiveX / COM / .NET
+			<li>
+				Scope is only the GUI functions and SOAP (plus some basic networking that the 
+				SOAP parts depends upon)</li></UL>
+		<h2>Where can I find more information ?
+		</h2>
+		<P>Be sure to check out the class documentation, modules, list of member functions, 
+			and the related pages on the left and top.
+		</P>
+		<P>The official source for information is the Web site at <A href="http://smartwinlib.org">
+				http://smartwinlib.org</A>. Including a <A href="http://smartwinlib.org/faq.php">
+				FAQ </A>.
+		</P>
+		<P>SmartWin++'s SourceForge site, <A href="http://sourceforge.net/projects/smartwin/">http://sourceforge.net/projects/smartwin</A>, 
+			has mailing lists, screenshots, CVS access, etc.
+		</P>
+		<P>You can download the <A href="http://sourceforge.net/project/showfiles.php?group_id=92327">
+				current released version</A> which has more then 50 SmartWin++ samples.
+		</P>
+		<P>You can interact with the developers at the <A href="http://sourceforge.net/forum/?group_id=92327">
+				forums</A>.
+		</P>
+		<p>You may be looking at a local documentation copy, here is a link to the<a href="http://smartwinlib.org/doc/">Web 
+				based class documentation </a>.
+		</p>		
+
+	</body>
+</html>

@@ -1,0 +1,18 @@
+/adt.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/append.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/at.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/cat.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/enum.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/filter.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/first_n.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/fold_left.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/fold_right.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/for_each.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/for_each_i.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/for_each_product.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/rest_n.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/reverse.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/size.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/to_tuple.hpp/1.1/Tue Aug 23 15:34:28 2005//
+/transform.hpp/1.1/Tue Aug 23 15:34:28 2005//
+D/detail////

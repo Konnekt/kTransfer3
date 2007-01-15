@@ -19,7 +19,7 @@ namespace kTransfer3 {
     setStaticValue(IM_PLUG_SIG, (int) "KT3");
     setStaticValue(IM_PLUG_NAME, (int) "kTransfer3");
     setStaticValue(IM_PLUG_PRIORITY, PLUGP_HIGH);
-    setStaticValue(IM_PLUG_DONTFREELIBRARY, 1);
+    //setStaticValue(IM_PLUG_DONTFREELIBRARY, 1);
 
     registerObserver(IM_START, bind(resolve_cast0(&Controller::_iStart), this));
     registerObserver(IM_UI_PREPARE, bind(resolve_cast0(&Controller::_onPrepare), this));

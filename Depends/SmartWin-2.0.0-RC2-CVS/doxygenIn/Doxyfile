@@ -1,0 +1,234 @@
+# Doxyfile 1.4.4
+
+#---------------------------------------------------------------------------
+# Project related configuration options
+#---------------------------------------------------------------------------
+PROJECT_NAME           = SmartWin++
+PROJECT_NUMBER         = 2.0 RC1
+OUTPUT_DIRECTORY       = ..\doxygenOut
+CREATE_SUBDIRS         = NO
+OUTPUT_LANGUAGE        = English
+USE_WINDOWS_ENCODING   = YES
+BRIEF_MEMBER_DESC      = YES
+REPEAT_BRIEF           = YES
+ABBREVIATE_BRIEF       = 
+ALWAYS_DETAILED_SEC    = NO
+INLINE_INHERITED_MEMB  = YES
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = 
+STRIP_FROM_INC_PATH    = 
+SHORT_NAMES            = NO
+JAVADOC_AUTOBRIEF      = NO
+MULTILINE_CPP_IS_BRIEF = YES
+DETAILS_AT_TOP         = NO
+INHERIT_DOCS           = YES
+DISTRIBUTE_GROUP_DOC   = NO
+SEPARATE_MEMBER_PAGES  = NO
+TAB_SIZE               = 8
+ALIASES                = "WidgetUsageInfo=You can either inherit from this class or add an instance of this class into your WidgetWindow inherited class. <br>If you inherit from the class you should explicitly call create e.g. in the CTOR of you class.<br> If you instantiate it directly (through the class Widget) you should create it by calling WidgetFactory::createxxx where xxx equals the name of the class WITHOUT the Widget part.<br>" \
+                         "EventHandlerGenericInfo=<b>General info on event handlers and events.</b><br>An event handler is a typesafe callback function defined by your application which will be \"raised\" or called whenever the specified event occurs.<br>E.g. if you define a WidgetWindow::onClosing event handler for a WidgetWindow widget your function will be called when your widget is being closed.<br>All event handlers are completely typesafe which means if you don't supply the right signature or try to set an event handler to a member of another class you will get a compile bug.<br>Also all events can be set to either a global/static member function or a member function of your derived WidgetWindow class, if you're setting an event handler to a global or static function you will recieve a pointer to the calling widget in the event handler (it will be expected to be part of the function signature) if you're setting an event handler to a member function of your class, this is not necessary off course since you will then be able to access the widget anyway. Also all Event Handlers handled by the \"parent\" Widget or another Widget then the Widget raising the event will demand passing the Widget pointer as the first parameter to the event handler function. Meaning a member version of an event for a WidgetButton taking an integer returning a bool will look like this; <i>bool foo( WidgetButton * btn, int value );</i> and must be a member of the parent class. A global/static event handler for the same event if the class name is Bar will look like this; <i>bool foo( Bar * bar, WidgetButton * btn, int value );</i><br>"
+OPTIMIZE_OUTPUT_FOR_C  = NO
+OPTIMIZE_OUTPUT_JAVA   = NO
+SUBGROUPING            = YES
+#---------------------------------------------------------------------------
+# Build related configuration options
+#---------------------------------------------------------------------------
+EXTRACT_ALL            = NO
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = YES
+HIDE_UNDOC_MEMBERS     = YES
+HIDE_UNDOC_CLASSES     = YES
+HIDE_FRIEND_COMPOUNDS  = YES
+HIDE_IN_BODY_DOCS      = YES
+INTERNAL_DOCS          = NO
+CASE_SENSE_NAMES       = NO
+HIDE_SCOPE_NAMES       = YES
+SHOW_INCLUDE_FILES     = NO
+INLINE_INFO            = NO
+SORT_MEMBER_DOCS       = YES
+SORT_BRIEF_DOCS        = YES
+SORT_BY_SCOPE_NAME     = NO
+GENERATE_TODOLIST      = NO
+GENERATE_TESTLIST      = NO
+GENERATE_BUGLIST       = NO
+GENERATE_DEPRECATEDLIST= YES
+ENABLED_SECTIONS       = 
+MAX_INITIALIZER_LINES  = 30
+SHOW_USED_FILES        = NO
+SHOW_DIRECTORIES       = NO
+FILE_VERSION_FILTER    = 
+#---------------------------------------------------------------------------
+# configuration options related to warning and progress messages
+#---------------------------------------------------------------------------
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+WARN_NO_PARAMDOC       = NO
+WARN_FORMAT            = "$file:$line: $text"
+WARN_LOGFILE           = ..\doxygenOut\error.txt
+#---------------------------------------------------------------------------
+# configuration options related to the input files
+#---------------------------------------------------------------------------
+INPUT                  = ..\include\smartwin \
+                         ..\include\io \
+                         ..\source \
+                         ..\include\smartwin\widgets \
+                         ..\include\smartwin\aspects \
+                         ..\SmartXML \
+                         ..\SmartUtil \
+                         ..\SmartNetwork \
+                         ..\SmartSOAP\SmartSOAP
+FILE_PATTERNS          = *.h \
+                         *.cpp
+RECURSIVE              = NO
+EXCLUDE                = 
+EXCLUDE_SYMLINKS       = NO
+EXCLUDE_PATTERNS       = 
+EXAMPLE_PATH           = .\html \
+                         ..\tests\HelloSmartWinWorld \
+                         ..\tests\HelloSmartWin
+EXAMPLE_PATTERNS       = 
+EXAMPLE_RECURSIVE      = NO
+IMAGE_PATH             = images
+INPUT_FILTER           = 
+FILTER_PATTERNS        = 
+FILTER_SOURCE_FILES    = NO
+#---------------------------------------------------------------------------
+# configuration options related to source browsing
+#---------------------------------------------------------------------------
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = NO
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+USE_HTAGS              = NO
+VERBATIM_HEADERS       = NO
+#---------------------------------------------------------------------------
+# configuration options related to the alphabetical class index
+#---------------------------------------------------------------------------
+ALPHABETICAL_INDEX     = YES
+COLS_IN_ALPHA_INDEX    = 1
+IGNORE_PREFIX          = 
+#---------------------------------------------------------------------------
+# configuration options related to the HTML output
+#---------------------------------------------------------------------------
+GENERATE_HTML          = YES
+HTML_OUTPUT            = doc
+HTML_FILE_EXTENSION    = .html
+HTML_HEADER            = 
+HTML_FOOTER            = footer.txt
+HTML_STYLESHEET        = doxygen.css
+HTML_ALIGN_MEMBERS     = YES
+GENERATE_HTMLHELP      = YES
+CHM_FILE               = 
+HHC_LOCATION           = 
+GENERATE_CHI           = YES
+BINARY_TOC             = YES
+TOC_EXPAND             = YES
+DISABLE_INDEX          = NO
+ENUM_VALUES_PER_LINE   = 1
+GENERATE_TREEVIEW      = YES
+TREEVIEW_WIDTH         = 250
+#---------------------------------------------------------------------------
+# configuration options related to the LaTeX output
+#---------------------------------------------------------------------------
+GENERATE_LATEX         = NO
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = latex
+MAKEINDEX_CMD_NAME     = makeindex
+COMPACT_LATEX          = YES
+PAPER_TYPE             = a4wide
+EXTRA_PACKAGES         = 
+LATEX_HEADER           = 
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = NO
+LATEX_HIDE_INDICES     = NO
+#---------------------------------------------------------------------------
+# configuration options related to the RTF output
+#---------------------------------------------------------------------------
+GENERATE_RTF           = NO
+RTF_OUTPUT             = rtf
+COMPACT_RTF            = NO
+RTF_HYPERLINKS         = NO
+RTF_STYLESHEET_FILE    = 
+RTF_EXTENSIONS_FILE    = 
+#---------------------------------------------------------------------------
+# configuration options related to the man page output
+#---------------------------------------------------------------------------
+GENERATE_MAN           = NO
+MAN_OUTPUT             = man
+MAN_EXTENSION          = .3
+MAN_LINKS              = NO
+#---------------------------------------------------------------------------
+# configuration options related to the XML output
+#---------------------------------------------------------------------------
+GENERATE_XML           = NO
+XML_OUTPUT             = xml
+XML_SCHEMA             = 
+XML_DTD                = 
+XML_PROGRAMLISTING     = YES
+#---------------------------------------------------------------------------
+# configuration options for the AutoGen Definitions output
+#---------------------------------------------------------------------------
+GENERATE_AUTOGEN_DEF   = NO
+#---------------------------------------------------------------------------
+# configuration options related to the Perl module output
+#---------------------------------------------------------------------------
+GENERATE_PERLMOD       = NO
+PERLMOD_LATEX          = YES
+PERLMOD_PRETTY         = YES
+PERLMOD_MAKEVAR_PREFIX = 
+#---------------------------------------------------------------------------
+# Configuration options related to the preprocessor   
+#---------------------------------------------------------------------------
+ENABLE_PREPROCESSING   = NO
+MACRO_EXPANSION        = NO
+EXPAND_ONLY_PREDEF     = NO
+SEARCH_INCLUDES        = YES
+INCLUDE_PATH           = 
+INCLUDE_FILE_PATTERNS  = 
+PREDEFINED             = 
+EXPAND_AS_DEFINED      = 
+SKIP_FUNCTION_MACROS   = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to external references   
+#---------------------------------------------------------------------------
+TAGFILES               = 
+GENERATE_TAGFILE       = 
+ALLEXTERNALS           = NO
+EXTERNAL_GROUPS        = NO
+PERL_PATH              = /cgi-bin
+#---------------------------------------------------------------------------
+# Configuration options related to the dot tool   
+#---------------------------------------------------------------------------
+CLASS_DIAGRAMS         = NO
+HIDE_UNDOC_RELATIONS   = NO
+HAVE_DOT               = NO
+CLASS_GRAPH            = NO
+COLLABORATION_GRAPH    = YES
+GROUP_GRAPHS           = YES
+UML_LOOK               = YES
+TEMPLATE_RELATIONS     = NO
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = NO
+CALL_GRAPH             = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+DOT_IMAGE_FORMAT       = png
+DOT_PATH               = 
+DOTFILE_DIRS           = 
+MAX_DOT_GRAPH_WIDTH    = 1024
+MAX_DOT_GRAPH_HEIGHT   = 1024
+MAX_DOT_GRAPH_DEPTH    = 1
+DOT_TRANSPARENT        = YES
+DOT_MULTI_TARGETS      = YES
+GENERATE_LEGEND        = YES
+DOT_CLEANUP            = YES
+#---------------------------------------------------------------------------
+# Configuration::additions related to the search engine   
+#---------------------------------------------------------------------------
+SEARCHENGINE           = YES
